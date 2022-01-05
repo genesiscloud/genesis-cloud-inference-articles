@@ -398,7 +398,7 @@ python3 read_image.py
 ```
 
 
-# Step 6: Running TorchScript inference using C++
+## Step 6: Running TorchScript inference using C++
 
 The C++ program `infer_model_ts.cpp` runs inference using a TorchScript model
 and pre-processed input image.
@@ -552,7 +552,7 @@ The program output will look like:
 <<<TODO>>>
 ```
 
-# Step 7: Benchmarking TorchScript inference in C++
+## Step 7: Benchmarking TorchScript inference in C++
 
 The C++ program `bench_ts.cpp` performs infernce benchmarking for a TorchScript model:
 
