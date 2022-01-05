@@ -11,5 +11,8 @@ The following articles are currently available:
 [Article 1](https://github.com/lxgo/genesis-kbase/blob/main/art01.md)
 Installation and basic use of CUDA, PyTorch, and torchvision
 
+[Article 2](https://github.com/lxgo/genesis-kbase/blob/main/art02.md)
+Deployment techniques for PyTorch models using TorchScript
+
 The repository is work in progress.
 
