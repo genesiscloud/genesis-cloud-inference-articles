@@ -1,5 +1,5 @@
 
-# Article 1: Installation and basic use of CUDA, PyTorch, and torchvision
+# Article 1. Installation and basic use of CUDA, PyTorch, and torchvision
 
 This article will guide you through the basic steps required for installation
 and basic use of PyTorch and related softwae components on a Genesis Cloud
@@ -24,7 +24,7 @@ can be found in the supporting
 [GitHub repository](https://github.com/lxgo/genesis-kbase/tree/main/art01).
 
 
-## Step 1: Creating a GPU instance on Genesis Cloud
+## Step 1. Creating a GPU instance on Genesis Cloud
 
 We assume that you have an account at Genesis Cloud. We start with creation of
 a new GPU instance that will be used for running examples described in this
@@ -44,7 +44,7 @@ Once ready, click the "Create Instance" button.
 
 Once your instance is ready, login and proceed with the following steps.
 
-## Step 2: Install CUDA
+## Step 2. Install CUDA
 
 As the next step, we will install CUDA. Although will not use CUDA directly for our first
 examples, it makes sense to perform the installation now.
@@ -137,12 +137,12 @@ Then, to check the `nvcc` availability, type:
 nvcc --version
 ```
 
-## Step 3: Simple CUDA / cuDNN example
+## Step 3. Simple CUDA / cuDNN program example
 
 **TODO**
 
 
-## Step 4: Install cuDNN
+## Step 4. Install cuDNN
 
 The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated library 
 of primitives for deep neural networks. To install cuDNN, visit the
@@ -172,7 +172,7 @@ sudo dpkg -i libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
 sudo dpkg -i libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
 ```
 
-## Step 5: Install PyTorch
+## Step 5. Install PyTorch
 
 To install and use PyTorch, Python interpreter and package installer `pip` are required.
 When a new instance is created on Genesis Cloud, Python 3 is authomatically preinstalled; 
@@ -222,7 +222,7 @@ True
 8200
 ```
 
-## Step 6: Inference using torchvision
+## Step 6. Inference using torchvision
 
 The [torchvision](https://pytorch.org/vision/stable/index.html) package is part of the PyTorch
 project. It includes various computational assets (model architectures, image transformations,

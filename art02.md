@@ -1,5 +1,5 @@
 
-# Article 2: Deployment techniques for PyTorch models using TorchScript
+# Article 2. Deployment techniques for PyTorch models using TorchScript
 
 This article covers using TorchScript for deployment of PyTorch models.
 
@@ -30,7 +30,7 @@ can be found in the supporting
 [GitHub repository](https://github.com/lxgo/genesis-kbase/tree/main/art02).
 
 
-## Step 1: Generation of TorchScript code for classification models
+## Step 1. Generation of TorchScript code for classification models
 
 We will continue using the torchvision image classification models for our examples.
 As the first step, we will demonstrate generation of TorchScript code for
@@ -137,7 +137,7 @@ Code generation for `googlenet` is currently disabled because this
 model uses calling conventions different from the other torchvision models.
 
 
-## Step 2: Running Torchscript code from a Python program
+## Step 2. Running Torchscript code from a Python program
 
 The Python program `infer_resnet50_ts.py` can be used to run inference
 for the ResNet50 TorchScript code with the single image as input.
@@ -231,7 +231,7 @@ You can also experiment with the other classification models from the torchvisio
 library and other input images.
 
 
-## Step 3: Benchmarking the TorchScript model
+## Step 3. Benchmarking the TorchScript model
 
 To compare performance of TorchScript code to the original PyTorch model,
 we use the Python program `perf_resnet50_ts.py`:
@@ -309,7 +309,12 @@ python3 perf_resnet50_ts.py
 The program output will look like:
 
 ```
-<<<TODO>>>
+Perf original model 9.11 ms
+Perf TorchScript model 6.24 ms
+Original model top 5 results:
+ tensor([[549, 783, 446, 490, 610]], device='cuda:0')
+TorchScript model top 5 results:
+ tensor([[549, 783, 446, 490, 610]], device='cuda:0')
 ```
 
 Typically, on NVIDIA RTX 3080 the TorchScript code for ResNet50 runs inference
@@ -354,7 +359,7 @@ As before, we recommend using a scratch directory '~/transit' as your current di
 The package contents will be placed in `~/vendor/libtorch`.
 
 
-## Step 5: Preparing the pre-processed input for C++ inference program
+## Step 5. Preparing the pre-processed input for C++ inference program
 
 To simplify our C++ inference examples and ensure comparable results,
 we will pre-process the input image using a stand-alone program that 
@@ -398,7 +403,7 @@ python3 read_image.py
 ```
 
 
-## Step 6: Running TorchScript inference using C++
+## Step 6. Running TorchScript inference using C++
 
 The C++ program `infer_model_ts.cpp` runs inference using a TorchScript model
 and pre-processed input image.
@@ -412,9 +417,9 @@ and pre-processed input image.
 #include <torch/script.h>
 #include <torch/nn/functional/activation.h>
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
     if (argc != 3) {
-        std::cerr << "usage: infer_model_ts <path-to-exported-model> <path-to-input-data>" << std::endl;
+        std::cerr << "Usage: infer_model_ts <path-to-exported-model> <path-to-input-data>" << std::endl;
         return -1;
     }
 
@@ -429,7 +434,7 @@ int main(int argc, const char* argv[]) {
     torch::jit::script::Module module;
     try {
         module = torch::jit::load(argv[1], device);
-    } catch (const c10::Error& e) {
+    } catch (const c10::Error &e) {
         std::cerr << "Error loading model" << std::endl;
         std::cerr << e.what_without_backtrace() << std::endl;
         return -1;
@@ -438,8 +443,10 @@ int main(int argc, const char* argv[]) {
     std::cout << "Model loaded successfully" << std::endl;
     std::cout << std::endl;
 
-    torch::NoGradGuard no_grad; // ensures that autograd is off
-    module.eval(); // turn off dropout and other training-time layers/functions
+    // ensure that autograd is off
+    torch::NoGradGuard noGrad; 
+    // turn off dropout and other training-time layers/functions
+    module.eval(); 
 
     // read classes
     std::string line;
@@ -549,10 +556,19 @@ command:
 The program output will look like:
 
 ```
-<<<TODO>>>
+Loading model...
+Model loaded successfully
+
+49.52% Siberian husky
+42.90% Eskimo dog
+5.87% malamute
+1.22% dogsled
+0.32% Saint Bernard
+
+DONE
 ```
 
-## Step 7: Benchmarking TorchScript inference in C++
+## Step 7. Benchmarking TorchScript inference in C++
 
 The C++ program `bench_ts.cpp` performs infernce benchmarking for a TorchScript model:
 
@@ -617,7 +633,7 @@ float WallClock::Elapsed() {
 //    Main program
 //
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
     if (argc != 2) {
         std::cerr << "usage: bench_ts <path-to-exported-model>" << std::endl;
         return -1;
@@ -647,7 +663,7 @@ int main(int argc, const char* argv[]) {
     torch::jit::script::Module module;
     try {
         module = torch::jit::load(argv[1], device);
-    } catch (const c10::Error& e) {
+    } catch (const c10::Error &e) {
         std::cerr << "Error loading model" << std::endl;
         std::cerr << e.what_without_backtrace() << std::endl;
         return -1;
@@ -656,7 +672,7 @@ int main(int argc, const char* argv[]) {
     std::cout << "Model loaded successfully" << std::endl;
 
     // ensures that autograd is off
-    torch::NoGradGuard no_grad; 
+    torch::NoGradGuard noGrad; 
     // turn off dropout and other training-time layers/functions
     module.eval(); 
 
@@ -684,15 +700,15 @@ int main(int argc, const char* argv[]) {
     at::Tensor output = module.forward(inputs).toTensor();
 
     namespace F = torch::nn::functional;
-    at::Tensor output_sm = F::softmax(output, F::SoftmaxFuncOptions(1));
-    std::tuple<at::Tensor, at::Tensor> top5_tensor = output_sm.topk(5);
-    at::Tensor top5 = std::get<1>(top5_tensor);
+    at::Tensor softmax = F::softmax(output, F::SoftmaxFuncOptions(1));
+    std::tuple<at::Tensor, at::Tensor> top5 = softmax.topk(5);
+    at::Tensor labels = std::get<1>(top5);
 
-    std::cout << top5[0] << std::endl;
+    std::cout << labels[0] << std::endl;
 
     std::cout << "DONE" << std::endl << std::endl;
     return 0;
-}  
+}
 ```
 
 The program is functionally similar to previously described Python program `perf_resnet50_ts.py`.
@@ -731,11 +747,21 @@ command:
 The program output will look like:
 
 ```
-<<<TODO>>>
+Start model ./ts/resnet50.ts
+Loading model...
+Model loaded successfully
+Model ./ts/resnet50.ts: elapsed time 547.467 ms / 100 iterations = 5.47467
+ 490
+ 549
+ 446
+ 610
+ 556
+[ CUDALongType{5} ]
+DONE
 ```
 
-Typically, inference with TorchScript code using the C++ program runs somewhat faster
-compared to the similar Python program.
+Typically, inference with ResNet50 TorchScript code using the C++ program runs faster
+compared to the equivalent Python program.
 
 The shell script `bench_ts_all.sh` can be used to benchmark the entire collection
 of image classification TorchScript models.

@@ -59,9 +59,9 @@ float WallClock::Elapsed() {
 //    Main program
 //
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
     if (argc != 2) {
-        std::cerr << "usage: bench_ts <path-to-exported-model>" << std::endl;
+        std::cerr << "Usage: bench_ts <path-to-exported-model>" << std::endl;
         return -1;
     }
 
@@ -89,7 +89,7 @@ int main(int argc, const char* argv[]) {
     torch::jit::script::Module module;
     try {
         module = torch::jit::load(argv[1], device);
-    } catch (const c10::Error& e) {
+    } catch (const c10::Error &e) {
         std::cerr << "Error loading model" << std::endl;
         std::cerr << e.what_without_backtrace() << std::endl;
         return -1;
@@ -98,7 +98,7 @@ int main(int argc, const char* argv[]) {
     std::cout << "Model loaded successfully" << std::endl;
 
     // ensures that autograd is off
-    torch::NoGradGuard no_grad; 
+    torch::NoGradGuard noGrad; 
     // turn off dropout and other training-time layers/functions
     module.eval(); 
 
@@ -126,11 +126,11 @@ int main(int argc, const char* argv[]) {
     at::Tensor output = module.forward(inputs).toTensor();
 
     namespace F = torch::nn::functional;
-    at::Tensor output_sm = F::softmax(output, F::SoftmaxFuncOptions(1));
-    std::tuple<at::Tensor, at::Tensor> top5_tensor = output_sm.topk(5);
-    at::Tensor top5 = std::get<1>(top5_tensor);
+    at::Tensor softmax = F::softmax(output, F::SoftmaxFuncOptions(1));
+    std::tuple<at::Tensor, at::Tensor> top5 = softmax.topk(5);
+    at::Tensor labels = std::get<1>(top5);
 
-    std::cout << top5[0] << std::endl;
+    std::cout << labels[0] << std::endl;
 
     std::cout << "DONE" << std::endl << std::endl;
     return 0;

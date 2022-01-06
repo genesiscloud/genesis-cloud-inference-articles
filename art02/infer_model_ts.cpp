@@ -7,9 +7,9 @@
 #include <torch/script.h>
 #include <torch/nn/functional/activation.h>
 
-int main(int argc, const char* argv[]) {
+int main(int argc, const char *argv[]) {
     if (argc != 3) {
-        std::cerr << "usage: infer_model_ts <path-to-exported-model> <path-to-input-data>" << std::endl;
+        std::cerr << "Usage: infer_model_ts <path-to-exported-model> <path-to-input-data>" << std::endl;
         return -1;
     }
 
@@ -24,7 +24,7 @@ int main(int argc, const char* argv[]) {
     torch::jit::script::Module module;
     try {
         module = torch::jit::load(argv[1], device);
-    } catch (const c10::Error& e) {
+    } catch (const c10::Error &e) {
         std::cerr << "Error loading model" << std::endl;
         std::cerr << e.what_without_backtrace() << std::endl;
         return -1;
@@ -33,8 +33,10 @@ int main(int argc, const char* argv[]) {
     std::cout << "Model loaded successfully" << std::endl;
     std::cout << std::endl;
 
-    torch::NoGradGuard no_grad; // ensures that autograd is off
-    module.eval(); // turn off dropout and other training-time layers/functions
+    // ensure that autograd is off
+    torch::NoGradGuard noGrad; 
+    // turn off dropout and other training-time layers/functions
+    module.eval(); 
 
     // read classes
     std::string line;
