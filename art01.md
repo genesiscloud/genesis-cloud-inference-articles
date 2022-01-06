@@ -412,7 +412,7 @@ g++ -o ./bin/cudnn_softmax -I /usr/local/cuda/include \
 Running this script is straightforward:
 
 ```
-build_cudnn_softmax.sh
+./build_cudnn_softmax.sh
 ```
 
 To run the program, use the command line:

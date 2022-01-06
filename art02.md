@@ -526,7 +526,7 @@ g++ -o ./bin/infer_model_ts \
 Running this script is straightforward:
 
 ```
-build_infer_model_ts.sh
+./build_infer_model_ts.sh
 ```
 
 The command line invoking the `g++` compiler refers to several LibTorch shared libraries
@@ -733,7 +733,7 @@ g++ -o ./bin/bench_ts \
 Running this script is straightforward:
 
 ```
-build_bench_ts.sh
+./build_bench_ts.sh
 ```
 
 The program has one command line argument representing a path to the TorchScript file. 
