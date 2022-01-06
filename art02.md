@@ -5,15 +5,15 @@ This article covers using TorchScript for deployment of PyTorch models.
 
 TorchScript represents a way to create serializable and optimizable models from PyTorch code.
 Technically, TorchScript is a statically typed subset of Python. TorchScript code
-is executed using a special interpreter. Statical typing allows for more performance efficient 
+is executed using a special interpreter. Static typing allows for more performance efficient 
 execution of TorchScript models compared to their original PyTorch versions.
 In a typical scenario, models are trained in PyTorch using conventional tools in Python and 
 then exported via TorchScript for deployment to a production environment. TorchScript models
-can be executed by Python or C++ programs not requiring presense of the PyTorch environment.
+can be executed by Python or C++ programs not requiring presence of the PyTorch environment.
 
 Pytorch provides two methods for generating TorchScript from the model code known as
 **tracing** and **scripting**. When tracing is used, the model is provided with the sample
-input, the regular inference is performed, and all the operations executed in process are
+input, the regular inference is performed, and all the operations executed are
 traced and recorded as TorchScript. In case of scripting, the TorchScript code is
 generated from the static inspection of the model.
 
@@ -59,7 +59,7 @@ This program:
 * saves the generated code in a file using the `save` method
 
 We want to execute the generated TorchScript code on a GPU, therefore
-the model must be placed on CUDA device before scripting.
+the model must be placed on a CUDA device before scripting.
 
 For convenience, we will place all TorchScript files in a separate subdirectory `ts`.
 
@@ -137,7 +137,7 @@ Code generation for `googlenet` is currently disabled because this
 model uses calling conventions different from the other torchvision models.
 
 
-## Step 2. Running Torchscript code from a Python program
+## Step 2. Running TorchScript code from a Python program
 
 The Python program `infer_resnet50_ts.py` can be used to run inference
 for the ResNet50 TorchScript code with the single image as input.
@@ -297,7 +297,7 @@ This program:
 
 The benchmarking of each model includes 10 "warmup" inference runs
 followed by 100 runs for which the total wall clock time is measured.
-The measued time is divided by the number of runs and the average
+The measured time is divided by the number of runs and the average
 time for one run in milliseconds is displayed.
 
 To run this program, use the command:
@@ -337,8 +337,8 @@ configuration as follows:
 * Language: C++ / Java
 * Compute Platform: CUDA 11.3
 
-The URL references to the distribution files fpr the selected configuration will be presented.
-Select the refeence labeled "Download here (cxx11 ABI)"; at the time of writing of this
+The URL references to the distribution files for the selected configuration will be presented.
+Select the reference labeled "Download here (cxx11 ABI)"; at the time of writing of this
 article it was:
 
 ```
@@ -541,8 +541,8 @@ export LD_LIBRARY_PATH=~/vendor/libtorch/lib:$LD_LIBRARY_PATH
 (NOTE: This setting will most likely prevent further normal functioning of Python programs
 using regular PyTorch because of the conflict of LibTorch libraries with their
 equivalents from the regular PyTorch installation. Roll back the above change
-of `LD_LIBRARY_PATH` if you want run regular PyTorch applications during the
-same session on the same instance.)
+of `LD_LIBRARY_PATH` if you want to run PyTorch applications implemented in Python 
+during the same session on the same instance.)
 
 The program has two command line arguments: a path to the TorchScript file and a path to
 the pre-processed input binary file. For example, to run inference with the ResNet50
@@ -570,7 +570,7 @@ DONE
 
 ## Step 7. Benchmarking TorchScript inference in C++
 
-The C++ program `bench_ts.cpp` performs infernce benchmarking for a TorchScript model:
+The C++ program `bench_ts.cpp` performs inference benchmarking for a TorchScript model:
 
 ```
 #include <cstdio>
@@ -736,7 +736,7 @@ Running this script is straightforward:
 build_bench_ts.sh
 ```
 
-The program has one command line arguments, a path to the TorchScript file. 
+The program has one command line argument representing a path to the TorchScript file. 
 For example, to run inference with the ResNet50 TorchScript code, use the following
 command:
 
