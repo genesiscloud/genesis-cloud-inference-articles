@@ -90,7 +90,7 @@ cd ~/transit
 Upon the successful installation, we recommend rebooting your instance by stopping and starting it
 from the Genesis Cloud Web console.
 
-We strongly advise to take time and study [CUDA EULA](https://docs.nvidia.com/cuda/eula/index.html)
+We strongly advise you to take time and study [CUDA EULA](https://docs.nvidia.com/cuda/eula/index.html)
 available by the reference on this page. 
 
 To validate CUDA installation, type the command:
