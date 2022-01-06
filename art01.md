@@ -2,7 +2,7 @@
 # Article 1. Installation and basic use of CUDA, PyTorch, and torchvision
 
 This article will guide you through the basic steps required for installation
-and basic use of PyTorch and related softwae components on a Genesis Cloud
+and basic use of PyTorch and related software components on a Genesis Cloud
 GPU instance. The following topics are covered:
 
 * creation of a Genesis Cloud GPU instance
@@ -46,8 +46,7 @@ Once your instance is ready, login and proceed with the following steps.
 
 ## Step 2. Install CUDA
 
-As the next step, we will install CUDA. Although will not use CUDA directly for our first
-examples, it makes sense to perform the installation now.
+As the next step, we will install CUDA.
 
 To install the desired version of CUDA, visit the 
 [CUDA Toolkit Archive](https://developer.nvidia.com/cuda-toolkit-archive) page.
@@ -88,10 +87,10 @@ mkdir -p ~/transit
 cd ~/transit
 ```
 
-Upon the successful installation, we recommend to reboot your instance by stoppong and starting it
-from Genesis Cloud Web console.
+Upon the successful installation, we recommend rebooting your instance by stopping and starting it
+from the Genesis Cloud Web console.
 
-We strongly advice to take time and study [CUDA EULA](https://docs.nvidia.com/cuda/eula/index.html)
+We strongly advise to take time and study [CUDA EULA](https://docs.nvidia.com/cuda/eula/index.html)
 available by the reference on this page. 
 
 To validate CUDA installation, type the command:
@@ -148,7 +147,7 @@ The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated library
 of primitives for deep neural networks. To install cuDNN, visit the
 [distribution page](https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/).
 Select packages corresponding to the desired combination of CUDA and cuDNN versions.
-For each such combination there are two pakages of interest representing the runtime and developer libraries.
+For each such combination there are two packages of interest representing the runtime and developer libraries.
 At the time of writing of this article, for CUDA 11.3 and cuDNN 8.2.0, these packages were:
 
 ```
@@ -163,7 +162,7 @@ wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
 ```
 
-As before, we recommend to perform installation from a separate scratch dirctory, e.g., `~/transit`.
+As before, we recommend to perform installation from a separate scratch directory, e.g., `~/transit`.
 
 Then install the packages using the commands:
 
@@ -175,8 +174,8 @@ sudo dpkg -i libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
 ## Step 5. Install PyTorch
 
 To install and use PyTorch, Python interpreter and package installer `pip` are required.
-When a new instance is created on Genesis Cloud, Python 3 is authomatically preinstalled; 
-however, `pip` must be installed explcitly. This can be done using the commands:
+When a new instance is created on Genesis Cloud, Python 3 is automatically preinstalled; 
+however, `pip` must be installed explicitly. This can be done using the commands:
 
 ```
 sudo apt install python3-pip
@@ -237,7 +236,7 @@ We will start with an example of direct use of torchvision models for image clas
 As input, we will need an arbitrary image containing a single object to be classified.
 We will use this [husky image](https://commons.wikimedia.org/wiki/Category:Siberian_Husky#/media/File:Siberian-husky-1291343_1920.jpg)
 in our experiments (it is in public domain). Use these commands to create a subdirectory
-`data` for holding input files and to downloas the image:
+`data` for holding input files and to downloads the image:
 
 ```
 mkdir data
@@ -350,8 +349,8 @@ Saint Bernard 0.32%
 You can also experiment with the other classification models from the torchvision
 library and other images.
 
-Using PyTorch and Python direcly is perhaps the most simple and straightforward way
+Using PyTorch and Python directly is perhaps the most simple and straightforward way
 for running inference; however there exist much more performance efficient methods for 
-model deployment on the GPU-enabled infastructure. We will discuss these methods
+model deployment on the GPU-enabled infrastructure. We will discuss these methods
 in the subsequent articles.
 
