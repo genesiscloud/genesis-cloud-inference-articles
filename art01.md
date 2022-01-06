@@ -136,7 +136,38 @@ Then, to check the `nvcc` availability, type:
 nvcc --version
 ```
 
-## Step 3. Simple CUDA / cuDNN program example
+## Step 3. Install cuDNN
+
+The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated library 
+of primitives for deep neural networks. To install cuDNN, visit the
+[distribution page](https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/).
+Select packages corresponding to the desired combination of CUDA and cuDNN versions.
+For each such combination there are two packages of interest representing the runtime and developer libraries.
+At the time of writing of this article, for CUDA 11.3 and cuDNN 8.2.0, these packages were:
+
+```
+libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
+libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
+```
+
+Download these files by entering the respective `wget` commands, for example:
+
+```
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
+```
+
+As before, we recommend to perform installation from a separate scratch directory, e.g., `~/transit`.
+
+Then install the packages using the commands:
+
+```
+sudo dpkg -i libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
+sudo dpkg -i libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
+```
+
+
+## Step 4. Simple CUDA / cuDNN program example
 
 The C++ program `cudnn_softmax` implements a simple cuDNN example
 that initializes a CUDA tensor with random values, applies
@@ -431,36 +462,6 @@ The program output will look like:
 [4] pos 717 val 0.00158761
 ```
 
-
-## Step 4. Install cuDNN
-
-The NVIDIA CUDA Deep Neural Network library (cuDNN) is a GPU-accelerated library 
-of primitives for deep neural networks. To install cuDNN, visit the
-[distribution page](https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/).
-Select packages corresponding to the desired combination of CUDA and cuDNN versions.
-For each such combination there are two packages of interest representing the runtime and developer libraries.
-At the time of writing of this article, for CUDA 11.3 and cuDNN 8.2.0, these packages were:
-
-```
-libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
-libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
-```
-
-Download these files by entering the respective `wget` commands, for example:
-
-```
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
-```
-
-As before, we recommend to perform installation from a separate scratch directory, e.g., `~/transit`.
-
-Then install the packages using the commands:
-
-```
-sudo dpkg -i libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
-sudo dpkg -i libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
-```
 
 ## Step 5. Install PyTorch
 
