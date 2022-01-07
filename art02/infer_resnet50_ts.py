@@ -38,7 +38,7 @@ with torch.no_grad():
 output = F.softmax(output, dim=1)
 top5 = torch.topk(output[0], 5)
 
-# Read the categories
+# read the categories
 with open("imagenet_classes.txt", "r") as f:
     categories = [s.strip() for s in f.readlines()]
 

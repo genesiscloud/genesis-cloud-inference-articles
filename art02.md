@@ -182,7 +182,7 @@ with torch.no_grad():
 output = F.softmax(output, dim=1)
 top5 = torch.topk(output[0], 5)
 
-# Read the categories
+# read the categories
 with open("imagenet_classes.txt", "r") as f:
     categories = [s.strip() for s in f.readlines()]
 
@@ -423,9 +423,9 @@ int main(int argc, const char *argv[]) {
         return -1;
     }
 
-    // make sure CUDA us available; get CUDA device
-    bool have_cuda = torch::cuda::is_available();
-    assert(have_cuda);
+    // make sure CUDA is available; get CUDA device
+    bool haveCuda = torch::cuda::is_available();
+    assert(haveCuda);
     torch::Device device = torch::kCUDA;
 
     std::cout << "Loading model..." << std::endl;

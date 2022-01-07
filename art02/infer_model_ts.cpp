@@ -13,9 +13,9 @@ int main(int argc, const char *argv[]) {
         return -1;
     }
 
-    // make sure CUDA us available; get CUDA device
-    bool have_cuda = torch::cuda::is_available();
-    assert(have_cuda);
+    // make sure CUDA is available; get CUDA device
+    bool haveCuda = torch::cuda::is_available();
+    assert(haveCuda);
     torch::Device device = torch::kCUDA;
 
     std::cout << "Loading model..." << std::endl;
