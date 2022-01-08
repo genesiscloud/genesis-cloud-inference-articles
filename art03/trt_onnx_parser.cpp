@@ -1,23 +1,13 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <cstdarg>
 #include <cassert>
 #include <memory>
 
 #include <NvInfer.h>
 #include <NvOnnxParser.h>
 
-// error handling
-
-void Error(const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-    fputc('\n', stderr);
-    exit(1);
-}
+#include "common.h"
 
 // logger
 
@@ -28,7 +18,7 @@ public:
 public:
     nvinfer1::ILogger::Severity SeverityLevel() const;
     void SetSeverityLevel(nvinfer1::ILogger::Severity level);
-    void log(nvinfer1::ILogger::Severity severity, const char *msg) override;
+    void log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept override;
 private:
     static const char *GetSeverityString(nvinfer1::ILogger::Severity severity);
 private:
@@ -48,7 +38,7 @@ void Logger::SetSeverityLevel(nvinfer1::ILogger::Severity level) {
     m_severityLevel = level;
 }
 
-void Logger::log(nvinfer1::ILogger::Severity severity, const char *msg) {
+void Logger::log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept {
     if (severity > m_severityLevel) {
         return;
     }
@@ -77,7 +67,7 @@ const char *Logger::GetSeverityString(nvinfer1::ILogger::Severity severity) {
 
 struct Deleter {
     template<typename T>
-    void operator()(T* obj) const {
+    void operator()(T *obj) const {
         if (obj != nullptr) {
             obj->destroy();
         }
@@ -181,7 +171,7 @@ void OnnxParser::Parse(const char *onnxPath, const char *planPath) {
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
-        fprintf(stderr, "Usage: onnx_parser <input_onnx_path> <output_plan_path>\n");
+        fprintf(stderr, "Usage: trt_onnx_parser <input_onnx_path> <output_plan_path>\n");
         return 1;
     }
     const char *onnxPath = argv[1];

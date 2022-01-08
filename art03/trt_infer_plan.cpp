@@ -1,9 +1,7 @@
 
 #include <cstdio>
 #include <cstdlib>
-#include <cstdarg>
 #include <cassert>
-#include <cmath>
 #include <memory>
 #include <string>
 #include <vector>
@@ -14,85 +12,7 @@
 
 #include <NvInfer.h>
 
-// error handling
-
-void Error(const char *fmt, ...) {
-    va_list args;
-    va_start(args, fmt);
-    vfprintf(stderr, fmt, args);
-    va_end(args);
-    fputc('\n', stderr);
-    exit(1);
-}
-
-// CUDA helpers
-
-void CallCuda(cudaError_t stat) {
-    if (stat != cudaSuccess) {
-        Error("%s", cudaGetErrorString(stat));
-    }
-}
-
-void *Malloc(int size) {
-    void *ptr = nullptr;
-    CallCuda(cudaMalloc(&ptr, size));
-    return ptr;
-}
-
-void Free(void *ptr) {
-    if (ptr != nullptr) {
-        cudaFree(ptr);
-    }
-}
-
-void Memget(void *dst, const void *src, int size) {
-    CallCuda(cudaMemcpy(dst, src, size, cudaMemcpyDeviceToHost));
-}
-
-void Memput(void *dst, const void *src, int size) {
-    CallCuda(cudaMemcpy(dst, src, size, cudaMemcpyHostToDevice));
-}
-
-template<typename T>
-class CudaBuffer {
-public:
-    CudaBuffer(): 
-        m_size(0), m_data(nullptr) { }
-    ~CudaBuffer() {
-        Done();
-    }
-public:
-    void Init(int size) {
-        assert(m_data == nullptr);
-        m_size = size;
-        m_data = static_cast<T *>(Malloc(size * sizeof(T)));
-    }
-    void Done() {
-        if (m_data != nullptr) {
-            Free(m_data);
-            m_size = 0;
-            m_data = nullptr;
-        }
-    }
-    int Size() const {
-        return m_size;
-    }
-    const T *Data() const {
-        return m_data;
-    }
-    T *Data() {
-        return m_data;
-    }
-    void Get(float *host) const {
-        Memget(host, m_data, m_size * sizeof(T));
-    }
-    void Put(const float *host) {
-        Memput(m_data, host, m_size * sizeof(T));
-    }
-private:
-    int m_size;
-    T *m_data;
-};
+#include "common.h"
 
 // general helpers
 
@@ -110,41 +30,6 @@ std::string FormatDims(const nvinfer1::Dims &dims) {
     return result;
 }
 
-void Softmax(int count, float *data) {
-    float sum = 0.0f;
-    for (int i = 0; i < count; i++) {
-        sum += std::exp(data[i]);
-    }
-    for (int i = 0; i < count; i++) {
-        data[i] = std::exp(data[i]) / sum;
-    }
-}
-
-void TopK(int count, const float *data, int k, int *pos, float *val) {
-    for (int i = 0; i < k; i++) {
-        pos[i] = -1;
-        val[i] = 0.0f;
-    }
-    for (int p = 0; p < count; p++) {
-        float v = data[p];
-        int j = -1;
-        for (int i = 0; i < k; i++) {
-            if (pos[i] < 0 || val[i] < v) {
-                j = i;
-                break;
-            }
-        }
-        if (j >= 0) {
-            for (int i = k - 1; i > j; i--) {
-                pos[i] = pos[i-1];
-                val[i] = val[i-1];
-            }
-            pos[j] = p;
-            val[j] = v;
-        }
-    }
-}
-
 // logger
 
 class Logger: public nvinfer1::ILogger {
@@ -154,7 +39,7 @@ public:
 public:
     nvinfer1::ILogger::Severity SeverityLevel() const;
     void SetSeverityLevel(nvinfer1::ILogger::Severity level);
-    void log(nvinfer1::ILogger::Severity severity, const char *msg) override;
+    void log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept override;
 private:
     static const char *GetSeverityString(nvinfer1::ILogger::Severity severity);
 private:
@@ -174,7 +59,7 @@ void Logger::SetSeverityLevel(nvinfer1::ILogger::Severity level) {
     m_severityLevel = level;
 }
 
-void Logger::log(nvinfer1::ILogger::Severity severity, const char *msg) {
+void Logger::log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept {
     if (severity > m_severityLevel) {
         return;
     }
@@ -203,7 +88,7 @@ const char *Logger::GetSeverityString(nvinfer1::ILogger::Severity severity) {
 
 struct Deleter {
     template<typename T>
-    void operator()(T* obj) const {
+    void operator()(T *obj) const {
         if (obj != nullptr) {
             obj->destroy();
         }
@@ -247,6 +132,7 @@ void Engine::Init(const std::vector<char> &plan) {
     if (m_engine == nullptr) {
         Error("Error deserializing CUDA engine");
     }
+    m_active = true;
 }
 
 void Engine::Done() {
@@ -348,7 +234,7 @@ void PrintOutput(const std::vector<float> &output, const std::vector<std::string
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
-        fprintf(stderr, "Usage: infer_plan <plan_path> <input_path>\n");
+        fprintf(stderr, "Usage: trt_infer_plan <plan_path> <input_path>\n");
         return 1;
     }
     const char *planPath = argv[1];
