@@ -78,8 +78,8 @@ int main(int argc, const char *argv[]) {
 
     int repeat = 100; // make it configuravle?
 
-    bool have_cuda = torch::cuda::is_available();
-    assert(have_cuda);
+    bool haveCuda = torch::cuda::is_available();
+    assert(haveCuda);
 
     torch::Device device = torch::kCUDA;
 
