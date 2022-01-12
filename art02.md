@@ -63,7 +63,7 @@ the model must be placed on a CUDA device before scripting.
 
 For convenience, we will place all TorchScript files in a separate subdirectory `ts`.
 
-To run this script, enter the following commands:
+To run this program, enter the following commands:
 
 ```
 mkdir -p ts
@@ -132,7 +132,7 @@ for name, model in MODELS:
     generate_model(name, model)  
 ```
 
-To run this script, enter the following commands:
+To run this program, enter the following commands:
 
 ```
 mkdir -p ts
