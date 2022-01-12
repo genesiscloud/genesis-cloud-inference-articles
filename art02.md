@@ -773,3 +773,9 @@ compared to the equivalent Python program.
 The shell script `bench_ts_all.sh` can be used to benchmark the entire collection
 of image classification TorchScript models.
 
+Running this script is straightforward:
+
+```
+./bench_ts_all.sh
+```
+
