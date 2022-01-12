@@ -532,7 +532,7 @@ in our experiments (it is in public domain). Use these commands to create a subd
 
 ```
 mkdir data
-wget https://upload.wikimedia.org/wikipedia/commons/4/4b/Siberian-husky-1291343_1920.jpg
+wget https://upload.wikimedia.org/wikipedia/commons/4/4b/Siberian-husky-1291343_1920.jpg -o data/husky01.jpg
 ```
 
 Torchvision image classification models have been trained on the ImageNet dataset and use
