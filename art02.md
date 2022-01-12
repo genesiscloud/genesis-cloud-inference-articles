@@ -132,7 +132,14 @@ for name, model in MODELS:
     generate_model(name, model)  
 ```
 
-We will later use the generated TorchScript models for benchmarking.
+To run this script, enter the following commands:
+
+```
+mkdir -p ts
+python3 generate_ts_all.py
+```
+
+We will use the generated TorchScript models for benchmarking.
 Code generation for `googlenet` is currently disabled because this
 model uses calling conventions different from the other torchvision models.
 
