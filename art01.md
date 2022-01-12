@@ -14,8 +14,8 @@ We will use a Genesis Cloud instance equipped with NVIDIA RTX 3080 GPU
 and the following software versions:
 
 * OS: Ubuntu 20.04
-* CUDA 11.3
-* cuDNN 8.2.0
+* CUDA 11.3.1
+* cuDNN 8.2.1
 * PyTorch 1.10.1
 * torchvision 0.11.2
 
@@ -50,8 +50,8 @@ As the next step, we will install CUDA.
 
 To install the desired version of CUDA, visit the 
 [CUDA Toolkit Archive](https://developer.nvidia.com/cuda-toolkit-archive) page.
-Select the line for CUDA Toolkit 11.3.0. You will be redirected to the
-[corresponding page](https://developer.nvidia.com/cuda-11.3.0-download-archive).
+Select the line for CUDA Toolkit 11.3.1. You will be redirected to the
+[corresponding page](https://developer.nvidia.com/cuda-11-3-1-download-archive).
 On this page, make the following selections:
 
 * Operating System: Linux
@@ -66,8 +66,8 @@ At the time of writing of this article, these commands were:
 ```
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
 sudo mv cuda-ubuntu2004.pin /etc/apt/preferences.d/cuda-repository-pin-600
-wget https://developer.download.nvidia.com/compute/cuda/11.3.0/local_installers/cuda-repo-ubuntu2004-11-3-local_11.3.0-465.19.01-1_amd64.deb
-sudo dpkg -i cuda-repo-ubuntu2004-11-3-local_11.3.0-465.19.01-1_amd64.deb
+wget https://developer.download.nvidia.com/compute/cuda/11.3.1/local_installers/cuda-repo-ubuntu2004-11-3-local_11.3.1-465.19.01-1_amd64.deb
+sudo dpkg -i cuda-repo-ubuntu2004-11-3-local_11.3.1-465.19.01-1_amd64.deb
 sudo apt-key add /var/cuda-repo-ubuntu2004-11-3-local/7fa2af80.pub
 sudo apt-get update
 sudo apt-get -y install cuda
@@ -143,18 +143,18 @@ of primitives for deep neural networks. To install cuDNN, visit the
 [distribution page](https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/).
 Select packages corresponding to the desired combination of CUDA and cuDNN versions.
 For each such combination there are two packages of interest representing the runtime and developer libraries.
-At the time of writing of this article, for CUDA 11.3 and cuDNN 8.2.0, these packages were:
+At the time of writing of this article, for CUDA 11.3 and cuDNN 8.2.1, these packages were:
 
 ```
-libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
-libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
+libcudnn8_8.2.1.32-1+cuda11.3_amd64.deb
+libcudnn8-dev_8.2.1.32-1+cuda11.3_amd64.deb
 ```
 
 Download these files by entering the respective `wget` commands, for example:
 
 ```
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
-wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/libcudnn8_8.2.1.32-1+cuda11.3_amd64.deb
+wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/libcudnn8-dev_8.2.1.32-1+cuda11.3_amd64.deb
 ```
 
 As before, we recommend to perform installation from a separate scratch directory, e.g., `~/transit`.
@@ -162,8 +162,8 @@ As before, we recommend to perform installation from a separate scratch director
 Then install the packages using the commands:
 
 ```
-sudo dpkg -i libcudnn8_8.2.0.53-1+cuda11.3_amd64.deb
-sudo dpkg -i libcudnn8-dev_8.2.0.53-1+cuda11.3_amd64.deb
+sudo dpkg -i libcudnn8_8.2.1.32-1+cuda11.3_amd64.deb
+sudo dpkg -i libcudnn8-dev_8.2.1.32-1+cuda11.3_amd64.deb
 ```
 
 
