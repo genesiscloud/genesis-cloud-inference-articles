@@ -3,7 +3,7 @@
 
 This article covers using TensorRT for deployment of PyTorch models.
 
-NVDIA TensorRT is an SDK for high-performance deep learning inference on
+NVIDIA TensorRT is an SDK for high-performance deep learning inference on
 NVIDIA GPU devices. It includes the inference engine and parsers for
 handling various input network specification formats. TensorRT provides
 application programmer interfaces (API) for C++ and Python. This article
@@ -164,7 +164,7 @@ The program performs the following steps:
 * creates `builder: Builder` representing a builder instance
 * uses `builder` to create `network: INetworkDefinition` representing 
 an empty network instance
-* uses 'builder' to create `config: IBuilderConfig` representing 
+* uses `builder` to create `config: IBuilderConfig` representing 
 a builder configuration instance
 * sets the `max_workspace_size` configuration parameter representing
 the maximum workspace size that can be used by inference algorithms
@@ -325,7 +325,7 @@ The `Init` method performs the following steps:
 * creates `m_builder` representing a builder instance
 * uses `m_builder` to create `m_network` representing 
 an empty network instance
-* uses 'm_builder' to create `m_config` representing 
+* uses `m_builder` to create `m_config` representing 
 a builder configuration instance
 * sets the `maxWorkspaceSize` configuration parameter representing
 the maximum workspace size that can be used by inference algorithms
