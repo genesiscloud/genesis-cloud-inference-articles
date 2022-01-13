@@ -32,12 +32,12 @@ can be found in the supporting
 
 ## Step 1. Install TensorRT
 
-The version of TensorRT must be compatible to the chosen versions of CUDA and cuDNN.
+The version of TensorRT must be compatible with the chosen versions of CUDA and cuDNN.
 For our choice of CUDA 11.3.1 and cuDNN 8.2.1 we will need TensorRT 8.0.3.
 (The actual support matrix for TensorRT 8.x is available
 [here](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-822/support-matrix/index.html).)
 
-To access TensorRT, you should register as a members of the 
+To access TensorRT, you should register as a member of the 
 [NVIDIA Developer Program](https://developer.nvidia.com/developer-program).
 
 To download the TensorRT distribution, visit the official
@@ -75,7 +75,7 @@ dpkg -l | grep TensorRT
 ```
 
 Detailed installation instructions can be found on the official
-["Installing TensorRT site"](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-debian)
+["Installing TensorRT"](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-debian) page.
 
 
 ## Step 2. Install PyCUDA package
