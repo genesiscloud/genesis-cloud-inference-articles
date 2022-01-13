@@ -7,7 +7,7 @@ NVDIA TensorRT is an SDK for high-performance deep learning inference on
 NVIDIA GPU devices. It includes the inference engine and parsers for
 handling various input network specification formats. TensorRT provides
 application programmer interfaces (API) for C++ and Python. This article
-will present example programs using both these langiages.
+will present example programs using both these languages.
 
 To deploy PyTorch models using TensorRT, we will export them in ONNX format.
 ONNX stands for Open Neural Network Exchange and is an open format built
@@ -106,9 +106,9 @@ The program will produce a file `resnet50.onnx` containing the ONNX model repres
 
 ## Step 4. Convert ONNX format to TensorRT plan using Python
 
-To perform inference of ONNX model using TensorRT, it must be pre-processed using
-TensorRT ONNX parser. We will start with conversion of the ONNX representation to
-TensorRT plan. The TensorRT plan is a serialized form of a TensorRT engine.
+To perform inference of the ONNX model using TensorRT, it must be pre-processed using
+the TensorRT ONNX parser. We will start with conversion of the ONNX representation to
+the TensorRT plan. The TensorRT plan is a serialized form of a TensorRT engine.
 The TensorRT engine represents the model optimized for execution on a chosen
 CUDA device.
 
@@ -297,7 +297,7 @@ int main(int argc, char *argv[]) {
 ```
 
 The program is functionally similar to previously described Python program `trt_onnx_parser.py`.
-Plans generated using the Python and C++ program versions are interhcngeable; each plan
+Plans generated using the Python and C++ program versions are interchangeable; each plan
 can be used for the subsequent inference with Python and C++ programs described in
 this article.
 
@@ -314,7 +314,7 @@ This program uses the following TensorRT API object classes:
 * `nvinfer1::IBuilder` - a factory used to create several other classes
 * `nvinfer1::INetworkDefinition` - representation of TensorRT networks (models)
 * `nvinfer1::IBuilderConfig` - a class used to hold configuration parameters for `IBuilder`
-* `nvinfer1::nvonnxparser::IParser` - a class used for parsing ONNX models into TensorRT network definitions
+* `nvonnxparser::IParser` - a class used for parsing ONNX models into TensorRT network definitions
 * `nvinfer1::IHostMemory` - representation of buffers in a host memory
 
 Class `OnnxParser` holds smart pointers to instances of these objects.
@@ -374,7 +374,7 @@ To run this program for conversion of ResNet50 ONNX representation, use the comm
 ## Step 6. Run TensorRT inference using Python
 
 The inference programs in Python and C++ described in the rest of this
-articles reuse several files introduced in Articles 1 and 2.
+article reuse several files introduced in Articles 1 and 2.
 These include:
 
 * `imagenet_classes.txt` - class descriptions for ImageNet labels (Article 1)
@@ -469,7 +469,7 @@ The program performs the following steps:
 * obtains a CUDA stream reference
 * allocates a Numpy array to hold the output data on the host
 * allocates device memory buffers for the input and output tensors
-* specifies input/output **bindings** as a list holding addresses
+* specifies input/output bindings as a list holding addresses
 of all input and output buffers
 * copies the input tensor from host to device
 * runs inference for the `context` with the specified bindings and CUDA stream handle
@@ -702,7 +702,7 @@ The `Infer` method performs the following steps:
 * allocates CUDA memory buffer for the input tensor
 * copies the input tensor from host to device
 * allocates CUDA memory buffer for the output tensor
-* specifies input/output **bindings** as an array holding addresses
+* specifies input/output bindings as an array holding addresses
 of all input and output buffers
 * runs inference for the `context` with the specified bindings and CUDA stream handle
 * copies the output tensor from device to host
@@ -764,7 +764,7 @@ Top-5 results
 
 ## Step 8. Run TensorRT benchmarking using Python
 
-The Python program `trt_bench_model.py` implements inference banchmarking using
+The Python program `trt_bench_model.py` implements inference benchmarking using
 the previously generated TensorRT plan and a pre-processed input image.
 
 ```
@@ -861,10 +861,10 @@ The program performs the following steps:
 * obtains a CUDA stream reference
 * allocates a Numpy array to hold the output data on the host
 * allocates device memory buffers for the input and output tensors
-* specifies input/output **bindings** as a list holding addresses
+* specifies input/output bindings as a list holding addresses
 of all input and output buffers
 * copies the input tensor from host to device
-* measures peformance by repeated execution of inference for the `context` with
+* measures performance by repeated execution of inference for the `context` with
 the specified bindings and CUDA stream handle
 * copies the output tensor from device to host
 * applies the softmax transformation to the output
@@ -1094,7 +1094,7 @@ The `StartInfer` method performs the following steps:
 
 The `RunInfer` method performs the following steps:
 
-* specifies input/output **bindings** as an array holding addresses
+* specifies input/output bindings as an array holding addresses
 of all input and output buffers
 * runs inference for the `m_context` with the specified bindings
 
@@ -1108,7 +1108,7 @@ The program performs the following steps:
 * generates random input
 * creates the `engine` 
 * initializes inference on the `engine` using the `InitInfer` method
-* measures peformance by repeated execution of inference with the `engine`
+* measures performance by repeated execution of inference with the `engine`
 using the `RunInfer` method
 * completes inference on the `engine` using the `EndInfer` method
 * applies the softmax transformation to the output
