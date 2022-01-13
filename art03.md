@@ -30,14 +30,52 @@ can be found in the supporting
 [GitHub repository](https://github.com/lxgo/genesis-kbase/tree/main/art03).
 
 
-## Overview of ONNX and TensorRT
-
-**TODO**
-
-
 ## Step 1. Install TensorRT
 
-**TODO**
+The version of TensorRT must be compatible to the chosen versions of CUDA and cuDNN.
+For our choice of CUDA 11.3.1 and cuDNN 8.2.1 we will need TensorRT 8.0.3.
+(The actual support matrix for TensorRT 8.x is available
+[here](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-822/support-matrix/index.html).)
+
+To access TensorRT, you should register as a members of the 
+[NVIDIA Developer Program](https://developer.nvidia.com/developer-program).
+
+To download the TensorRT distribution, visit the official
+[download site](https://developer.nvidia.com/nvidia-tensorrt-download).
+Choose "TensorRT 8", then agree to the "NVIDIA TensorRT License Agreement"
+and choose "TensorRT 8.0 GA Update 1" ("GA" stands for "General Availability").
+Select and download "TensorRT 8.0.3 GA for Ubuntu 20.04 and CUDA 11.3 DEB local repo package".
+You will get a DEB repo file; at the time of writing this article its name was:
+
+```
+nv-tensorrt-repo-ubuntu2004-cuda11.3-trt8.0.3.4-ga-20210831_1-1_amd64.deb
+```
+
+Place it in a scratch directory on you instance (we use `~/transit` in this series of articles),
+then proceed with installation by entering these commands:
+
+```
+sudo dpkg -i nv-tensorrt-repo-ubuntu2004-cuda11.3-trt8.0.3.4-ga-20210831_1-1_amd64.deb
+sudo apt-key add /var/nv-tensorrt-repo-ubuntu2004-cuda11.3-trt8.0.3.4-ga-20210831/7fa2af80.pub
+sudo apt-get update
+sudo apt-get install tensorrt
+```
+
+Then install Python bindings for TensorRT API:
+
+```
+python3 -m pip install numpy
+sudo apt-get install python3-libnvinfer-dev
+```
+
+Verify the installation using the command:
+
+```
+dpkg -l | grep TensorRT
+```
+
+Detailed installation instructions can be found on the official
+["Installing TensorRT site"](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html#installing-debian)
 
 
 ## Step 2. Install PyCUDA package
