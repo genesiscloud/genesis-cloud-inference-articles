@@ -3,9 +3,12 @@
 #include <cstdlib>
 #include <cstdarg>
 #include <cmath>
+#include <string>
 #include <chrono>
 
 #include <cuda_runtime.h>
+
+#include <NvInfer.h>
 
 #include "common.h"
 
@@ -109,4 +112,61 @@ void TopK(int count, const float *data, int k, int *pos, float *val) {
         }
     }
 }
+
+// TensorRT helpers
+
+std::string FormatDims(const nvinfer1::Dims &dims) {
+    std::string result;
+    char buf[64];
+    int nbDims = static_cast<int>(dims.nbDims);
+    for (int i = 0; i < nbDims; i++) {
+        if (i > 0) {
+            result += " ";
+        }
+        sprintf(buf, "%d", static_cast<int>(dims.d[i]));
+        result += buf;
+    }
+    return result;
+}
+
+// logger
+
+Logger::Logger():
+        m_severityLevel(nvinfer1::ILogger::Severity::kWARNING) { }
+
+Logger::~Logger() { }
+
+nvinfer1::ILogger::Severity Logger::SeverityLevel() const {
+    return m_severityLevel;
+}
+
+void Logger::SetSeverityLevel(nvinfer1::ILogger::Severity level) {
+    m_severityLevel = level;
+}
+
+void Logger::log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept {
+    if (severity > m_severityLevel) {
+        return;
+    }
+    fprintf(stderr, "%s: %s\n", GetSeverityString(severity), msg);
+}
+
+const char *Logger::GetSeverityString(nvinfer1::ILogger::Severity severity) {
+    using T = nvinfer1::ILogger::Severity;
+    switch (severity) {
+    case T::kINTERNAL_ERROR:
+        return "INTERNAL_ERROR";
+    case T::kERROR:
+        return "ERROR";
+    case T::kWARNING:
+        return "WARNING";
+    case T::kINFO:
+        return "INFO";
+    case T::kVERBOSE:
+        return "VERBOSE";
+    default:
+        return "?";
+    }
+}
+
 

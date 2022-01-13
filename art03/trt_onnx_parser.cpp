@@ -2,80 +2,11 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
-#include <memory>
 
 #include <NvInfer.h>
 #include <NvOnnxParser.h>
 
 #include "common.h"
-
-// logger
-
-class Logger: public nvinfer1::ILogger {
-public:
-    Logger();
-    ~Logger();
-public:
-    nvinfer1::ILogger::Severity SeverityLevel() const;
-    void SetSeverityLevel(nvinfer1::ILogger::Severity level);
-    void log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept override;
-private:
-    static const char *GetSeverityString(nvinfer1::ILogger::Severity severity);
-private:
-    nvinfer1::ILogger::Severity m_severityLevel;
-};
-
-Logger::Logger():
-        m_severityLevel(nvinfer1::ILogger::Severity::kWARNING) { }
-
-Logger::~Logger() { }
-
-nvinfer1::ILogger::Severity Logger::SeverityLevel() const {
-    return m_severityLevel;
-}
-
-void Logger::SetSeverityLevel(nvinfer1::ILogger::Severity level) {
-    m_severityLevel = level;
-}
-
-void Logger::log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept {
-    if (severity > m_severityLevel) {
-        return;
-    }
-    fprintf(stderr, "%s: %s\n", GetSeverityString(severity), msg);
-}
-
-const char *Logger::GetSeverityString(nvinfer1::ILogger::Severity severity) {
-    using T = nvinfer1::ILogger::Severity;
-    switch (severity) {
-    case T::kINTERNAL_ERROR:
-        return "INTERNAL_ERROR";
-    case T::kERROR:
-        return "ERROR";
-    case T::kWARNING:
-        return "WARNING";
-    case T::kINFO:
-        return "INFO";
-    case T::kVERBOSE:
-        return "VERBOSE";
-    default:
-        return "?";
-    }
-}
-
-// deleter
-
-struct Deleter {
-    template<typename T>
-    void operator()(T *obj) const {
-        if (obj != nullptr) {
-            obj->destroy();
-        }
-    }
-};
-
-template<typename T>
-using UniquePtr = std::unique_ptr<T, Deleter>;
 
 // wrapper class for ONNX parser
 
@@ -98,9 +29,7 @@ private:
 
 OnnxParser::OnnxParser(): m_active(false) { }
 
-OnnxParser::~OnnxParser() {
-    Done();
-}
+OnnxParser::~OnnxParser() { }
 
 void OnnxParser::Init() {
     assert(!m_active);
@@ -140,23 +69,10 @@ void OnnxParser::Parse(const char *onnxPath, const char *planPath) {
     if (!ok) {
         Error("ONNX parse error");
     }
-#if 1 // TODO: Revise this
-    UniquePtr<nvinfer1::ICudaEngine> engine(
-        m_builder->buildEngineWithConfig(*m_network, *m_config));
-    if (engine == nullptr) {
-        Error("Error building CUDA engine");
-    }
-    UniquePtr<nvinfer1::IHostMemory> plan(engine->serialize());
-    if (plan == nullptr) {
-        Error("Network serialization error");
-    }
-#else
-    // requires version 8.x
     UniquePtr<nvinfer1::IHostMemory> plan(m_builder->buildSerializedNetwork(*m_network, *m_config));
     if (plan == nullptr) {
         Error("Network serialization error");
     }
-#endif
     const void *data = plan->data();
     size_t size = plan->size();
     FILE *fp = fopen(planPath, "wb");

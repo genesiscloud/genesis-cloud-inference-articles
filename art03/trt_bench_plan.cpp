@@ -2,84 +2,13 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cassert>
-#include <memory>
 #include <vector>
 #include <iostream>
 #include <fstream>
 
-#include <cuda_runtime.h>
-
 #include <NvInfer.h>
 
 #include "common.h"
-
-// logger
-
-class Logger: public nvinfer1::ILogger {
-public:
-    Logger();
-    ~Logger();
-public:
-    nvinfer1::ILogger::Severity SeverityLevel() const;
-    void SetSeverityLevel(nvinfer1::ILogger::Severity level);
-    void log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept override;
-private:
-    static const char *GetSeverityString(nvinfer1::ILogger::Severity severity);
-private:
-    nvinfer1::ILogger::Severity m_severityLevel;
-};
-
-Logger::Logger():
-        m_severityLevel(nvinfer1::ILogger::Severity::kWARNING) { }
-
-Logger::~Logger() { }
-
-nvinfer1::ILogger::Severity Logger::SeverityLevel() const {
-    return m_severityLevel;
-}
-
-void Logger::SetSeverityLevel(nvinfer1::ILogger::Severity level) {
-    m_severityLevel = level;
-}
-
-void Logger::log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept {
-    if (severity > m_severityLevel) {
-        return;
-    }
-    fprintf(stderr, "%s: %s\n", GetSeverityString(severity), msg);
-}
-
-const char *Logger::GetSeverityString(nvinfer1::ILogger::Severity severity) {
-    using T = nvinfer1::ILogger::Severity;
-    switch (severity) {
-    case T::kINTERNAL_ERROR:
-        return "INTERNAL_ERROR";
-    case T::kERROR:
-        return "ERROR";
-    case T::kWARNING:
-        return "WARNING";
-    case T::kINFO:
-        return "INFO";
-    case T::kVERBOSE:
-        return "VERBOSE";
-    default:
-        return "?";
-    }
-}
-
-// deleter
-
-struct Deleter {
-    template<typename T>
-    void operator()(T *obj) const {
-        if (obj != nullptr) {
-            obj->destroy();
-        }
-    }
-};
-
-template<typename T>
-using UniquePtr = std::unique_ptr<T, Deleter>;
 
 // wrapper class for inference engine
 
@@ -105,9 +34,7 @@ private:
 
 Engine::Engine(): m_active(false) { }
 
-Engine::~Engine() {
-    Done();
-}
+Engine::~Engine() { }
 
 void Engine::Init(const std::vector<char> &plan) {
     assert(!m_active);

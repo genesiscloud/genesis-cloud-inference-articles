@@ -1,9 +1,14 @@
 #pragma once
 
+#include <cstdio>
 #include <cassert>
+#include <string>
+#include <memory>
 #include <chrono>
 
 #include <cuda_runtime.h>
+
+#include <NvInfer.h>
 
 // error handling
 
@@ -79,4 +84,30 @@ private:
 
 void Softmax(int count, float *data);
 void TopK(int count, const float *data, int k, int *pos, float *val);
+
+// TensorRT helpers
+
+std::string FormatDims(const nvinfer1::Dims &dims);
+
+// logger
+
+class Logger: public nvinfer1::ILogger {
+public:
+    Logger();
+    ~Logger();
+public:
+    nvinfer1::ILogger::Severity SeverityLevel() const;
+    void SetSeverityLevel(nvinfer1::ILogger::Severity level);
+    void log(nvinfer1::ILogger::Severity severity, const char *msg) noexcept override;
+private:
+    static const char *GetSeverityString(nvinfer1::ILogger::Severity severity);
+private:
+    nvinfer1::ILogger::Severity m_severityLevel;
+};
+
+// smart pointer alias
+
+template<typename T>
+using UniquePtr = std::unique_ptr<T>;
+
 
