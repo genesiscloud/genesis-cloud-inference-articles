@@ -14,5 +14,8 @@ Installation and basic use of CUDA, PyTorch, and torchvision
 [Article 2](https://github.com/lxgo/genesis-kbase/blob/main/art02.md)
 Deployment techniques for PyTorch models using TorchScript
 
+[Article 3](https://github.com/lxgo/genesis-kbase/blob/main/art03.md)
+Deployment techniques for PyTorch models using TendorRT
+
 The repository is work in progress.
 
