@@ -85,8 +85,6 @@ MODELS = [
     ('densenet169', models.densenet169),
     ('densenet201', models.densenet201),
 
-#    ('googlenet', models.googlenet),
-
     ('mnasnet0_5', models.mnasnet0_5),
     ('mnasnet1_0', models.mnasnet1_0),
 
@@ -129,7 +127,7 @@ def generate_model(name, model):
     m_scripted.save('./ts/' + name + '.ts')
 
 for name, model in MODELS:
-    generate_model(name, model)  
+    generate_model(name, model)
 ```
 
 To run this program, enter the following commands:
@@ -324,8 +322,139 @@ TorchScript model top 5 results:
  tensor([[549, 783, 446, 490, 610]], device='cuda:0')
 ```
 
-Typically, on NVIDIA RTX 3080 the TorchScript code for ResNet50 runs inference
-about 1.5 times faster compared to the original PyTorch model.
+The Python program `bench_model_ts.py` is more general; it implements benchmarking
+of any supported torchvision image classification model:
+
+```
+import sys
+from time import perf_counter
+import torch
+import torch.nn.functional as F
+import torchvision.models as models
+
+def main():
+    if len(sys.argv) != 2:
+        sys.exit("Usage: python3 bench_model_ts.py <model_name>")
+
+    name = sys.argv[1]
+    print('Start ' + name)
+
+    # create model
+
+    builder = getattr(models, name)
+    model_orig = builder(pretrained=True).cuda()
+    model = torch.jit.script(model_orig)
+    model.eval()
+
+    input = torch.rand(1, 3, 224, 224).cuda()
+
+    # benchmark TorchScript model
+
+    for i in range(1, 10):
+        model(input)
+    start = perf_counter()
+    for i in range(1, 100):
+        model(input)
+    end = perf_counter()
+
+    elapsed = ((end - start) / 100) * 1000
+    print('Model {0}: elapsed time {1:.2f} ms'.format(name, elapsed))
+    # record for automated extraction
+    print('#{0};{1:f}'.format(name, elapsed))
+
+    # print Top-5 results
+
+    output = model(input)
+    top5 = F.softmax(output, dim=1).topk(5)
+    top5p = top5.indices.detach().cpu().numpy()
+    top5v = top5.values.detach().cpu().numpy()
+
+    print("Top-5 results")
+    for ind, val in zip(top5p[0], top5v[0]):
+        print("  {0} {1:.2f}%".format(ind, val * 100))
+
+main() 
+```
+
+The program uses a model name as its single command line argument.
+
+The program performs the following steps:
+
+* creates a model builder for the specified model name
+* uses this builder to create a model; places the model on CUDA device
+* uses scripting to produce the TorchScript version for this model
+* sets the model in evaluation (inference) mode
+* creates an input tensor with random dummy contents; places it on CUDA device
+* benchmarks the model
+* prints benchmarking results
+* applies the softmax transformation to the outputs
+* gets labels and probabilities for top 5 results
+* prints top 5 classes and probabilities
+
+The program prints a special formatted line starting with `"#"` that
+will be later used for automated extraction of performance metrics.
+
+To run this program for ResNet50, use the command:
+
+```
+python3 bench_model_ts.py resnet50
+```
+
+The program output will look like:
+
+```
+<<<TODO>>>
+```
+
+The shell script `bench_ts_all_py.sh` performs benchmarking of all supported torchvision
+models:
+
+```
+#!/bin/bash
+
+echo "#head;TorchScript (Python)"
+
+python3 bench_model_ts.py alexnet
+python3 bench_model_ts.py densenet121
+python3 bench_model_ts.py densenet161
+python3 bench_model_ts.py densenet169
+python3 bench_model_ts.py densenet201
+python3 bench_model_ts.py mnasnet0_5
+python3 bench_model_ts.py mnasnet1_0
+python3 bench_model_ts.py mobilenet_v2
+python3 bench_model_ts.py mobilenet_v3_large
+python3 bench_model_ts.py mobilenet_v3_small
+python3 bench_model_ts.py resnet101
+python3 bench_model_ts.py resnet152
+python3 bench_model_ts.py resnet18
+python3 bench_model_ts.py resnet34
+python3 bench_model_ts.py resnet50
+python3 bench_model_ts.py resnext101_32x8d
+python3 bench_model_ts.py resnext50_32x4d
+python3 bench_model_ts.py shufflenet_v2_x0_5
+python3 bench_model_ts.py shufflenet_v2_x1_0
+python3 bench_model_ts.py squeezenet1_0
+python3 bench_model_ts.py squeezenet1_1
+python3 bench_model_ts.py vgg11
+python3 bench_model_ts.py vgg11_bn
+python3 bench_model_ts.py vgg13
+python3 bench_model_ts.py vgg13_bn
+python3 bench_model_ts.py vgg16
+python3 bench_model_ts.py vgg16_bn
+python3 bench_model_ts.py vgg19
+python3 bench_model_ts.py vgg19_bn
+python3 bench_model_ts.py wide_resnet101_2
+python3 bench_model_ts.py wide_resnet50_2
+```
+
+Running this script is straightforward:
+
+```
+./bench_ts_all_py.sh >bench_ts_py.log
+```
+
+The benchmarking log will be saved in `bench_ts_py.log` that later will be
+used for performance comparison of various deployment methods.
 
 
 ## Step 4. Install LibTorch
@@ -642,25 +771,19 @@ float WallClock::Elapsed() {
 
 int main(int argc, const char *argv[]) {
     if (argc != 2) {
-        std::cerr << "usage: bench_ts <path-to-exported-model>" << std::endl;
+        std::cerr << "Usage: bench_ts <path-to-exported-model>" << std::endl;
         return -1;
     }
 
     std::string name(argv[1]);
-
-    if (name.find("googlenet") != std::string::npos) {
-        std::cout << "Skip inference: " << name << std::endl;
-        std::cout << "DONE" << std::endl << std::endl;
-        return 0;
-    }
 
     // execute model and package output as tensor
     std::cout << "Start model " << name << std::endl;
 
     int repeat = 100; // make it configuravle?
 
-    bool have_cuda = torch::cuda::is_available();
-    assert(have_cuda);
+    bool haveCuda = torch::cuda::is_available();
+    assert(haveCuda);
 
     torch::Device device = torch::kCUDA;
 
@@ -702,6 +825,8 @@ int main(int argc, const char *argv[]) {
     float t = clock.Elapsed();
     std::cout << "Model " << name << ": elapsed time " << 
         t << " ms / " << repeat << " iterations = " << t / float(repeat) << std::endl; 
+    // record for automated extraction
+    std::cout << "#" << name << ";" << t / float(repeat) << std::endl;
 
     // execute model and package output as tensor
     at::Tensor output = module.forward(inputs).toTensor();
@@ -767,15 +892,145 @@ Model ./ts/resnet50.ts: elapsed time 547.467 ms / 100 iterations = 5.47467
 DONE
 ```
 
-Typically, inference with ResNet50 TorchScript code using the C++ program runs faster
-compared to the equivalent Python program.
-
 The shell script `bench_ts_all.sh` can be used to benchmark the entire collection
 of image classification TorchScript models.
 
 Running this script is straightforward:
 
 ```
-./bench_ts_all.sh
+./bench_ts_all.sh >bench_ts.log
 ```
+
+The benchmarking log will be saved in `bench_ts.log` that later will be
+used for performance comparison of various deployment methods.
+
+
+Step 8. Extraction of performance metrics from benchmarking logs
+
+The Python program `merge_perf.py` extracts performance metrics from multiple
+benchmarking log files and merges them in a single CSV file in a form
+suitable for further analysis:
+
+```
+import sys
+
+def get_model_name(s):
+    pos = s.rfind("/")
+    if pos >= 0:
+        s = s[pos+1:]
+    pos = s.find(".")
+    if pos >= 0:
+        s = s[:pos]
+    return s
+
+def main():
+    if len(sys.argv) < 3:
+        sys.exit("Usage: python3 merge_perf.py <path1> <path2> ...") 
+
+    heads = []
+    model_set = set()
+    perf_all = {}
+    for path in sys.argv[1:]:
+        with open(path, "r") as fp:
+            head = None
+            perf = {}
+            lines = fp.readlines()
+            for line in lines:
+                if not line.startswith("#"):
+                    continue
+                line = line[1:].strip()
+                fields = line.split(";")
+                if fields[0] == "head":
+                    head = fields[1]
+                else:
+                    model = get_model_name(fields[0])
+                    model_set.add(model)
+                    perf[model] = float(fields[1])
+            if head is None:
+                raise ValueError("Missing head tag in " + path)
+            heads.append(head)
+            for key, value in perf.items():
+                perf_all[head + "#" + key] = value
+
+    line = "Model"
+    for head in heads:
+        line += ";" + head
+    print(line)
+
+    models = sorted(list(model_set))
+    for model in models:
+        line = model
+        for head in heads:
+            key = head + "#" + model
+            value = "-"
+            if key in perf_all:
+                value = "{0:.2f}".format(perf_all[key])
+            line += ";" + value
+        print(line)
+
+main()
+```
+
+The program has two or more command line arguments, each argument specifying a path
+to the log file.
+
+The program extracts special records starting with `"#"` from all input files, 
+merges the extracted information, and saves it as a single CSV file. 
+Each line of the output file  corresponds to one model and each column corresponds to 
+one deployment method.
+
+For example, assuming that benchmarking described in the Articles 1 and 2 has been
+performed in the sibling directories `art01` and `art02` respectively and the current
+directory is `art02`, the following command can be used to merge the three log
+files considered so far:
+
+```
+python3 merge_perf.py ..\art01\bench_torch.log bench_ts_py.log bench_ts.log >perf02.csv
+```
+
+The output file `perf02.csv` will look like:
+
+```
+Model;PyTorch;TorchScript (Python);TorchScript (C++)
+alexnet;1.23;1.19;1.04
+densenet121;19.79;19.45;13.34
+densenet161;29.43;30.32;20.70
+densenet169;28.47;30.06;20.11
+densenet201;33.48;36.21;22.70
+mnasnet0_5;5.45;4.65;3.67
+mnasnet1_0;5.66;4.62;3.95
+mobilenet_v2;6.19;5.63;4.02
+mobilenet_v3_large;8.07;6.71;5.18
+mobilenet_v3_small;6.37;5.66;4.19
+resnet101;15.80;12.76;10.81
+resnet152;23.66;19.08;16.37
+resnet18;3.39;2.69;2.30
+resnet34;6.11;4.83;4.11
+resnet50;7.99;6.42;5.47
+resnext101_32x8d;21.69;18.82;16.66
+resnext50_32x4d;6.45;5.10;4.41
+shufflenet_v2_x0_5;6.33;5.12;4.01
+shufflenet_v2_x1_0;6.84;5.59;4.44
+squeezenet1_0;3.05;2.95;2.33
+squeezenet1_1;3.03;2.79;2.31
+vgg11;1.91;1.81;1.84
+vgg11_bn;2.37;2.09;1.96
+vgg13;2.26;2.21;2.27
+vgg13_bn;2.62;2.42;2.43
+vgg16;2.82;2.79;2.88
+vgg16_bn;3.23;3.03;3.06
+vgg19;3.29;3.36;3.40
+vgg19_bn;3.72;3.60;3.64
+wide_resnet101_2;15.50;12.32;10.55
+wide_resnet50_2;7.88;6.66;5.35 
+```
+
+## Conclusion
+
+Analysis of these perfomance data reveals that running TorchScript code with C++
+and TorchLib provides substantial performance increase (typically about by the factor of 1.5)
+compared to running the original PyTorch model with Python. 
+
+Running TorchScript code with Python is slower than running it with C++
+but faster than running the original PyToch model.
 
