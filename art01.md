@@ -641,6 +641,227 @@ Saint Bernard 0.32%
 You can also experiment with the other classification models from the torchvision
 library and other images.
 
+
+## Step 7. Benchmarking the torchvision models
+
+We will perform simple inference benchmarking of torchscript models by running
+inference multiple times and measuring the average wall clock time required
+for one run.
+
+The Python program `bench_resnet50.py` implements benchmarking of ResNet50:
+
+```
+from time import perf_counter
+import torch
+import torch.nn.functional as F
+import torchvision.models as models
+
+name = 'resnet50'
+print('Start ' + name)
+
+# create model
+
+name = 'resnet50'
+resnet50 = models.resnet50(pretrained=True).cuda()
+resnet50.eval()
+
+# create dummy input
+
+input = torch.rand(1, 3, 224, 224).cuda()
+
+# benchmark model
+
+with torch.no_grad():
+    for i in range(1, 10):
+        resnet50(input)
+
+start = perf_counter()
+with torch.no_grad():
+    for i in range(1, 100):
+        resnet50(input)
+end = perf_counter()
+
+elapsed = ((end - start) / 100) * 1000
+print('Model {0}: elapsed time {1:.2f} ms'.format(name, elapsed))
+
+# print Top-5 results
+
+output = resnet50(input)
+top5 = F.softmax(output, dim=1).topk(5).indices
+print('Top 5 results:\n {}'.format(top5))  
+```
+
+The program performs the following steps:
+
+* creates ResNet50 model; places the model on CUDA device
+* sets the model in evaluation (inference) mode
+* creates an input tensor with random dummy contents; places it on CUDA device
+* disables gradient computations in PyTorch and benchmarks the model
+* prints benchmarking results
+* applies the softmax transformation to the outputs
+* gets labels and probabilities for top 5 results
+* prints top 5 classes and probabilities
+
+The benchmarking includes 10 "warmup" inference runs
+followed by 100 runs for which the total wall clock time is measured.
+The measured time is divided by the number of runs and the average
+time for one run in milliseconds is displayed.
+
+To run this program, use the command:
+
+```
+python3 bench_resnet50.py
+```
+
+The program output will look like:
+
+```
+<<<TODO>>>
+```
+
+The Python program `bench_model.py` is more general; it implements benchmarking
+of almost any given torchvision image classification model:
+
+```
+import sys
+from time import perf_counter
+import torch
+import torch.nn.functional as F
+import torchvision.models as models
+
+def main():
+    if len(sys.argv) != 2:
+        sys.exit("Usage: python3 bench_model <model_name>")
+ 
+    name = sys.argv[1]
+    print('Start ' + name)
+
+    # create model
+
+    builder = getattr(models, name)
+    model = builder(pretrained=True).cuda()
+    model.eval()
+
+    # create dummy input
+
+    input = torch.rand(1, 3, 224, 224).cuda()
+
+    # benchmark model
+
+    with torch.no_grad():
+        for i in range(1, 10):
+            model(input)
+
+    start = perf_counter()
+    with torch.no_grad():
+        for i in range(1, 100):
+            model(input)
+    end = perf_counter()
+
+    elapsed = ((end - start) / 100) * 1000
+    print('Model {0}: elapsed time {1:.2f} ms'.format(name, elapsed))
+    # record for automated extraction
+    print('#{0};{1:f}'.format(name, elapsed)) 
+
+    # print Top-5 results
+
+    output = model(input)
+    top5 = F.softmax(output, dim=1).topk(5)
+    top5p = top5.indices.detach().cpu().numpy()
+    top5v = top5.values.detach().cpu().numpy()
+
+    print("Top-5 results")
+    for ind, val in zip(top5p[0], top5v[0]):
+        print("  {0} {1:.2f}%".format(ind, val * 100)) 
+
+main()  
+```
+
+The program uses a model name as its single command line argument.
+
+NOTE: The model `googlenet` is not supported because of specific format
+of input tensors it uses.
+
+The program performs the following steps:
+
+* creates a model builder for the specified model name
+* uses this builder to create a model; places the model on CUDA device
+* sets the model in evaluation (inference) mode
+* creates an input tensor with random dummy contents; places it on CUDA device
+* disables gradient computations in PyTorch and benchmarks the model
+* prints benchmarking results
+* applies the softmax transformation to the outputs
+* gets labels and probabilities for top 5 results
+* prints top 5 classes and probabilities
+
+The program prints a special formatted line started with "#" that
+will be later used for automated extraction of performance metrics.
+
+To run this program for ResNet50, use the command:
+
+```
+python3 bench_model.py resnet50
+```
+
+The program output will look like:
+
+```
+<<<TODO>>>
+```
+
+The shell script `bench_all.sh` performs benchmarking of all supported torchvision
+models:
+
+```
+#!/bin/bash
+
+echo "#head;PyTorch"
+
+python3 bench_model.py alexnet
+python3 bench_model.py densenet121
+python3 bench_model.py densenet161
+python3 bench_model.py densenet169
+python3 bench_model.py densenet201
+python3 bench_model.py mnasnet0_5
+python3 bench_model.py mnasnet1_0
+python3 bench_model.py mobilenet_v2
+python3 bench_model.py mobilenet_v3_large
+python3 bench_model.py mobilenet_v3_small
+python3 bench_model.py resnet101
+python3 bench_model.py resnet152
+python3 bench_model.py resnet18
+python3 bench_model.py resnet34
+python3 bench_model.py resnet50
+python3 bench_model.py resnext101_32x8d
+python3 bench_model.py resnext50_32x4d
+python3 bench_model.py shufflenet_v2_x0_5
+python3 bench_model.py shufflenet_v2_x1_0
+python3 bench_model.py squeezenet1_0
+python3 bench_model.py squeezenet1_1
+python3 bench_model.py vgg11
+python3 bench_model.py vgg11_bn
+python3 bench_model.py vgg13
+python3 bench_model.py vgg13_bn
+python3 bench_model.py vgg16
+python3 bench_model.py vgg16_bn
+python3 bench_model.py vgg19
+python3 bench_model.py vgg19_bn
+python3 bench_model.py wide_resnet101_2
+python3 bench_model.py wide_resnet50_2 
+```
+
+Running this script is straightforward:
+
+```
+./bench_all.sh >bench_torch.log
+```
+
+The benchmarking log will be saved in `bench_torch.log` that later will be
+used for performance comparison of various deployment methods.
+
+
+## Conclusion
+
 Using PyTorch and Python directly is perhaps the most simple and straightforward way
 for running inference; however there exist much more performance efficient methods for 
 model deployment on the GPU-enabled infrastructure. We will discuss these methods
