@@ -1,0 +1,404 @@
+#head;TorchScript (C++)
+Start model ts/alexnet.ts
+Loading model...
+Model loaded successfully
+Model ts/alexnet.ts: elapsed time 103.812 ms / 100 iterations = 1.03812
+#ts/alexnet.ts;1.03812
+ 556
+ 892
+ 549
+ 446
+ 844
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/densenet121.ts
+Loading model...
+Model loaded successfully
+Model ts/densenet121.ts: elapsed time 1334.33 ms / 100 iterations = 13.3433
+#ts/densenet121.ts;13.3433
+ 539
+ 591
+ 549
+ 446
+ 455
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/densenet161.ts
+Loading model...
+Model loaded successfully
+Model ts/densenet161.ts: elapsed time 2070.33 ms / 100 iterations = 20.7033
+#ts/densenet161.ts;20.7033
+  94
+ 892
+ 971
+  16
+ 600
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/densenet169.ts
+Loading model...
+Model loaded successfully
+Model ts/densenet169.ts: elapsed time 2010.69 ms / 100 iterations = 20.1069
+#ts/densenet169.ts;20.1069
+ 111
+ 892
+ 644
+ 844
+ 783
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/densenet201.ts
+Loading model...
+Model loaded successfully
+Model ts/densenet201.ts: elapsed time 2270.02 ms / 100 iterations = 22.7002
+#ts/densenet201.ts;22.7002
+ 844
+ 701
+ 111
+ 405
+ 783
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/mnasnet0_5.ts
+Loading model...
+Model loaded successfully
+Model ts/mnasnet0_5.ts: elapsed time 366.994 ms / 100 iterations = 3.66994
+#ts/mnasnet0_5.ts;3.66994
+ 892
+ 783
+ 844
+ 644
+ 446
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/mnasnet1_0.ts
+Loading model...
+Model loaded successfully
+Model ts/mnasnet1_0.ts: elapsed time 395.199 ms / 100 iterations = 3.95199
+#ts/mnasnet1_0.ts;3.95199
+ 418
+ 563
+ 769
+ 111
+ 446
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/mobilenet_v2.ts
+Loading model...
+Model loaded successfully
+Model ts/mobilenet_v2.ts: elapsed time 402.17 ms / 100 iterations = 4.0217
+#ts/mobilenet_v2.ts;4.0217
+ 892
+ 549
+ 418
+ 844
+ 600
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/mobilenet_v3_large.ts
+Loading model...
+Model loaded successfully
+Model ts/mobilenet_v3_large.ts: elapsed time 518.037 ms / 100 iterations = 5.18037
+#ts/mobilenet_v3_large.ts;5.18037
+  23
+ 844
+  21
+ 446
+  22
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/mobilenet_v3_small.ts
+Loading model...
+Model loaded successfully
+Model ts/mobilenet_v3_small.ts: elapsed time 419.429 ms / 100 iterations = 4.19429
+#ts/mobilenet_v3_small.ts;4.19429
+  21
+  22
+  92
+ 549
+  23
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/resnet101.ts
+Loading model...
+Model loaded successfully
+Model ts/resnet101.ts: elapsed time 1081.25 ms / 100 iterations = 10.8125
+#ts/resnet101.ts;10.8125
+ 783
+ 784
+ 549
+ 418
+ 111
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/resnet152.ts
+Loading model...
+Model loaded successfully
+Model ts/resnet152.ts: elapsed time 1636.52 ms / 100 iterations = 16.3652
+#ts/resnet152.ts;16.3652
+  78
+ 783
+ 644
+ 679
+ 111
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/resnet18.ts
+Loading model...
+Model loaded successfully
+Model ts/resnet18.ts: elapsed time 230.38 ms / 100 iterations = 2.3038
+#ts/resnet18.ts;2.3038
+ 111
+ 418
+ 892
+ 644
+ 845
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/resnet34.ts
+Loading model...
+Model loaded successfully
+Model ts/resnet34.ts: elapsed time 410.644 ms / 100 iterations = 4.10644
+#ts/resnet34.ts;4.10644
+ 845
+ 549
+ 610
+ 418
+ 844
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/resnet50.ts
+Loading model...
+Model loaded successfully
+Model ts/resnet50.ts: elapsed time 546.857 ms / 100 iterations = 5.46857
+#ts/resnet50.ts;5.46857
+ 892
+ 783
+ 844
+ 549
+ 600
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/resnext101_32x8d.ts
+Loading model...
+Model loaded successfully
+Model ts/resnext101_32x8d.ts: elapsed time 1665.76 ms / 100 iterations = 16.6576
+#ts/resnext101_32x8d.ts;16.6576
+ 882
+ 892
+ 446
+ 777
+ 753
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/resnext50_32x4d.ts
+Loading model...
+Model loaded successfully
+Model ts/resnext50_32x4d.ts: elapsed time 440.557 ms / 100 iterations = 4.40557
+#ts/resnext50_32x4d.ts;4.40557
+ 111
+ 556
+ 783
+ 534
+  78
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/shufflenet_v2_x0_5.ts
+Loading model...
+Model loaded successfully
+Model ts/shufflenet_v2_x0_5.ts: elapsed time 401.227 ms / 100 iterations = 4.01227
+#ts/shufflenet_v2_x0_5.ts;4.01227
+ 904
+ 490
+ 446
+  89
+ 411
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/shufflenet_v2_x1_0.ts
+Loading model...
+Model loaded successfully
+Model ts/shufflenet_v2_x1_0.ts: elapsed time 444.422 ms / 100 iterations = 4.44422
+#ts/shufflenet_v2_x1_0.ts;4.44422
+ 700
+ 549
+  78
+ 111
+ 904
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/squeezenet1_0.ts
+Loading model...
+Model loaded successfully
+Model ts/squeezenet1_0.ts: elapsed time 233.357 ms / 100 iterations = 2.33357
+#ts/squeezenet1_0.ts;2.33357
+ 533
+ 446
+ 904
+ 619
+ 549
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/squeezenet1_1.ts
+Loading model...
+Model loaded successfully
+Model ts/squeezenet1_1.ts: elapsed time 230.813 ms / 100 iterations = 2.30813
+#ts/squeezenet1_1.ts;2.30813
+ 533
+ 539
+ 735
+ 443
+ 474
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/vgg11.ts
+Loading model...
+Model loaded successfully
+Model ts/vgg11.ts: elapsed time 184.28 ms / 100 iterations = 1.8428
+#ts/vgg11.ts;1.8428
+ 618
+ 784
+ 701
+ 418
+ 623
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/vgg11_bn.ts
+Loading model...
+Model loaded successfully
+Model ts/vgg11_bn.ts: elapsed time 195.965 ms / 100 iterations = 1.95965
+#ts/vgg11_bn.ts;1.95965
+ 892
+ 549
+ 111
+  79
+ 844
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/vgg13.ts
+Loading model...
+Model loaded successfully
+Model ts/vgg13.ts: elapsed time 226.899 ms / 100 iterations = 2.26899
+#ts/vgg13.ts;2.26899
+ 549
+ 844
+ 600
+ 111
+ 783
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/vgg13_bn.ts
+Loading model...
+Model loaded successfully
+Model ts/vgg13_bn.ts: elapsed time 242.771 ms / 100 iterations = 2.42771
+#ts/vgg13_bn.ts;2.42771
+ 549
+ 701
+ 977
+   6
+ 892
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/vgg16.ts
+Loading model...
+Model loaded successfully
+Model ts/vgg16.ts: elapsed time 288.018 ms / 100 iterations = 2.88018
+#ts/vgg16.ts;2.88018
+ 111
+ 418
+ 446
+ 892
+ 844
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/vgg16_bn.ts
+Loading model...
+Model loaded successfully
+Model ts/vgg16_bn.ts: elapsed time 306.465 ms / 100 iterations = 3.06465
+#ts/vgg16_bn.ts;3.06465
+ 418
+ 783
+  78
+ 892
+ 600
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/vgg19.ts
+Loading model...
+Model loaded successfully
+Model ts/vgg19.ts: elapsed time 339.83 ms / 100 iterations = 3.3983
+#ts/vgg19.ts;3.3983
+ 892
+ 844
+ 618
+ 549
+ 446
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/vgg19_bn.ts
+Loading model...
+Model loaded successfully
+Model ts/vgg19_bn.ts: elapsed time 364.031 ms / 100 iterations = 3.64031
+#ts/vgg19_bn.ts;3.64031
+ 446
+ 418
+ 111
+ 844
+ 783
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/wide_resnet101_2.ts
+Loading model...
+Model loaded successfully
+Model ts/wide_resnet101_2.ts: elapsed time 1054.73 ms / 100 iterations = 10.5473
+#ts/wide_resnet101_2.ts;10.5473
+ 111
+ 556
+ 892
+ 784
+ 318
+[ CUDALongType{5} ]
+DONE
+
+Start model ts/wide_resnet50_2.ts
+Loading model...
+Model loaded successfully
+Model ts/wide_resnet50_2.ts: elapsed time 534.852 ms / 100 iterations = 5.34852
+#ts/wide_resnet50_2.ts;5.34852
+ 783
+  78
+ 679
+ 892
+ 111
+[ CUDALongType{5} ]
+DONE
+

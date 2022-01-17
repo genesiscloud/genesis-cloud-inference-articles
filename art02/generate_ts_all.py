@@ -10,8 +10,6 @@ MODELS = [
     ('densenet169', models.densenet169),
     ('densenet201', models.densenet201),
 
-    ('googlenet', models.googlenet),
-
     ('mnasnet0_5', models.mnasnet0_5),
     ('mnasnet1_0', models.mnasnet1_0),
 

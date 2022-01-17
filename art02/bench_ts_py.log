@@ -1,0 +1,280 @@
+#head;TorchScript (Python)
+Start alexnet
+Model alexnet: elapsed time 1.19 ms
+#alexnet;1.187317
+Top-5 results
+  556 4.72%
+  549 2.77%
+  892 2.63%
+  446 2.30%
+  844 2.00%
+Start densenet121
+Model densenet121: elapsed time 19.45 ms
+#densenet121;19.446931
+Top-5 results
+  418 2.04%
+  892 1.79%
+  446 1.55%
+  549 1.54%
+  772 1.35%
+Start densenet161
+Model densenet161: elapsed time 30.32 ms
+#densenet161;30.322270
+Top-5 results
+  620 3.94%
+  892 3.76%
+  600 2.37%
+  971 2.23%
+  844 1.94%
+Start densenet169
+Model densenet169: elapsed time 30.06 ms
+#densenet169;30.055242
+Top-5 results
+  111 36.19%
+  812 2.16%
+  844 2.11%
+  892 2.00%
+  446 1.98%
+Start densenet201
+Model densenet201: elapsed time 36.21 ms
+#densenet201;36.207940
+Top-5 results
+  844 3.45%
+  783 3.00%
+  644 2.97%
+  784 2.44%
+  78 2.44%
+Start mnasnet0_5
+Model mnasnet0_5: elapsed time 4.65 ms
+#mnasnet0_5;4.649257
+Top-5 results
+  892 2.87%
+  783 2.04%
+  644 1.76%
+  78 1.64%
+  844 1.62%
+Start mnasnet1_0
+Model mnasnet1_0: elapsed time 4.62 ms
+#mnasnet1_0;4.621840
+Top-5 results
+  418 9.31%
+  446 4.28%
+  111 4.21%
+  563 3.95%
+  844 3.44%
+Start mobilenet_v2
+Model mobilenet_v2: elapsed time 5.63 ms
+#mobilenet_v2;5.628340
+Top-5 results
+  892 5.24%
+  549 4.63%
+  446 3.13%
+  844 2.38%
+  418 1.99%
+Start mobilenet_v3_large
+Model mobilenet_v3_large: elapsed time 6.71 ms
+#mobilenet_v3_large;6.711290
+Top-5 results
+  21 7.34%
+  23 5.68%
+  128 5.31%
+  22 3.85%
+  701 2.83%
+Start mobilenet_v3_small
+Model mobilenet_v3_small: elapsed time 5.66 ms
+#mobilenet_v3_small;5.658193
+Top-5 results
+  21 9.25%
+  549 4.55%
+  892 3.92%
+  22 3.14%
+  92 2.58%
+Start resnet101
+Model resnet101: elapsed time 12.76 ms
+#resnet101;12.756311
+Top-5 results
+  783 12.80%
+  784 5.98%
+  418 5.26%
+  549 4.89%
+  563 3.24%
+Start resnet152
+Model resnet152: elapsed time 19.08 ms
+#resnet152;19.075341
+Top-5 results
+  78 6.27%
+  679 4.87%
+  111 4.58%
+  783 4.11%
+  644 3.86%
+Start resnet18
+Model resnet18: elapsed time 2.69 ms
+#resnet18;2.694303
+Top-5 results
+  845 4.18%
+  111 3.12%
+  418 3.12%
+  644 2.45%
+  784 2.21%
+Start resnet34
+Model resnet34: elapsed time 4.83 ms
+#resnet34;4.834139
+Top-5 results
+  845 2.28%
+  418 1.78%
+  610 1.70%
+  549 1.54%
+  679 1.52%
+Start resnet50
+Model resnet50: elapsed time 6.42 ms
+#resnet50;6.418032
+Top-5 results
+  892 3.47%
+  549 2.93%
+  783 2.74%
+  610 2.68%
+  844 2.19%
+Start resnext101_32x8d
+Model resnext101_32x8d: elapsed time 18.82 ms
+#resnext101_32x8d;18.815202
+Top-5 results
+  892 19.76%
+  446 8.42%
+  882 5.44%
+  844 3.79%
+  418 3.38%
+Start resnext50_32x4d
+Model resnext50_32x4d: elapsed time 5.10 ms
+#resnext50_32x4d;5.099405
+Top-5 results
+  111 38.79%
+  556 4.08%
+  783 3.27%
+  534 2.54%
+  446 2.20%
+Start shufflenet_v2_x0_5
+Model shufflenet_v2_x0_5: elapsed time 5.12 ms
+#shufflenet_v2_x0_5;5.115101
+Top-5 results
+  490 23.49%
+  904 8.61%
+  446 8.22%
+  411 7.00%
+  89 6.38%
+Start shufflenet_v2_x1_0
+Model shufflenet_v2_x1_0: elapsed time 5.59 ms
+#shufflenet_v2_x1_0;5.587741
+Top-5 results
+  549 13.79%
+  700 12.13%
+  78 8.14%
+  111 5.92%
+  446 3.26%
+Start squeezenet1_0
+Model squeezenet1_0: elapsed time 2.95 ms
+#squeezenet1_0;2.946618
+Top-5 results
+  533 4.26%
+  446 2.49%
+  679 1.74%
+  418 1.68%
+  549 1.62%
+Start squeezenet1_1
+Model squeezenet1_1: elapsed time 2.79 ms
+#squeezenet1_1;2.786455
+Top-5 results
+  539 5.30%
+  533 4.54%
+  443 2.12%
+  735 2.09%
+  549 1.53%
+Start vgg11
+Model vgg11: elapsed time 1.81 ms
+#vgg11;1.809227
+Top-5 results
+  618 4.39%
+  784 3.22%
+  418 3.00%
+  623 2.68%
+  677 2.48%
+Start vgg11_bn
+Model vgg11_bn: elapsed time 2.09 ms
+#vgg11_bn;2.086451
+Top-5 results
+  549 2.81%
+  892 2.07%
+  446 1.79%
+  111 1.74%
+  619 1.42%
+Start vgg13
+Model vgg13: elapsed time 2.21 ms
+#vgg13;2.214464
+Top-5 results
+  111 2.71%
+  600 2.45%
+  783 2.32%
+  677 2.23%
+  892 2.23%
+Start vgg13_bn
+Model vgg13_bn: elapsed time 2.42 ms
+#vgg13_bn;2.420521
+Top-5 results
+  549 5.73%
+  111 2.93%
+  701 2.13%
+  892 2.12%
+  921 1.39%
+Start vgg16
+Model vgg16: elapsed time 2.79 ms
+#vgg16;2.792963
+Top-5 results
+  111 5.70%
+  892 1.92%
+  844 1.88%
+  418 1.84%
+  446 1.63%
+Start vgg16_bn
+Model vgg16_bn: elapsed time 3.03 ms
+#vgg16_bn;3.031486
+Top-5 results
+  783 2.04%
+  418 1.96%
+  623 1.68%
+  549 1.58%
+  677 1.57%
+Start vgg19
+Model vgg19: elapsed time 3.36 ms
+#vgg19;3.355425
+Top-5 results
+  892 2.06%
+  844 1.79%
+  618 1.33%
+  418 1.11%
+  549 0.97%
+Start vgg19_bn
+Model vgg19_bn: elapsed time 3.60 ms
+#vgg19_bn;3.599378
+Top-5 results
+  446 2.23%
+  111 1.43%
+  549 1.38%
+  418 1.33%
+  784 1.13%
+Start wide_resnet101_2
+Model wide_resnet101_2: elapsed time 12.32 ms
+#wide_resnet101_2;12.317547
+Top-5 results
+  111 4.90%
+  556 4.53%
+  784 2.62%
+  563 2.27%
+  78 2.09%
+Start wide_resnet50_2
+Model wide_resnet50_2: elapsed time 6.66 ms
+#wide_resnet50_2;6.664267
+Top-5 results
+  892 6.23%
+  679 5.76%
+  783 5.46%
+  111 4.52%
+  78 4.52%

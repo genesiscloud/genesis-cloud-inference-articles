@@ -67,12 +67,6 @@ int main(int argc, const char *argv[]) {
 
     std::string name(argv[1]);
 
-    if (name.find("googlenet") != std::string::npos) {
-        std::cout << "Skip inference: " << name << std::endl;
-        std::cout << "DONE" << std::endl << std::endl;
-        return 0;
-    }
-
     // execute model and package output as tensor
     std::cout << "Start model " << name << std::endl;
 
@@ -121,6 +115,8 @@ int main(int argc, const char *argv[]) {
     float t = clock.Elapsed();
     std::cout << "Model " << name << ": elapsed time " << 
         t << " ms / " << repeat << " iterations = " << t / float(repeat) << std::endl; 
+    // record for automated extraction
+    std::cout << "#" << name << ";" << t / float(repeat) << std::endl;
 
     // execute model and package output as tensor
     at::Tensor output = module.forward(inputs).toTensor();

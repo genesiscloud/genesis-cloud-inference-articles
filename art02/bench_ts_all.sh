@@ -1,11 +1,12 @@
 #!/bin/bash
 
+echo "#head;TorchScript (C++)"
+
 ./bin/bench_ts ts/alexnet.ts
 ./bin/bench_ts ts/densenet121.ts
 ./bin/bench_ts ts/densenet161.ts
 ./bin/bench_ts ts/densenet169.ts
 ./bin/bench_ts ts/densenet201.ts
-./bin/bench_ts ts/googlenet.ts
 ./bin/bench_ts ts/mnasnet0_5.ts
 ./bin/bench_ts ts/mnasnet1_0.ts
 ./bin/bench_ts ts/mobilenet_v2.ts
