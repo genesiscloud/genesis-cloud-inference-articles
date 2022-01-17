@@ -794,7 +794,7 @@ The program performs the following steps:
 * gets labels and probabilities for top 5 results
 * prints top 5 classes and probabilities
 
-The program prints a special formatted line starting with "#" that
+The program prints a special formatted line starting with `"#"` that
 will be later used for automated extraction of performance metrics.
 
 To run this program for ResNet50, use the command:
