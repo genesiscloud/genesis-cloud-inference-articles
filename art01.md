@@ -716,7 +716,10 @@ python3 bench_resnet50.py
 The program output will look like:
 
 ```
-<<<TODO>>>
+Start resnet50
+Model resnet50: elapsed time 8.01 ms
+Top 5 results:
+ tensor([[783, 610, 549, 892, 600]], device='cuda:0')
 ```
 
 The Python program `bench_model.py` is more general; it implements benchmarking
@@ -806,7 +809,15 @@ python3 bench_model.py resnet50
 The program output will look like:
 
 ```
-<<<TODO>>>
+Start resnet50
+Model resnet50: elapsed time 7.94 ms
+#resnet50;7.940051
+Top-5 results
+  610 5.20%
+  549 4.50%
+  783 3.84%
+  892 3.42%
+  446 3.23%
 ```
 
 The shell script `bench_all.sh` performs benchmarking of all supported torchvision

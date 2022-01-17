@@ -403,7 +403,15 @@ python3 bench_model_ts.py resnet50
 The program output will look like:
 
 ```
-<<<TODO>>>
+Start resnet50
+Model resnet50: elapsed time 6.48 ms
+#resnet50;6.484319
+Top-5 results
+  549 4.64%
+  892 3.64%
+  783 3.17%
+  610 3.15%
+  446 2.88%
 ```
 
 The shell script `bench_ts_all_py.sh` performs benchmarking of all supported torchvision
