@@ -9,7 +9,7 @@ is executed using a special interpreter. Static typing allows for more performan
 execution of TorchScript models compared to their original PyTorch versions.
 In a typical scenario, models are trained in PyTorch using conventional tools in Python and 
 then exported via TorchScript for deployment to a production environment. TorchScript models
-can be executed by Python or C++ programs not requiring presence of the PyTorch environment.
+can be executed by Python or C++ programs not requiring the presence of the PyTorch environment.
 
 Pytorch provides two methods for generating TorchScript from the model code known as
 **tracing** and **scripting**. When tracing is used, the model is provided with the sample
@@ -1027,10 +1027,10 @@ wide_resnet50_2;7.88;6.66;5.35
 
 ## Conclusion
 
-Analysis of these perfomance data reveals that running TorchScript code with C++
+Analysis of these performance data reveals that running TorchScript code with C++
 and TorchLib provides substantial performance increase (typically about by the factor of 1.5)
 compared to running the original PyTorch model with Python. 
 
 Running TorchScript code with Python is slower than running it with C++
-but faster than running the original PyToch model.
+but faster than running the original PyTorch model.
 
