@@ -7,7 +7,7 @@ import torchvision.models as models
 
 def main():
     if len(sys.argv) != 2:
-        sys.exit("Usage: python3 bench_model_ts <model_name>")
+        sys.exit("Usage: python3 bench_model_ts.py <model_name>")
 
     name = sys.argv[1]
     print('Start ' + name)

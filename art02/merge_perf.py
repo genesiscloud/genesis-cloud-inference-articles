@@ -12,7 +12,7 @@ def get_model_name(s):
 
 def main():
     if len(sys.argv) < 3:
-        sys.exit("Usage: python3 merge_perf <path1> <path2> ...") 
+        sys.exit("Usage: python3 merge_perf.py <path1> <path2> ...") 
 
     heads = []
     model_set = set()
