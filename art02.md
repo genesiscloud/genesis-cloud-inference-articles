@@ -71,7 +71,7 @@ python3 generate_ts_resnet50.py
 ```
 
 The Python program `generate_ts_all.py` can be used to produce TorchScript code
-for most of the image classification models available in torchscript.
+for most of the image classification models available in torchvision.
 
 ```
 import torch
