@@ -122,7 +122,7 @@ input = torch.rand(1, 3, 224, 224)
 model = models.resnet50(pretrained=True)
 model.eval()
 output = model(input)
-torch.onnx.export(model, input, "resnet50.onnx", export_params=True)  
+torch.onnx.export(model, input, "./onnx/resnet50.onnx", export_params=True)
 ```
 
 This program:
@@ -133,6 +133,13 @@ This program:
 * runs dummy inference for the model
 * exports model to ONNX format and saves result in a file
 
+We store generated ONNX files in the subdirectory `onnx` which
+must be created before running the program:
+
+```
+mkdir -p onnx
+```
+
 To run this program, use the command:
 
 ```
@@ -140,6 +147,78 @@ python3 infer_generate_onnx_resnet50.py
 ```
 
 The program will produce a file `resnet50.onnx` containing the ONNX model representation.
+
+---
+
+The Python program `generate_onnx_all.py` can be used to produce ONNX descriptions
+for all considered torchvision image classification models.
+
+```
+import torch
+import torchvision.models as models
+
+MODELS = [
+    ('alexnet', models.alexnet),
+
+    ('densenet121', models.densenet121),
+    ('densenet161', models.densenet161),
+    ('densenet169', models.densenet169),
+    ('densenet201', models.densenet201),
+
+    ('mnasnet0_5', models.mnasnet0_5),
+    ('mnasnet1_0', models.mnasnet1_0),
+
+    ('mobilenet_v2', models.mobilenet_v2),
+    ('mobilenet_v3_large', models.mobilenet_v3_large),
+    ('mobilenet_v3_small', models.mobilenet_v3_small),
+
+    ('resnet18', models.resnet18),
+    ('resnet34', models.resnet34),
+    ('resnet50', models.resnet50),
+    ('resnet101', models.resnet101),
+    ('resnet152', models.resnet152),
+
+    ('resnext50_32x4d', models.resnext50_32x4d),
+    ('resnext101_32x8d', models.resnext101_32x8d),
+
+    ('shufflenet_v2_x0_5', models.shufflenet_v2_x0_5),
+    ('shufflenet_v2_x1_0', models.shufflenet_v2_x1_0),
+
+    ('squeezenet1_0', models.squeezenet1_0),
+    ('squeezenet1_1', models.squeezenet1_1),
+
+    ('vgg11', models.vgg11),
+    ('vgg11_bn', models.vgg11_bn),
+    ('vgg13', models.vgg13),
+    ('vgg13_bn', models.vgg13_bn),
+    ('vgg16', models.vgg16),
+    ('vgg16_bn', models.vgg16_bn),
+    ('vgg19', models.vgg19),
+    ('vgg19_bn', models.vgg19_bn),
+
+    ('wide_resnet50_2', models.wide_resnet50_2),
+    ('wide_resnet101_2', models.wide_resnet101_2),
+]
+
+def generate_model(name, builder):
+    print('Generate', name)
+    input = torch.rand(1, 3, 224, 224)
+    model = builder(pretrained=True)
+    model.eval()
+    output = model(input)
+    onnx_path = './onnx/' + name + '.onnx'
+    torch.onnx.export(model, input, onnx_path, export_params=True) 
+
+for name, model in MODELS:
+    generate_model(name, model)  
+```
+
+To run this program, enter the following commands:
+
+```
+mkdir -p onnx
+python3 generate_onnx_all.py
+```
 
 
 ## Step 4. Convert ONNX format to TensorRT plan using Python
@@ -158,7 +237,7 @@ import tensorrt as trt
 
 def main():
     if len(sys.argv) != 3:
-        sys.exit("Usage: python3 trt_onnx_parser <input_onnx_path> <output_plan_path>")
+        sys.exit("Usage: python3 trt_onnx_parser.py <input_onnx_path> <output_plan_path>")
 
     onnx_path = sys.argv[1]
     plan_path = sys.argv[2]
@@ -168,6 +247,9 @@ def main():
     network = builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
     config = builder.create_builder_config()
     config.max_workspace_size = 256 * 1024 * 1024
+    # setup timimg cache just to avoid warnings at runtime
+    cache = config.create_timing_cache(b"")
+    config.set_timing_cache(cache, False)
 
     parser = trt.OnnxParser(network, logger)
     ok = parser.parse_from_file(onnx_path)
@@ -219,18 +301,120 @@ a serialized network (plan) stored in a host memory buffer
 The program has two command line arguments: a path to the input ONNX file and
 a path to the output TensorRT plan file.
 
+We store generated plan files in the subdirectory `plan` which
+must be created before running the program:
+
+```
+mkdir -p plan
+```
+
 To run this program for conversion of ResNet50 ONNX representation, use the command:
 
 ```
-python3 trt_onnx_parser.py resnet50.onnx resnet50.plan
+python3 trt_onnx_parser.py ./onnx/resnet50.onnx ./plan/resnet50.plan
 ```
+
+The Python program `trt_onnx_parser_all.py` can be used to produce ONNX representations
+for all considered torchvision image classification models.
+
+```
+import sys
+import tensorrt as trt
+
+MODELS = [
+    'alexnet',
+
+    'densenet121',
+    'densenet161',
+    'densenet169',
+    'densenet201',
+
+    'mnasnet0_5',
+    'mnasnet1_0',
+
+    'mobilenet_v2',
+    'mobilenet_v3_large',
+    'mobilenet_v3_small',
+
+    'resnet18',
+    'resnet34',
+    'resnet50',
+    'resnet101',
+    'resnet152',
+
+    'resnext50_32x4d',
+    'resnext101_32x8d',
+
+    'shufflenet_v2_x0_5',
+    'shufflenet_v2_x1_0',
+
+    'squeezenet1_0',
+    'squeezenet1_1',
+
+    'vgg11',
+    'vgg11_bn',
+    'vgg13',
+    'vgg13_bn',
+    'vgg16',
+    'vgg16_bn',
+    'vgg19',
+    'vgg19_bn',
+
+    'wide_resnet50_2',
+    'wide_resnet101_2',
+]
+
+
+def setup_builder():
+    logger = trt.Logger()
+    builder = trt.Builder(logger)
+    return (logger, builder)
+
+def generate_plan(logger, builder, name):
+    print('Generate TensorRT plan for ' + name)
+
+    onnx_path = './onnx/' + name + '.onnx'
+    plan_path = './plan/' + name + '.plan'
+
+    network = builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
+    config = builder.create_builder_config()
+    config.max_workspace_size = 256 * 1024 * 1024
+    # setup timing cache just to avoid warnings at runtime
+    cache = config.create_timing_cache(b"")
+    config.set_timing_cache(cache, False)
+
+    parser = trt.OnnxParser(network, logger)
+    ok = parser.parse_from_file(onnx_path)
+    if not ok:
+        sys.exit('ONNX parse error')
+
+    plan = builder.build_serialized_network(network, config)
+    with open(plan_path, "wb") as fp:
+        fp.write(plan)
+
+def main():
+    logger, builder = setup_builder()
+    for name in MODELS:
+        generate_plan(logger, builder, name)
+    print('DONE')
+
+main() 
+```
+
+To run this program, enter the following commands:
+
+```
+mkdir -p onnx
+python3 trt_onnx_parser_all.py
+```
+
 
 ## Step 5. Convert ONNX format to TensorRT plan using C++
 
 Conversion of the ONNX representation to TensorRT plan can be also
 implemented using the TensorRT C++ API.
 
-The C++ program `generate_onnx_resnet50.cpp` serves this purpose.
+The C++ program `trt_onnx_parser.cpp` serves this purpose.
 
 ```
 #include <cstdio>
@@ -250,7 +434,6 @@ public:
     ~OnnxParser();
 public:
     void Init();
-    void Done();
     void Parse(const char *onnxPath, const char *planPath);
 private:
     bool m_active;
@@ -258,6 +441,7 @@ private:
     UniquePtr<nvinfer1::IBuilder> m_builder;
     UniquePtr<nvinfer1::INetworkDefinition> m_network;
     UniquePtr<nvinfer1::IBuilderConfig> m_config;
+    UniquePtr<nvinfer1::ITimingCache> m_cache;
     UniquePtr<nvonnxparser::IParser> m_parser;
 };
 
@@ -285,17 +469,15 @@ void OnnxParser::Init() {
     if (m_parser == nullptr) {
         Error("Error creating ONNX parser");
     }
-}
-
-void OnnxParser::Done() {
-    if (!m_active) {
-        return;
+    // setup timing cache just to avoid warnings at runtime
+    m_cache.reset(m_config->createTimingCache(nullptr, 0));
+    if (m_cache == nullptr) {
+        Error("Error creating timing cache");
     }
-    m_parser.reset();
-    m_config.reset();
-    m_network.reset();
-    m_builder.reset();
-    m_active = false;
+    bool ok = m_config->setTimingCache(*m_cache, false);
+    if (!ok) {
+        Error("Error setting timing cache");
+    }
 }
 
 void OnnxParser::Parse(const char *onnxPath, const char *planPath) {
@@ -326,10 +508,10 @@ int main(int argc, char *argv[]) {
     }
     const char *onnxPath = argv[1];
     const char *planPath = argv[2];
+    printf("Generate TensorRT plan for %s\n", onnxPath);
     OnnxParser parser;
     parser.Init();
     parser.Parse(onnxPath, planPath);   
-    parser.Done();
     return 0;
 }
 ```
@@ -405,7 +587,53 @@ a path to the output TensorRT plan file.
 To run this program for conversion of ResNet50 ONNX representation, use the command:
 
 ```
-./bin/trt_onnx_parser resnet50.onnx resnet50.plan
+./bin/trt_onnx_parser ./onnx/resnet50.onnx ./plan/resnet50.plan
+```
+
+The shell script `trt_onnx_parser_all.sh` uses the C++ program to generate 
+ONNX representations for all considered torchvision image classification files:
+
+```
+#!/bin/bash
+
+./bin/trt_onnx_parser ./onnx/alexnet.onnx ./plan/alexnet.plan
+./bin/trt_onnx_parser ./onnx/densenet121.onnx ./plan/densenet121.plan
+./bin/trt_onnx_parser ./onnx/densenet161.onnx ./plan/densenet161.plan
+./bin/trt_onnx_parser ./onnx/densenet169.onnx ./plan/densenet169.plan
+./bin/trt_onnx_parser ./onnx/densenet201.onnx ./plan/densenet201.plan
+./bin/trt_onnx_parser ./onnx/mnasnet0_5.onnx ./plan/mnasnet0_5.plan
+./bin/trt_onnx_parser ./onnx/mnasnet1_0.onnx ./plan/mnasnet1_0.plan
+./bin/trt_onnx_parser ./onnx/mobilenet_v2.onnx ./plan/mobilenet_v2.plan
+./bin/trt_onnx_parser ./onnx/mobilenet_v3_large.onnx ./plan/mobilenet_v3_large.plan
+./bin/trt_onnx_parser ./onnx/mobilenet_v3_small.onnx ./plan/mobilenet_v3_small.plan
+./bin/trt_onnx_parser ./onnx/resnet101.onnx ./plan/resnet101.plan
+./bin/trt_onnx_parser ./onnx/resnet152.onnx ./plan/resnet152.plan
+./bin/trt_onnx_parser ./onnx/resnet18.onnx ./plan/resnet18.plan
+./bin/trt_onnx_parser ./onnx/resnet34.onnx ./plan/resnet34.plan
+./bin/trt_onnx_parser ./onnx/resnet50.onnx ./plan/resnet50.plan
+./bin/trt_onnx_parser ./onnx/resnext101_32x8d.onnx ./plan/resnext101_32x8d.plan
+./bin/trt_onnx_parser ./onnx/resnext50_32x4d.onnx ./plan/resnext50_32x4d.plan
+./bin/trt_onnx_parser ./onnx/shufflenet_v2_x0_5.onnx ./plan/shufflenet_v2_x0_5.plan
+./bin/trt_onnx_parser ./onnx/shufflenet_v2_x1_0.onnx ./plan/shufflenet_v2_x1_0.plan
+./bin/trt_onnx_parser ./onnx/squeezenet1_0.onnx ./plan/squeezenet1_0.plan
+./bin/trt_onnx_parser ./onnx/squeezenet1_1.onnx ./plan/squeezenet1_1.plan
+./bin/trt_onnx_parser ./onnx/vgg11.onnx ./plan/vgg11.plan
+./bin/trt_onnx_parser ./onnx/vgg11_bn.onnx ./plan/vgg11_bn.plan
+./bin/trt_onnx_parser ./onnx/vgg13.onnx ./plan/vgg13.plan
+./bin/trt_onnx_parser ./onnx/vgg13_bn.onnx ./plan/vgg13_bn.plan
+./bin/trt_onnx_parser ./onnx/vgg16.onnx ./plan/vgg16.plan
+./bin/trt_onnx_parser ./onnx/vgg16_bn.onnx ./plan/vgg16_bn.plan
+./bin/trt_onnx_parser ./onnx/vgg19.onnx ./plan/vgg19.plan
+./bin/trt_onnx_parser ./onnx/vgg19_bn.onnx ./plan/vgg19_bn.plan
+./bin/trt_onnx_parser ./onnx/wide_resnet101_2.onnx ./plan/wide_resnet101_2.plan
+./bin/trt_onnx_parser ./onnx/wide_resnet50_2.onnx ./plan/wide_resnet50_2.plan
+```
+
+Running this script is straightforward:
+
+```
+mkdir -p ./plan
+trt_onnx_parser_all.sh
 ```
 
 
@@ -420,7 +648,7 @@ These include:
 
 See the respective articles for details on obtaining these files.
 
-The Python program `trt_infer_model.py` implements TensorRT inference using
+The Python program `trt_infer_plan.py` implements TensorRT inference using
 the previously generated TensorRT plan and a pre-processed input image.
 
 ```
@@ -443,10 +671,12 @@ def topk(x, k):
 
 def main():
     if len(sys.argv) != 3:
-        sys.exit("Usage: python3 trt_infer_plan <plan_path> <input_path>")
+        sys.exit("Usage: python3 trt_infer_plan.py <plan_path> <input_path>")
 
     plan_path = sys.argv[1]
     input_path = sys.argv[2]
+
+    print("Start " + plan_path)
 
     # read the plan
     with open(plan_path, "rb") as fp:
@@ -466,7 +696,6 @@ def main():
     context = engine.create_execution_context()
 
     # create device buffers and TensorRT bindings
-    stream = cuda.Stream()
     output = np.zeros((1000), dtype=np.float32)
     d_input = cuda.mem_alloc(input.nbytes)
     d_output = cuda.mem_alloc(output.nbytes)
@@ -474,7 +703,7 @@ def main():
 
     # copy input to device, run inference, copy output to host
     cuda.memcpy_htod(d_input, input)
-    context.execute_async_v2(bindings=bindings, stream_handle=stream.handle)
+    context.execute_v2(bindings=bindings)
     cuda.memcpy_dtoh(output, d_output)
     
     # apply softmax and get Top-5 results
@@ -482,10 +711,11 @@ def main():
     top5p, top5v = topk(output, 5)
 
     # print results
+    print("Top-5 results")
     for ind, val in zip(top5p, top5v):
-        print("{0} {1:.2f}%".format(categories[ind], val * 100))
+        print("  {0} {1:.2f}%".format(categories[ind], val * 100))
 
-main()  
+main()
 ```
 
 This program uses the following TensorRT API object classes:
@@ -523,7 +753,7 @@ To run this program for the previously created ResNet50 plan and husky image,
 use the command:
 
 ```
-python3 trt_infer_plan.py resnet50.plan ./data/husky01.dat
+python3 trt_infer_plan.py ./plan/resnet50.plan ./data/husky01.dat
 ```
 
 The program output will look like:
@@ -563,7 +793,6 @@ public:
     ~Engine();
 public:
     void Init(const std::vector<char> &plan);
-    void Done();
     void Infer(const std::vector<float> &input, std::vector<float> &output);
     void DiagBindings();
 private:
@@ -588,15 +817,6 @@ void Engine::Init(const std::vector<char> &plan) {
         Error("Error deserializing CUDA engine");
     }
     m_active = true;
-}
-
-void Engine::Done() {
-    if (!m_active) {
-        return;
-    }
-    m_engine.reset();
-    m_runtime.reset(); 
-    m_active = false;
 }
 
 void Engine::Infer(const std::vector<float> &input, std::vector<float> &output) {
@@ -695,6 +915,8 @@ int main(int argc, char *argv[]) {
     const char *planPath = argv[1];
     const char *inputPath = argv[2];
 
+    printf("Start %s\n", planPath);
+
     std::vector<std::string> classes;
     ReadClasses("imagenet_classes.txt", classes);
 
@@ -710,7 +932,6 @@ int main(int argc, char *argv[]) {
     engine.Init(plan);
     engine.DiagBindings();
     engine.Infer(input, output);
-    engine.Done();
 
     Softmax(static_cast<int>(output.size()), output.data());
     PrintOutput(output, classes);
@@ -782,7 +1003,7 @@ To run this program for the previously created ResNet50 plan and husky image,
 use the command:
 
 ```
-./bin/trt_infer_plan resnet50.plan ./data/husky01.dat
+./bin/trt_infer_plan ./plan/resnet50.plan ./data/husky01.dat
 ```
 
 The program output will look like:
@@ -802,7 +1023,7 @@ Top-5 results
 
 ## Step 8. Run TensorRT benchmarking using Python
 
-The Python program `trt_bench_model.py` implements inference benchmarking using
+The Python program `trt_bench_plan.py` implements inference benchmarking using
 the previously generated TensorRT plan and a pre-processed input image.
 
 ```
@@ -826,9 +1047,11 @@ def topk(x, k):
 
 def main():
     if len(sys.argv) != 2:
-        sys.exit("Usage: python3 trt_bench_plan <plan_path>")
+        sys.exit("Usage: python3 trt_bench_plan.py <plan_path>")
 
     plan_path = sys.argv[1]
+
+    print("Start " + plan_path)
 
     # read the plan
     with open(plan_path, "rb") as fp:
@@ -846,7 +1069,6 @@ def main():
     context = engine.create_execution_context()
 
     # create device buffers and TensorRT bindings
-    stream = cuda.Stream()
     output = np.zeros((1000), dtype=np.float32)
     d_input = cuda.mem_alloc(input.nbytes)
     d_output = cuda.mem_alloc(output.nbytes)
@@ -857,14 +1079,17 @@ def main():
 
     #  warm up
     for i in range(1, 10):
-        context.execute_async_v2(bindings=bindings, stream_handle=stream.handle)
+        context.execute_v2(bindings=bindings)
 
     # benchmark
     start = perf_counter()
     for i in range(1, 100):
-        context.execute_async_v2(bindings=bindings, stream_handle=stream.handle)
+        context.execute_v2(bindings=bindings)
     end = perf_counter()
-    print('Model {0}: elapsed time {1:.2f} ms'.format(plan_path, ((end - start) / 100) * 1000))
+    elapsed = ((end - start) / 100) * 1000
+    print('Model {0}: elapsed time {1:.2f} ms'.format(plan_path, elapsed))
+    # record for automated extraction
+    print('#{0};{1:f}'.format(plan_path, elapsed))
 
     # copy output to host
     cuda.memcpy_dtoh(output, d_output)
@@ -909,12 +1134,15 @@ the specified bindings and CUDA stream handle
 * gets labels and probabilities for top 5 results
 * prints top 5 classes and probabilities in a human-readable form
 
+The program prints a special formatted line starting with `"#"` that
+will be later used for automated extraction of performance metrics.
+
 The program uses a path to the TensorRT plan file as its single command line argument.
 
 To run this program for the previously created ResNet50 plan, use the command:
 
 ```
-python3 trt_bench_plan.py resnet50.plan
+python3 trt_bench_plan.py ./plan/resnet50.plan
 ```
 
 The program output will look like:
@@ -928,6 +1156,56 @@ Top-5 results
   783 3.20%
   892 2.93%
 ```
+
+The shell script `bench_plan_all_py.sh` performs benchmarking of all supported torchvision
+models:
+
+```
+#!/bin/bash
+
+echo "#head;TensorRT (Python)"
+
+python3 trt_bench_plan.py ./plan/alexnet.plan
+python3 trt_bench_plan.py ./plan/densenet121.plan
+python3 trt_bench_plan.py ./plan/densenet161.plan
+python3 trt_bench_plan.py ./plan/densenet169.plan
+python3 trt_bench_plan.py ./plan/densenet201.plan
+python3 trt_bench_plan.py ./plan/mnasnet0_5.plan
+python3 trt_bench_plan.py ./plan/mnasnet1_0.plan
+python3 trt_bench_plan.py ./plan/mobilenet_v2.plan
+python3 trt_bench_plan.py ./plan/mobilenet_v3_large.plan
+python3 trt_bench_plan.py ./plan/mobilenet_v3_small.plan
+python3 trt_bench_plan.py ./plan/resnet101.plan
+python3 trt_bench_plan.py ./plan/resnet152.plan
+python3 trt_bench_plan.py ./plan/resnet18.plan
+python3 trt_bench_plan.py ./plan/resnet34.plan
+python3 trt_bench_plan.py ./plan/resnet50.plan
+python3 trt_bench_plan.py ./plan/resnext101_32x8d.plan
+python3 trt_bench_plan.py ./plan/resnext50_32x4d.plan
+python3 trt_bench_plan.py ./plan/shufflenet_v2_x0_5.plan
+python3 trt_bench_plan.py ./plan/shufflenet_v2_x1_0.plan
+python3 trt_bench_plan.py ./plan/squeezenet1_0.plan
+python3 trt_bench_plan.py ./plan/squeezenet1_1.plan
+python3 trt_bench_plan.py ./plan/vgg11.plan
+python3 trt_bench_plan.py ./plan/vgg11_bn.plan
+python3 trt_bench_plan.py ./plan/vgg13.plan
+python3 trt_bench_plan.py ./plan/vgg13_bn.plan
+python3 trt_bench_plan.py ./plan/vgg16.plan
+python3 trt_bench_plan.py ./plan/vgg16_bn.plan
+python3 trt_bench_plan.py ./plan/vgg19.plan
+python3 trt_bench_plan.py ./plan/vgg19_bn.plan
+python3 trt_bench_plan.py ./plan/wide_resnet101_2.plan
+python3 trt_bench_plan.py ./plan/wide_resnet50_2.plan 
+```
+
+Running this script is straightforward:
+
+```
+./bench_plan_all_py.sh >bench_trt_py.log
+```
+
+The benchmarking log will be saved in `bench_trt_py.log` that later will be
+used for performance comparison of various deployment methods.
 
 
 ## Step 9. Run TensorRT benchmarking using C++
@@ -956,7 +1234,6 @@ public:
     ~Engine();
 public:
     void Init(const std::vector<char> &plan);
-    void Done();
     void StartInfer(const std::vector<float> &input);
     void RunInfer();
     void EndInfer(std::vector<float> &output);
@@ -985,16 +1262,6 @@ void Engine::Init(const std::vector<char> &plan) {
         Error("Error deserializing CUDA engine");
     }
     m_active = true;
-}
-
-void Engine::Done() {
-    if (!m_active) {
-        return;
-    }
-    m_context.reset();
-    m_engine.reset();
-    m_runtime.reset(); 
-    m_active = false;
 }
 
 void Engine::StartInfer(const std::vector<float> &input) {
@@ -1070,6 +1337,8 @@ int main(int argc, char *argv[]) {
     }
     const char *planPath = argv[1];
 
+    printf("Start %s\n", planPath);
+
     int repeat = 100;
 
     std::vector<char> plan;
@@ -1096,9 +1365,10 @@ int main(int argc, char *argv[]) {
     clock.Stop();
     float t = clock.Elapsed();
     printf("Model %s: elapsed time %f ms / %d = %f\n", planPath, t, repeat, t / float(repeat));
+    // record for automated extraction
+    printf("#%s;%f\n", planPath, t / float(repeat)); 
 
     engine.EndInfer(output);
-    engine.Done();
 
     Softmax(static_cast<int>(output.size()), output.data());
     PrintOutput(output);
@@ -1153,6 +1423,9 @@ using the `RunInfer` method
 * gets labels and probabilities for top 5 results
 * prints top 5 classes and probabilities in a human-readable form
 
+The program prints a special formatted line starting with `"#"` that
+will be later used for automated extraction of performance metrics.
+
 The shell script `build_trt_bench_plan.sh` must be used to compile and link this program:
 
 ```
@@ -1178,7 +1451,7 @@ a path to the file containing the pre-processed input image.
 To run this program for the previously created ResNet50 plan, use the command:
 
 ```
-./bin/trt_bench_plan resnet50.plan
+./bin/trt_bench_plan ./plan/resnet50.plan
 ```
 
 The program output will look like:
@@ -1192,4 +1465,125 @@ Top-5 results
   [3] 892 3.51%
   [4] 446 3.18%
 ```
+
+The shell script `bench_plan_all.sh` performs benchmarking of all supported torchvision
+models:
+
+```
+#!/bin/bash
+
+echo "#head;TensorRT (C++)"
+
+./bin/trt_bench_plan ./plan/alexnet.plan
+./bin/trt_bench_plan ./plan/densenet121.plan
+./bin/trt_bench_plan ./plan/densenet161.plan
+./bin/trt_bench_plan ./plan/densenet169.plan
+./bin/trt_bench_plan ./plan/densenet201.plan
+./bin/trt_bench_plan ./plan/mnasnet0_5.plan
+./bin/trt_bench_plan ./plan/mnasnet1_0.plan
+./bin/trt_bench_plan ./plan/mobilenet_v2.plan
+./bin/trt_bench_plan ./plan/mobilenet_v3_large.plan
+./bin/trt_bench_plan ./plan/mobilenet_v3_small.plan
+./bin/trt_bench_plan ./plan/resnet101.plan
+./bin/trt_bench_plan ./plan/resnet152.plan
+./bin/trt_bench_plan ./plan/resnet18.plan
+./bin/trt_bench_plan ./plan/resnet34.plan
+./bin/trt_bench_plan ./plan/resnet50.plan
+./bin/trt_bench_plan ./plan/resnext101_32x8d.plan
+./bin/trt_bench_plan ./plan/resnext50_32x4d.plan
+./bin/trt_bench_plan ./plan/shufflenet_v2_x0_5.plan
+./bin/trt_bench_plan ./plan/shufflenet_v2_x1_0.plan
+./bin/trt_bench_plan ./plan/squeezenet1_0.plan
+./bin/trt_bench_plan ./plan/squeezenet1_1.plan
+./bin/trt_bench_plan ./plan/vgg11.plan
+./bin/trt_bench_plan ./plan/vgg11_bn.plan
+./bin/trt_bench_plan ./plan/vgg13.plan
+./bin/trt_bench_plan ./plan/vgg13_bn.plan
+./bin/trt_bench_plan ./plan/vgg16.plan
+./bin/trt_bench_plan ./plan/vgg16_bn.plan
+./bin/trt_bench_plan ./plan/vgg19.plan
+./bin/trt_bench_plan ./plan/vgg19_bn.plan
+./bin/trt_bench_plan ./plan/wide_resnet101_2.plan
+./bin/trt_bench_plan ./plan/wide_resnet50_2.plan
+```
+
+Running this script is straightforward:
+
+```
+./bench_plan_all.sh >bench_trt.log
+```
+
+The benchmarking log will be saved in `bench_trt.log` that later will be
+used for performance comparison of various deployment methods.
+
+
+## Step 10. Extraction of performance metrics from benchmarking logs
+
+The Python program `merge_perf.py` introduced in Article 2 extracts 
+performance metrics from multiple benchmarking log files and merges them 
+in a single CSV file in a form suitable for further analysis.
+
+The program has two or more command line arguments, each argument specifying a path
+to the log file.
+
+The program extracts special records starting with `"#"` from all input files, 
+merges the extracted information, and saves it as a single CSV file. 
+Each line of the output file  corresponds to one model and each column corresponds to 
+one deployment method.
+
+Assuming that benchmarking described in the Articles 1, 2, and 3 has been
+performed in the sibling directories `art01`, `art02`, and `art03` respectively 
+and the current directory is `art03`, the following command can be used to merge the three log
+files considered so far:
+
+```
+python3 merge_perf.py ..\art01\bench_torch.log ..\art02\bench_ts_py.log ..\art02\bench_ts.log bench_trt_py.log bench_trt.log >perf03.csv
+```
+
+The output file `perf03.csv` will look like:
+
+```
+Model;PyTorch;TorchScript (Python);TorchScript (C++);TensorRT (Python);TensorRT (C++)
+alexnet;1.23;1.19;1.04;0.58;0.60
+densenet121;19.79;19.45;13.34;3.73;3.67
+densenet161;29.43;30.32;20.70;7.99;7.40
+densenet169;28.47;30.06;20.11;8.17;7.32
+densenet201;33.48;36.21;22.70;12.24;10.96
+mnasnet0_5;5.45;4.65;3.67;0.64;0.61
+mnasnet1_0;5.66;4.62;3.95;0.80;0.80
+mobilenet_v2;6.19;5.63;4.02;0.77;0.76
+mobilenet_v3_large;8.07;6.71;5.18;0.98;0.91
+mobilenet_v3_small;6.37;5.66;4.19;0.74;0.67
+resnet101;15.80;12.76;10.81;3.12;3.18
+resnet152;23.66;19.08;16.37;4.57;4.57
+resnet18;3.39;2.69;2.30;1.08;1.04
+resnet34;6.11;4.83;4.11;1.84;1.79
+resnet50;7.99;6.42;5.47;1.75;1.75
+resnext101_32x8d;21.69;18.82;16.66;8.06;8.11
+resnext50_32x4d;6.45;5.10;4.41;2.13;2.08
+shufflenet_v2_x0_5;6.33;5.12;4.01;0.47;0.49
+shufflenet_v2_x1_0;6.84;5.59;4.44;0.88;0.86
+squeezenet1_0;3.05;2.95;2.33;0.41;0.42
+squeezenet1_1;3.03;2.79;2.31;0.31;0.31
+vgg11;1.91;1.81;1.84;1.74;1.75
+vgg11_bn;2.37;2.09;1.96;1.75;1.75
+vgg13;2.26;2.21;2.27;2.16;2.15
+vgg13_bn;2.62;2.42;2.43;2.14;2.17
+vgg16;2.82;2.79;2.88;2.64;2.61
+vgg16_bn;3.23;3.03;3.06;2.61;2.65
+vgg19;3.29;3.36;3.40;3.17;3.14
+vgg19_bn;3.72;3.60;3.64;3.07;3.13
+wide_resnet101_2;15.50;12.32;10.55;5.58;5.45
+wide_resnet50_2;7.88;6.66;5.35;2.83;2.95 
+```
+
+## Conclusion
+
+Analysis of these performance data reveals that using TensorRT
+provides substantial performance increase compared any previously considered
+deployment methods.
+
+Differences between TensorRT performance data for Python and C++ are within the experimental error. 
+Python and C++ can be considered equally good for running TensorRT.
+
 

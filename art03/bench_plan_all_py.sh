@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "TensorRT (Python)"
+echo "#head;TensorRT (Python)"
 
 python3 trt_bench_plan.py ./plan/alexnet.plan
 python3 trt_bench_plan.py ./plan/densenet121.plan
