@@ -275,6 +275,7 @@ This program uses the following TensorRT API object classes:
 * `Builder` - a factory used to create several other classes
 * `INetworkDefinition` - representation of TensorRT networks (models)
 * `IBuilderConfig` - a class used to hold configuration parameters for `Builder`
+* `ITimingCahche` - a class handling timing information
 * `OnnxParser` - a class used for parsing ONNX models into TensorRT network definitions
 * `IHostMemory` - representation of buffers in a host memory
 
@@ -288,6 +289,7 @@ an empty network instance
 a builder configuration instance
 * sets the `max_workspace_size` configuration parameter representing
 the maximum workspace size that can be used by inference algorithms
+* sets up timing cache `cache: ITimingCache`
 * creates `parser: OnnxParser` representing an ONNX parser instance;
 reference to the previously created empty network definition is attached 
 to the parser
@@ -297,6 +299,9 @@ the attached network definition object
 * uses `builder` to create `plan: IHostMemory` representing
 a serialized network (plan) stored in a host memory buffer
 * saves the plan in the output file
+
+Note that in this example the timing cache is set up only to avoid
+warning messages at runtime.
 
 The program has two command line arguments: a path to the input ONNX file and
 a path to the output TensorRT plan file.
@@ -534,6 +539,7 @@ This program uses the following TensorRT API object classes:
 * `nvinfer1::IBuilder` - a factory used to create several other classes
 * `nvinfer1::INetworkDefinition` - representation of TensorRT networks (models)
 * `nvinfer1::IBuilderConfig` - a class used to hold configuration parameters for `IBuilder`
+* `nvinfer1::ITimingCahche` - a class handling timing information
 * `nvonnxparser::IParser` - a class used for parsing ONNX models into TensorRT network definitions
 * `nvinfer1::IHostMemory` - representation of buffers in a host memory
 
@@ -549,9 +555,13 @@ an empty network instance
 a builder configuration instance
 * sets the `maxWorkspaceSize` configuration parameter representing
 the maximum workspace size that can be used by inference algorithms
+* sets up timing cache `cache`
 * creates `m_parser` representing an ONNX parser instance;
 reference to the previously created empty network definition is attached 
 to the parser
+
+Note that in this example the timing cache is set up only to avoid
+warning messages at runtime.
 
 The `Parse` method performs the following steps:
 
@@ -1585,5 +1595,18 @@ deployment methods.
 
 Differences between TensorRT performance data for Python and C++ are within the experimental error. 
 Python and C++ can be considered equally good for running TensorRT.
+
+
+## Further reading
+
+These documentation on NVIDIA TensorRT 8.2.1 can be used for further references:
+
+* [NVIDIA TensorRT Developer Guide](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-821/developer-guide/index.html)
+* [NVIDIA TensorRT C++ API](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-821/api/c_api/index.html)
+* [NVIDIA TensorRT Python API](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-821/api/python_api/index.html)
+* [NVIDIA TensorRT Sample Support Guide](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-821/sample-support-guide/index.html)
+
+The index of documents covering all TensorRT versions is available
+[here](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html).
 
 
