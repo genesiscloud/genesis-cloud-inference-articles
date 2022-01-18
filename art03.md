@@ -1602,9 +1602,12 @@ Python and C++ can be considered equally good for running TensorRT.
 This documentation on NVIDIA TensorRT 8.0.3 can be used for further references:
 
 * [NVIDIA TensorRT Developer Guide](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-803/developer-guide/index.html)
-* [NVIDIA TensorRT C++ API](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-803/api/c_api/index.html)
-* [NVIDIA TensorRT Python API](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-803/api/python_api/index.html)
 * [NVIDIA TensorRT Sample Support Guide](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-803/sample-support-guide/index.html)
+
+At the time of writing, the detailed API information was available only for version 8.0.1:
+
+* [NVIDIA TensorRT C++ API](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-801/api/c_api/index.html)
+* [NVIDIA TensorRT Python API](https://docs.nvidia.com/deeplearning/tensorrt/archives/tensorrt-801/api/python_api/index.html)
 
 The index of documents covering all TensorRT versions is available
 [here](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html).
