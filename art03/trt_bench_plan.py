@@ -19,7 +19,7 @@ def topk(x, k):
 
 def main():
     if len(sys.argv) != 2:
-        sys.exit("Usage: python3 trt_bench_plan <plan_path>")
+        sys.exit("Usage: python3 trt_bench_plan.py <plan_path>")
 
     plan_path = sys.argv[1]
 

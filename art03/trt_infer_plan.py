@@ -18,7 +18,7 @@ def topk(x, k):
 
 def main():
     if len(sys.argv) != 3:
-        sys.exit("Usage: python3 trt_infer_plan <plan_path> <input_path>")
+        sys.exit("Usage: python3 trt_infer_plan.py <plan_path> <input_path>")
 
     plan_path = sys.argv[1]
     input_path = sys.argv[2]

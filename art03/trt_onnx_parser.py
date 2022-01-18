@@ -4,7 +4,7 @@ import tensorrt as trt
 
 def main():
     if len(sys.argv) != 3:
-        sys.exit("Usage: python3 trt_onnx_parser <input_onnx_path> <output_plan_path>")
+        sys.exit("Usage: python3 trt_onnx_parser.py <input_onnx_path> <output_plan_path>")
 
     onnx_path = sys.argv[1]
     plan_path = sys.argv[2]
