@@ -1580,7 +1580,7 @@ wide_resnet50_2;7.88;6.66;5.35;2.83;2.95
 ## Conclusion
 
 Analysis of these performance data reveals that using TensorRT
-provides substantial performance increase compared to any previously considered
+provides substantial performance increase compared to all previously considered
 deployment methods.
 
 Differences between TensorRT performance data for Python and C++ are within the experimental error. 
