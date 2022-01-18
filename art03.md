@@ -644,7 +644,7 @@ article reuse several files introduced in Articles 1 and 2.
 These include:
 
 * `imagenet_classes.txt` - class descriptions for ImageNet labels (Article 1)
-* `./data/husky01.dat` - pre-processed input tensor for the husky image
+* `./data/husky01.dat` - pre-processed input tensor for the husky image (Article 2)
 
 See the respective articles for details on obtaining these files.
 
@@ -1517,7 +1517,7 @@ The benchmarking log will be saved in `bench_trt.log` that later will be
 used for performance comparison of various deployment methods.
 
 
-## Step 10. Extraction of performance metrics from benchmarking logs
+## Step 10. Extract performance metrics from benchmarking logs
 
 The Python program `merge_perf.py` introduced in Article 2 extracts 
 performance metrics from multiple benchmarking log files and merges them 
@@ -1580,7 +1580,7 @@ wide_resnet50_2;7.88;6.66;5.35;2.83;2.95
 ## Conclusion
 
 Analysis of these performance data reveals that using TensorRT
-provides substantial performance increase compared any previously considered
+provides substantial performance increase compared to any previously considered
 deployment methods.
 
 Differences between TensorRT performance data for Python and C++ are within the experimental error. 
