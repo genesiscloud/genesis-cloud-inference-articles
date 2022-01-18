@@ -1547,7 +1547,7 @@ and the current directory is `art03`, the following command can be used to merge
 files considered so far:
 
 ```
-python3 merge_perf.py ..\art01\bench_torch.log ..\art02\bench_ts_py.log ..\art02\bench_ts.log bench_trt_py.log bench_trt.log >perf03.csv
+python3 merge_perf.py ../art01/bench_torch.log ../art02/bench_ts_py.log ../art02/bench_ts.log bench_trt_py.log bench_trt.log >perf03.csv
 ```
 
 The output file `perf03.csv` will look like:

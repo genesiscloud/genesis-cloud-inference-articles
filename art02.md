@@ -993,7 +993,7 @@ directory is `art02`, the following command can be used to merge the three log
 files considered so far:
 
 ```
-python3 merge_perf.py ..\art01\bench_torch.log bench_ts_py.log bench_ts.log >perf02.csv
+python3 merge_perf.py ../art01/bench_torch.log bench_ts_py.log bench_ts.log >perf02.csv
 ```
 
 The output file `perf02.csv` will look like:
