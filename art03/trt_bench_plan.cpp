@@ -18,7 +18,6 @@ public:
     ~Engine();
 public:
     void Init(const std::vector<char> &plan);
-    void Done();
     void StartInfer(const std::vector<float> &input);
     void RunInfer();
     void EndInfer(std::vector<float> &output);
@@ -47,16 +46,6 @@ void Engine::Init(const std::vector<char> &plan) {
         Error("Error deserializing CUDA engine");
     }
     m_active = true;
-}
-
-void Engine::Done() {
-    if (!m_active) {
-        return;
-    }
-    m_context.reset();
-    m_engine.reset();
-    m_runtime.reset(); 
-    m_active = false;
 }
 
 void Engine::StartInfer(const std::vector<float> &input) {
@@ -132,6 +121,8 @@ int main(int argc, char *argv[]) {
     }
     const char *planPath = argv[1];
 
+    printf("Start %s\n", planPath);
+
     int repeat = 100;
 
     std::vector<char> plan;
@@ -158,13 +149,15 @@ int main(int argc, char *argv[]) {
     clock.Stop();
     float t = clock.Elapsed();
     printf("Model %s: elapsed time %f ms / %d = %f\n", planPath, t, repeat, t / float(repeat));
+    // record for automated extraction
+    printf("#%s;%f\n", planPath, t / float(repeat)); 
 
     engine.EndInfer(output);
-    engine.Done();
 
     Softmax(static_cast<int>(output.size()), output.data());
     PrintOutput(output);
 
     return 0;
 }
+
 

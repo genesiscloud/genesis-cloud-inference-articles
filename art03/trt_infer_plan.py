@@ -23,6 +23,8 @@ def main():
     plan_path = sys.argv[1]
     input_path = sys.argv[2]
 
+    print("Start " + plan_path)
+
     # read the plan
     with open(plan_path, "rb") as fp:
         plan = fp.read()
@@ -41,7 +43,6 @@ def main():
     context = engine.create_execution_context()
 
     # create device buffers and TensorRT bindings
-    stream = cuda.Stream()
     output = np.zeros((1000), dtype=np.float32)
     d_input = cuda.mem_alloc(input.nbytes)
     d_output = cuda.mem_alloc(output.nbytes)
@@ -49,7 +50,7 @@ def main():
 
     # copy input to device, run inference, copy output to host
     cuda.memcpy_htod(d_input, input)
-    context.execute_async_v2(bindings=bindings, stream_handle=stream.handle)
+    context.execute_v2(bindings=bindings)
     cuda.memcpy_dtoh(output, d_output)
     
     # apply softmax and get Top-5 results
@@ -57,8 +58,9 @@ def main():
     top5p, top5v = topk(output, 5)
 
     # print results
+    print("Top-5 results")
     for ind, val in zip(top5p, top5v):
-        print("{0} {1:.2f}%".format(categories[ind], val * 100))
+        print("  {0} {1:.2f}%".format(categories[ind], val * 100))
 
 main()
 

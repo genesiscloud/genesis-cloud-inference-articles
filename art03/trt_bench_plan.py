@@ -23,6 +23,8 @@ def main():
 
     plan_path = sys.argv[1]
 
+    print("Start " + plan_path)
+
     # read the plan
     with open(plan_path, "rb") as fp:
         plan = fp.read()
@@ -39,7 +41,6 @@ def main():
     context = engine.create_execution_context()
 
     # create device buffers and TensorRT bindings
-    stream = cuda.Stream()
     output = np.zeros((1000), dtype=np.float32)
     d_input = cuda.mem_alloc(input.nbytes)
     d_output = cuda.mem_alloc(output.nbytes)
@@ -50,14 +51,17 @@ def main():
 
     #  warm up
     for i in range(1, 10):
-        context.execute_async_v2(bindings=bindings, stream_handle=stream.handle)
+        context.execute_v2(bindings=bindings)
 
     # benchmark
     start = perf_counter()
     for i in range(1, 100):
-        context.execute_async_v2(bindings=bindings, stream_handle=stream.handle)
+        context.execute_v2(bindings=bindings)
     end = perf_counter()
-    print('Model {0}: elapsed time {1:.2f} ms'.format(plan_path, ((end - start) / 100) * 1000))
+    elapsed = ((end - start) / 100) * 1000
+    print('Model {0}: elapsed time {1:.2f} ms'.format(plan_path, elapsed))
+    # record for automated extraction
+    print('#{0};{1:f}'.format(plan_path, elapsed))
 
     # copy output to host
     cuda.memcpy_dtoh(output, d_output)

@@ -1,0 +1,280 @@
+#head;TensorRT (C++)
+Start ./plan/alexnet.plan
+Model ./plan/alexnet.plan: elapsed time 59.963955 ms / 100 = 0.599640
+#./plan/alexnet.plan;0.599640
+Top-5 results
+  [0] 556 5.09%
+  [1] 549 3.29%
+  [2] 892 2.92%
+  [3] 844 2.18%
+  [4] 446 2.02%
+Start ./plan/densenet121.plan
+Model ./plan/densenet121.plan: elapsed time 366.937286 ms / 100 = 3.669373
+#./plan/densenet121.plan;3.669373
+Top-5 results
+  [0] 539 3.70%
+  [1] 591 3.65%
+  [2] 549 2.69%
+  [3] 446 2.20%
+  [4] 455 1.87%
+Start ./plan/densenet161.plan
+Model ./plan/densenet161.plan: elapsed time 740.302185 ms / 100 = 7.403022
+#./plan/densenet161.plan;7.403022
+Top-5 results
+  [0] 620 5.73%
+  [1] 94 3.69%
+  [2] 971 3.36%
+  [3] 688 3.12%
+  [4] 892 2.79%
+Start ./plan/densenet169.plan
+Model ./plan/densenet169.plan: elapsed time 731.970764 ms / 100 = 7.319708
+#./plan/densenet169.plan;7.319708
+Top-5 results
+  [0] 111 40.71%
+  [1] 892 2.30%
+  [2] 744 2.04%
+  [3] 657 1.91%
+  [4] 812 1.69%
+Start ./plan/densenet201.plan
+Model ./plan/densenet201.plan: elapsed time 1096.480103 ms / 100 = 10.964801
+#./plan/densenet201.plan;10.964801
+Top-5 results
+  [0] 844 3.58%
+  [1] 111 3.32%
+  [2] 977 3.18%
+  [3] 644 2.85%
+  [4] 783 2.57%
+Start ./plan/mnasnet0_5.plan
+Model ./plan/mnasnet0_5.plan: elapsed time 61.489574 ms / 100 = 0.614896
+#./plan/mnasnet0_5.plan;0.614896
+Top-5 results
+  [0] 892 2.51%
+  [1] 446 2.29%
+  [2] 783 2.00%
+  [3] 844 1.76%
+  [4] 78 1.40%
+Start ./plan/mnasnet1_0.plan
+Model ./plan/mnasnet1_0.plan: elapsed time 80.284935 ms / 100 = 0.802849
+#./plan/mnasnet1_0.plan;0.802849
+Top-5 results
+  [0] 418 12.20%
+  [1] 563 6.20%
+  [2] 769 3.25%
+  [3] 844 2.89%
+  [4] 549 2.48%
+Start ./plan/mobilenet_v2.plan
+Model ./plan/mobilenet_v2.plan: elapsed time 76.234894 ms / 100 = 0.762349
+#./plan/mobilenet_v2.plan;0.762349
+Top-5 results
+  [0] 892 3.97%
+  [1] 549 2.83%
+  [2] 844 2.09%
+  [3] 418 2.06%
+  [4] 446 2.00%
+Start ./plan/mobilenet_v3_large.plan
+Model ./plan/mobilenet_v3_large.plan: elapsed time 91.226616 ms / 100 = 0.912266
+#./plan/mobilenet_v3_large.plan;0.912266
+Top-5 results
+  [0] 23 4.24%
+  [1] 21 3.58%
+  [2] 128 2.84%
+  [3] 22 2.61%
+  [4] 844 2.59%
+Start ./plan/mobilenet_v3_small.plan
+Model ./plan/mobilenet_v3_small.plan: elapsed time 66.592567 ms / 100 = 0.665926
+#./plan/mobilenet_v3_small.plan;0.665926
+Top-5 results
+  [0] 21 8.68%
+  [1] 892 3.38%
+  [2] 549 3.02%
+  [3] 22 2.79%
+  [4] 92 2.50%
+Start ./plan/resnet101.plan
+Model ./plan/resnet101.plan: elapsed time 318.084045 ms / 100 = 3.180840
+#./plan/resnet101.plan;3.180840
+Top-5 results
+  [0] 783 11.87%
+  [1] 784 4.58%
+  [2] 549 4.31%
+  [3] 111 4.15%
+  [4] 418 3.76%
+Start ./plan/resnet152.plan
+Model ./plan/resnet152.plan: elapsed time 457.149475 ms / 100 = 4.571495
+#./plan/resnet152.plan;4.571495
+Top-5 results
+  [0] 78 5.27%
+  [1] 679 4.46%
+  [2] 783 4.38%
+  [3] 644 3.80%
+  [4] 892 3.27%
+Start ./plan/resnet18.plan
+Model ./plan/resnet18.plan: elapsed time 104.251602 ms / 100 = 1.042516
+#./plan/resnet18.plan;1.042516
+Top-5 results
+  [0] 111 8.18%
+  [1] 845 2.86%
+  [2] 418 2.69%
+  [3] 892 2.33%
+  [4] 644 2.20%
+Start ./plan/resnet34.plan
+Model ./plan/resnet34.plan: elapsed time 179.362778 ms / 100 = 1.793628
+#./plan/resnet34.plan;1.793628
+Top-5 results
+  [0] 845 2.57%
+  [1] 418 1.66%
+  [2] 563 1.37%
+  [3] 783 1.33%
+  [4] 549 1.16%
+Start ./plan/resnet50.plan
+Model ./plan/resnet50.plan: elapsed time 174.876038 ms / 100 = 1.748760
+#./plan/resnet50.plan;1.748760
+Top-5 results
+  [0] 610 4.25%
+  [1] 549 3.90%
+  [2] 783 3.64%
+  [3] 892 3.51%
+  [4] 446 3.18%
+Start ./plan/resnext101_32x8d.plan
+Model ./plan/resnext101_32x8d.plan: elapsed time 810.949463 ms / 100 = 8.109494
+#./plan/resnext101_32x8d.plan;8.109494
+Top-5 results
+  [0] 892 12.86%
+  [1] 446 7.52%
+  [2] 882 4.82%
+  [3] 418 3.20%
+  [4] 844 3.14%
+Start ./plan/resnext50_32x4d.plan
+Model ./plan/resnext50_32x4d.plan: elapsed time 208.288208 ms / 100 = 2.082882
+#./plan/resnext50_32x4d.plan;2.082882
+Top-5 results
+  [0] 111 27.15%
+  [1] 556 9.10%
+  [2] 783 4.02%
+  [3] 534 3.41%
+  [4] 78 2.11%
+Start ./plan/shufflenet_v2_x0_5.plan
+Model ./plan/shufflenet_v2_x0_5.plan: elapsed time 49.410519 ms / 100 = 0.494105
+#./plan/shufflenet_v2_x0_5.plan;0.494105
+Top-5 results
+  [0] 904 13.34%
+  [1] 490 11.67%
+  [2] 446 7.51%
+  [3] 89 6.05%
+  [4] 556 4.21%
+Start ./plan/shufflenet_v2_x1_0.plan
+Model ./plan/shufflenet_v2_x1_0.plan: elapsed time 85.751106 ms / 100 = 0.857511
+#./plan/shufflenet_v2_x1_0.plan;0.857511
+Top-5 results
+  [0] 700 21.56%
+  [1] 549 8.53%
+  [2] 78 7.71%
+  [3] 904 5.30%
+  [4] 772 3.23%
+Start ./plan/squeezenet1_0.plan
+Model ./plan/squeezenet1_0.plan: elapsed time 41.550220 ms / 100 = 0.415502
+#./plan/squeezenet1_0.plan;0.415502
+Top-5 results
+  [0] 533 4.01%
+  [1] 904 1.91%
+  [2] 446 1.71%
+  [3] 418 1.66%
+  [4] 844 1.30%
+Start ./plan/squeezenet1_1.plan
+Model ./plan/squeezenet1_1.plan: elapsed time 30.977322 ms / 100 = 0.309773
+#./plan/squeezenet1_1.plan;0.309773
+Top-5 results
+  [0] 533 12.09%
+  [1] 539 6.72%
+  [2] 443 3.24%
+  [3] 735 2.39%
+  [4] 474 1.68%
+Start ./plan/vgg11.plan
+Model ./plan/vgg11.plan: elapsed time 175.150955 ms / 100 = 1.751510
+#./plan/vgg11.plan;1.751510
+Top-5 results
+  [0] 618 3.86%
+  [1] 418 2.62%
+  [2] 784 2.57%
+  [3] 701 2.22%
+  [4] 623 2.22%
+Start ./plan/vgg11_bn.plan
+Model ./plan/vgg11_bn.plan: elapsed time 175.295547 ms / 100 = 1.752955
+#./plan/vgg11_bn.plan;1.752955
+Top-5 results
+  [0] 549 2.04%
+  [1] 892 1.81%
+  [2] 446 1.66%
+  [3] 111 1.59%
+  [4] 619 1.42%
+Start ./plan/vgg13.plan
+Model ./plan/vgg13.plan: elapsed time 214.720413 ms / 100 = 2.147204
+#./plan/vgg13.plan;2.147204
+Top-5 results
+  [0] 892 2.97%
+  [1] 111 2.50%
+  [2] 549 2.18%
+  [3] 783 2.08%
+  [4] 600 2.02%
+Start ./plan/vgg13_bn.plan
+Model ./plan/vgg13_bn.plan: elapsed time 216.773804 ms / 100 = 2.167738
+#./plan/vgg13_bn.plan;2.167738
+Top-5 results
+  [0] 6 3.76%
+  [1] 549 3.37%
+  [2] 977 2.58%
+  [3] 3 1.59%
+  [4] 4 1.43%
+Start ./plan/vgg16.plan
+Model ./plan/vgg16.plan: elapsed time 260.874786 ms / 100 = 2.608748
+#./plan/vgg16.plan;2.608748
+Top-5 results
+  [0] 111 5.28%
+  [1] 446 1.87%
+  [2] 892 1.59%
+  [3] 844 1.41%
+  [4] 534 1.28%
+Start ./plan/vgg16_bn.plan
+Model ./plan/vgg16_bn.plan: elapsed time 264.736145 ms / 100 = 2.647362
+#./plan/vgg16_bn.plan;2.647362
+Top-5 results
+  [0] 418 1.65%
+  [1] 111 1.61%
+  [2] 783 1.51%
+  [3] 623 1.48%
+  [4] 78 1.45%
+Start ./plan/vgg19.plan
+Model ./plan/vgg19.plan: elapsed time 313.845825 ms / 100 = 3.138458
+#./plan/vgg19.plan;3.138458
+Top-5 results
+  [0] 892 3.61%
+  [1] 844 2.23%
+  [2] 618 2.18%
+  [3] 549 1.44%
+  [4] 623 1.27%
+Start ./plan/vgg19_bn.plan
+Model ./plan/vgg19_bn.plan: elapsed time 313.014038 ms / 100 = 3.130140
+#./plan/vgg19_bn.plan;3.130140
+Top-5 results
+  [0] 446 2.46%
+  [1] 844 1.57%
+  [2] 111 1.56%
+  [3] 418 1.49%
+  [4] 549 1.39%
+Start ./plan/wide_resnet101_2.plan
+Model ./plan/wide_resnet101_2.plan: elapsed time 544.838196 ms / 100 = 5.448382
+#./plan/wide_resnet101_2.plan;5.448382
+Top-5 results
+  [0] 111 11.24%
+  [1] 78 2.17%
+  [2] 318 1.95%
+  [3] 784 1.87%
+  [4] 563 1.78%
+Start ./plan/wide_resnet50_2.plan
+Model ./plan/wide_resnet50_2.plan: elapsed time 294.840393 ms / 100 = 2.948404
+#./plan/wide_resnet50_2.plan;2.948404
+Top-5 results
+  [0] 679 8.80%
+  [1] 892 5.89%
+  [2] 783 5.35%
+  [3] 111 5.10%
+  [4] 78 3.84%

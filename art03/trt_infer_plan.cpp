@@ -19,7 +19,6 @@ public:
     ~Engine();
 public:
     void Init(const std::vector<char> &plan);
-    void Done();
     void Infer(const std::vector<float> &input, std::vector<float> &output);
     void DiagBindings();
 private:
@@ -44,15 +43,6 @@ void Engine::Init(const std::vector<char> &plan) {
         Error("Error deserializing CUDA engine");
     }
     m_active = true;
-}
-
-void Engine::Done() {
-    if (!m_active) {
-        return;
-    }
-    m_engine.reset();
-    m_runtime.reset(); 
-    m_active = false;
 }
 
 void Engine::Infer(const std::vector<float> &input, std::vector<float> &output) {
@@ -151,6 +141,8 @@ int main(int argc, char *argv[]) {
     const char *planPath = argv[1];
     const char *inputPath = argv[2];
 
+    printf("Start %s\n", planPath);
+
     std::vector<std::string> classes;
     ReadClasses("imagenet_classes.txt", classes);
 
@@ -166,7 +158,6 @@ int main(int argc, char *argv[]) {
     engine.Init(plan);
     engine.DiagBindings();
     engine.Infer(input, output);
-    engine.Done();
 
     Softmax(static_cast<int>(output.size()), output.data());
     PrintOutput(output, classes);

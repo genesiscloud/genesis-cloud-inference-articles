@@ -16,7 +16,6 @@ public:
     ~OnnxParser();
 public:
     void Init();
-    void Done();
     void Parse(const char *onnxPath, const char *planPath);
 private:
     bool m_active;
@@ -24,6 +23,7 @@ private:
     UniquePtr<nvinfer1::IBuilder> m_builder;
     UniquePtr<nvinfer1::INetworkDefinition> m_network;
     UniquePtr<nvinfer1::IBuilderConfig> m_config;
+    UniquePtr<nvinfer1::ITimingCache> m_cache;
     UniquePtr<nvonnxparser::IParser> m_parser;
 };
 
@@ -51,17 +51,15 @@ void OnnxParser::Init() {
     if (m_parser == nullptr) {
         Error("Error creating ONNX parser");
     }
-}
-
-void OnnxParser::Done() {
-    if (!m_active) {
-        return;
+    // setup timing cache just to avoid warnings at runtime
+    m_cache.reset(m_config->createTimingCache(nullptr, 0));
+    if (m_cache == nullptr) {
+        Error("Error creating timing cache");
     }
-    m_parser.reset();
-    m_config.reset();
-    m_network.reset();
-    m_builder.reset();
-    m_active = false;
+    bool ok = m_config->setTimingCache(*m_cache, false);
+    if (!ok) {
+        Error("Error setting timing cache");
+    }
 }
 
 void OnnxParser::Parse(const char *onnxPath, const char *planPath) {
@@ -92,10 +90,10 @@ int main(int argc, char *argv[]) {
     }
     const char *onnxPath = argv[1];
     const char *planPath = argv[2];
+    printf("Generate TensorRT plan for %s\n", onnxPath);
     OnnxParser parser;
     parser.Init();
     parser.Parse(onnxPath, planPath);   
-    parser.Done();
     return 0;
 }
 

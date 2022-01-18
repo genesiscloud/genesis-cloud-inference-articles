@@ -1,0 +1,280 @@
+#head;TensorRT (Python)
+Start ./plan/alexnet.plan
+Model ./plan/alexnet.plan: elapsed time 0.58 ms
+#./plan/alexnet.plan;0.582097
+Top-5 results
+  556 5.12%
+  892 2.87%
+  549 2.78%
+  844 2.20%
+  446 2.11%
+Start ./plan/densenet121.plan
+Model ./plan/densenet121.plan: elapsed time 3.73 ms
+#./plan/densenet121.plan;3.734657
+Top-5 results
+  591 2.05%
+  446 2.00%
+  455 1.94%
+  549 1.77%
+  893 1.72%
+Start ./plan/densenet161.plan
+Model ./plan/densenet161.plan: elapsed time 7.99 ms
+#./plan/densenet161.plan;7.987797
+Top-5 results
+  971 2.81%
+  892 2.70%
+  904 2.44%
+  620 2.42%
+  94 2.21%
+Start ./plan/densenet169.plan
+Model ./plan/densenet169.plan: elapsed time 8.17 ms
+#./plan/densenet169.plan;8.169362
+Top-5 results
+  111 13.25%
+  446 5.63%
+  620 4.64%
+  783 2.36%
+  892 1.92%
+Start ./plan/densenet201.plan
+Model ./plan/densenet201.plan: elapsed time 12.24 ms
+#./plan/densenet201.plan;12.241733
+Top-5 results
+  844 3.65%
+  701 3.18%
+  111 2.71%
+  977 2.15%
+  892 2.11%
+Start ./plan/mnasnet0_5.plan
+Model ./plan/mnasnet0_5.plan: elapsed time 0.64 ms
+#./plan/mnasnet0_5.plan;0.643382
+Top-5 results
+  892 1.84%
+  783 1.51%
+  644 1.51%
+  78 1.47%
+  844 1.27%
+Start ./plan/mnasnet1_0.plan
+Model ./plan/mnasnet1_0.plan: elapsed time 0.80 ms
+#./plan/mnasnet1_0.plan;0.801802
+Top-5 results
+  418 10.64%
+  446 4.87%
+  563 4.43%
+  111 3.41%
+  549 2.86%
+Start ./plan/mobilenet_v2.plan
+Model ./plan/mobilenet_v2.plan: elapsed time 0.77 ms
+#./plan/mobilenet_v2.plan;0.766150
+Top-5 results
+  892 5.31%
+  549 4.21%
+  446 2.26%
+  844 2.18%
+  600 2.09%
+Start ./plan/mobilenet_v3_large.plan
+Model ./plan/mobilenet_v3_large.plan: elapsed time 0.98 ms
+#./plan/mobilenet_v3_large.plan;0.982076
+Top-5 results
+  21 5.98%
+  128 4.02%
+  23 3.69%
+  22 3.61%
+  146 2.44%
+Start ./plan/mobilenet_v3_small.plan
+Model ./plan/mobilenet_v3_small.plan: elapsed time 0.74 ms
+#./plan/mobilenet_v3_small.plan;0.743421
+Top-5 results
+  21 12.86%
+  92 5.23%
+  22 4.14%
+  128 3.32%
+  892 2.63%
+Start ./plan/resnet101.plan
+Model ./plan/resnet101.plan: elapsed time 3.12 ms
+#./plan/resnet101.plan;3.124432
+Top-5 results
+  783 10.01%
+  549 5.46%
+  701 5.02%
+  111 4.79%
+  784 4.28%
+Start ./plan/resnet152.plan
+Model ./plan/resnet152.plan: elapsed time 4.57 ms
+#./plan/resnet152.plan;4.572776
+Top-5 results
+  78 7.35%
+  644 5.18%
+  111 4.86%
+  783 3.80%
+  679 3.77%
+Start ./plan/resnet18.plan
+Model ./plan/resnet18.plan: elapsed time 1.08 ms
+#./plan/resnet18.plan;1.081589
+Top-5 results
+  111 11.15%
+  418 3.17%
+  845 2.47%
+  892 2.44%
+  644 2.37%
+Start ./plan/resnet34.plan
+Model ./plan/resnet34.plan: elapsed time 1.84 ms
+#./plan/resnet34.plan;1.836510
+Top-5 results
+  845 2.40%
+  549 1.25%
+  844 1.18%
+  418 1.13%
+  783 1.11%
+Start ./plan/resnet50.plan
+Model ./plan/resnet50.plan: elapsed time 1.75 ms
+#./plan/resnet50.plan;1.750224
+Top-5 results
+  610 6.29%
+  549 5.21%
+  446 5.00%
+  783 3.20%
+  892 2.93%
+Start ./plan/resnext101_32x8d.plan
+Model ./plan/resnext101_32x8d.plan: elapsed time 8.06 ms
+#./plan/resnext101_32x8d.plan;8.056244
+Top-5 results
+  446 7.39%
+  892 7.15%
+  844 6.49%
+  882 5.46%
+  418 5.39%
+Start ./plan/resnext50_32x4d.plan
+Model ./plan/resnext50_32x4d.plan: elapsed time 2.13 ms
+#./plan/resnext50_32x4d.plan;2.129004
+Top-5 results
+  111 13.95%
+  556 11.72%
+  892 3.53%
+  783 3.44%
+  78 3.39%
+Start ./plan/shufflenet_v2_x0_5.plan
+Model ./plan/shufflenet_v2_x0_5.plan: elapsed time 0.47 ms
+#./plan/shufflenet_v2_x0_5.plan;0.466368
+Top-5 results
+  904 19.23%
+  490 12.65%
+  446 10.60%
+  89 6.37%
+  556 6.01%
+Start ./plan/shufflenet_v2_x1_0.plan
+Model ./plan/shufflenet_v2_x1_0.plan: elapsed time 0.88 ms
+#./plan/shufflenet_v2_x1_0.plan;0.882937
+Top-5 results
+  700 22.74%
+  78 9.16%
+  549 8.66%
+  111 4.58%
+  772 2.87%
+Start ./plan/squeezenet1_0.plan
+Model ./plan/squeezenet1_0.plan: elapsed time 0.41 ms
+#./plan/squeezenet1_0.plan;0.412052
+Top-5 results
+  533 2.80%
+  446 1.47%
+  679 1.44%
+  549 1.44%
+  418 1.38%
+Start ./plan/squeezenet1_1.plan
+Model ./plan/squeezenet1_1.plan: elapsed time 0.31 ms
+#./plan/squeezenet1_1.plan;0.309919
+Top-5 results
+  533 5.03%
+  539 4.05%
+  443 2.37%
+  735 2.24%
+  549 1.72%
+Start ./plan/vgg11.plan
+Model ./plan/vgg11.plan: elapsed time 1.74 ms
+#./plan/vgg11.plan;1.741891
+Top-5 results
+  618 3.77%
+  418 3.27%
+  784 2.92%
+  623 2.59%
+  892 2.16%
+Start ./plan/vgg11_bn.plan
+Model ./plan/vgg11_bn.plan: elapsed time 1.75 ms
+#./plan/vgg11_bn.plan;1.751305
+Top-5 results
+  549 2.75%
+  892 2.64%
+  844 2.02%
+  111 1.97%
+  446 1.95%
+Start ./plan/vgg13.plan
+Model ./plan/vgg13.plan: elapsed time 2.16 ms
+#./plan/vgg13.plan;2.164897
+Top-5 results
+  844 3.89%
+  111 3.42%
+  600 3.33%
+  677 2.80%
+  892 2.80%
+Start ./plan/vgg13_bn.plan
+Model ./plan/vgg13_bn.plan: elapsed time 2.14 ms
+#./plan/vgg13_bn.plan;2.142913
+Top-5 results
+  549 6.05%
+  6 2.44%
+  892 2.11%
+  701 1.70%
+  921 1.62%
+Start ./plan/vgg16.plan
+Model ./plan/vgg16.plan: elapsed time 2.64 ms
+#./plan/vgg16.plan;2.644701
+Top-5 results
+  111 8.01%
+  892 2.09%
+  844 1.83%
+  418 1.78%
+  618 1.59%
+Start ./plan/vgg16_bn.plan
+Model ./plan/vgg16_bn.plan: elapsed time 2.61 ms
+#./plan/vgg16_bn.plan;2.608168
+Top-5 results
+  418 1.68%
+  623 1.60%
+  892 1.60%
+  783 1.37%
+  111 1.34%
+Start ./plan/vgg19.plan
+Model ./plan/vgg19.plan: elapsed time 3.17 ms
+#./plan/vgg19.plan;3.168846
+Top-5 results
+  892 2.84%
+  844 2.46%
+  618 2.19%
+  446 1.72%
+  549 1.55%
+Start ./plan/vgg19_bn.plan
+Model ./plan/vgg19_bn.plan: elapsed time 3.07 ms
+#./plan/vgg19_bn.plan;3.074626
+Top-5 results
+  446 3.46%
+  549 1.76%
+  418 1.51%
+  111 1.43%
+  844 1.14%
+Start ./plan/wide_resnet101_2.plan
+Model ./plan/wide_resnet101_2.plan: elapsed time 5.58 ms
+#./plan/wide_resnet101_2.plan;5.584394
+Top-5 results
+  556 9.32%
+  111 4.43%
+  78 2.34%
+  784 2.20%
+  446 2.03%
+Start ./plan/wide_resnet50_2.plan
+Model ./plan/wide_resnet50_2.plan: elapsed time 2.83 ms
+#./plan/wide_resnet50_2.plan;2.831756
+Top-5 results
+  892 6.80%
+  679 4.98%
+  783 4.57%
+  111 4.43%
+  844 4.24%
