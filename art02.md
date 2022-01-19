@@ -1097,7 +1097,7 @@ main()
 To run this program, use the following command line:
 
 ```
-python3 perf02.csv >perf02.txt
+python3 tab_perf.py perf02.csv >perf02.txt
 ```
 
 The output file `perf02.txt` will look like:

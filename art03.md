@@ -1607,7 +1607,7 @@ the CSV data in the tabular format.
 To run this program, use the following command line:
 
 ```
-python3 perf03.csv >perf03.txt
+python3 tab_perf.py perf03.csv >perf03.txt
 ```
 
 The output file `perf03.txt` will look like:
