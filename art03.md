@@ -822,7 +822,7 @@ void Engine::Init(const std::vector<char> &plan) {
     if (m_runtime == nullptr) {
         Error("Error creating infer runtime");
     }
-    m_engine.reset(m_runtime->deserializeCudaEngine(plan.data(), plan.size()));
+    m_engine.reset(m_runtime->deserializeCudaEngine(plan.data(), plan.size(), nullptr));
     if (m_engine == nullptr) {
         Error("Error deserializing CUDA engine");
     }
@@ -986,6 +986,13 @@ The program performs the following steps:
 * applies the softmax transformation to the output
 * gets labels and probabilities for top 5 results
 * prints top 5 classes and probabilities in a human-readable form
+
+NOTE: In this program we intentionally use the deprecated version of
+`IRuntime::deserializeCudaEngine` method requiring the last `nullptr` argument
+because, at the times of writing, using the new version without this
+argument sometimes caused unexpected program behavior on the considered
+GPU devices. The root cause of this problem is not yet clarified;
+there might be an undocumented bug in TensorRT inference library.
 
 The shell script `build_trt_infer_plan.sh` must be used to compile and link this program:
 
@@ -1435,6 +1442,13 @@ using the `RunInfer` method
 
 The program prints a special formatted line starting with `"#"` that
 will be later used for automated extraction of performance metrics.
+
+NOTE: In this program we intentionally use the deprecated version of
+`IRuntime::deserializeCudaEngine` method requiring the last `nullptr` argument
+because, at the times of writing, using the new version without this
+argument sometimes caused unexpected program behavior on the considered
+GPU devices. The root cause of this problem is not yet clarified;
+there might be an undocumented bug in TensorRT inference library.
 
 The shell script `build_trt_bench_plan.sh` must be used to compile and link this program:
 

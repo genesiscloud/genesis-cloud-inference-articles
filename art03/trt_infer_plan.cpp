@@ -38,7 +38,7 @@ void Engine::Init(const std::vector<char> &plan) {
     if (m_runtime == nullptr) {
         Error("Error creating infer runtime");
     }
-    m_engine.reset(m_runtime->deserializeCudaEngine(plan.data(), plan.size()));
+    m_engine.reset(m_runtime->deserializeCudaEngine(plan.data(), plan.size(), nullptr));
     if (m_engine == nullptr) {
         Error("Error deserializing CUDA engine");
     }
