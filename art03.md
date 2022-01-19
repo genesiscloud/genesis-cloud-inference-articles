@@ -148,8 +148,6 @@ python3 infer_generate_onnx_resnet50.py
 
 The program will produce a file `resnet50.onnx` containing the ONNX model representation.
 
----
-
 The Python program `generate_onnx_all.py` can be used to produce ONNX descriptions
 for all considered torchvision image classification models.
 
