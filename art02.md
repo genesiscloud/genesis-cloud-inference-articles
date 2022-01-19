@@ -1033,6 +1033,112 @@ wide_resnet101_2;15.50;12.32;10.55
 wide_resnet50_2;7.88;6.66;5.35 
 ```
 
+The Python program `tab_perf.py` can be used to display the CSV data in the tabular format:
+
+```
+import sys
+
+def main():
+    if len(sys.argv) != 2:
+        sys.exit("Usage: python3 tab_perf.py <input_csv_path>")  
+
+    input_path = sys.argv[1]
+
+    min_col_width = 12
+    margin = 4
+
+    lines = []
+    with open(input_path, "r") as fp:
+        for line in fp:
+            line = line.strip()
+            lines.append(line)
+
+    num_cols = len(lines[0].split(";"))
+    col_widths = [min_col_width] * num_cols
+    val_widths = [0] * num_cols
+
+    for lno, line in enumerate(lines):
+        fields = line.split(";")
+        assert len(fields) == num_cols
+        for col in range(num_cols):
+            width = len(fields[col])
+            if width > col_widths[col]:
+                col_widths[col] = width
+            if lno != 0 and width > val_widths[col]:
+                val_widths[col] = width
+
+    for lno, line in enumerate(lines):
+        output = ""
+        fields = line.split(";")
+        for col in range(num_cols):
+            field = fields[col]
+            space = col_widths[col] - len(field)
+            if col == 0:
+                output += field          
+                output += " " * space
+            else:
+                if lno == 0:
+                    rpad = space // 2
+                else:
+                    rpad = (col_widths[col] - val_widths[col]) // 2
+                lpad = space - rpad
+                output += " " * (margin + lpad)
+                output += field          
+                output += " " * rpad
+        print(output)
+        if lno == 0:
+            tab_width = sum(col_widths) + margin * (num_cols - 1)
+            output = "-" * tab_width
+            print(output)
+
+main()
+```
+
+To run this program, use the following command line:
+
+```
+python3 perf02.csv >perf02.txt
+```
+
+The output file `perf02.txt` will look like:
+
+```
+Model                    PyTorch      TorchScript (Python)    TorchScript (C++)
+-------------------------------------------------------------------------------
+alexnet                    1.23                1.19                  1.04      
+densenet121               19.79               19.45                 13.34      
+densenet161               29.43               30.32                 20.70      
+densenet169               28.47               30.06                 20.11      
+densenet201               33.48               36.21                 22.70      
+mnasnet0_5                 5.45                4.65                  3.67      
+mnasnet1_0                 5.66                4.62                  3.95      
+mobilenet_v2               6.19                5.63                  4.02      
+mobilenet_v3_large         8.07                6.71                  5.18      
+mobilenet_v3_small         6.37                5.66                  4.19      
+resnet101                 15.80               12.76                 10.81      
+resnet152                 23.66               19.08                 16.37      
+resnet18                   3.39                2.69                  2.30      
+resnet34                   6.11                4.83                  4.11      
+resnet50                   7.99                6.42                  5.47      
+resnext101_32x8d          21.69               18.82                 16.66      
+resnext50_32x4d            6.45                5.10                  4.41      
+shufflenet_v2_x0_5         6.33                5.12                  4.01      
+shufflenet_v2_x1_0         6.84                5.59                  4.44      
+squeezenet1_0              3.05                2.95                  2.33      
+squeezenet1_1              3.03                2.79                  2.31      
+vgg11                      1.91                1.81                  1.84      
+vgg11_bn                   2.37                2.09                  1.96      
+vgg13                      2.26                2.21                  2.27      
+vgg13_bn                   2.62                2.42                  2.43      
+vgg16                      2.82                2.79                  2.88      
+vgg16_bn                   3.23                3.03                  3.06      
+vgg19                      3.29                3.36                  3.40      
+vgg19_bn                   3.72                3.60                  3.64      
+wide_resnet101_2          15.50               12.32                 10.55      
+wide_resnet50_2            7.88                6.66                  5.35       
+```
+
+
 ## Conclusion
 
 Analysis of these performance data reveals that running TorchScript code with C++
