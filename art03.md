@@ -641,7 +641,7 @@ Running this script is straightforward:
 
 ```
 mkdir -p ./plan
-trt_onnx_parser_all.sh
+./trt_onnx_parser_all.sh
 ```
 
 
