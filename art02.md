@@ -913,7 +913,7 @@ The benchmarking log will be saved in `bench_ts.log` that later will be
 used for performance comparison of various deployment methods.
 
 
-Step 8. Extract performance metrics from benchmarking logs
+## Step 8. Extract performance metrics from benchmarking logs
 
 The Python program `merge_perf.py` extracts performance metrics from multiple
 benchmarking log files and merges them in a single CSV file in a form
