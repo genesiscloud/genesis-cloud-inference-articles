@@ -407,7 +407,7 @@ main()
 To run this program, enter the following commands:
 
 ```
-mkdir -p onnx
+mkdir -p plan
 python3 trt_onnx_parser_all.py
 ```
 
