@@ -143,7 +143,7 @@ mkdir -p onnx
 To run this program, use the command:
 
 ```
-python3 infer_generate_onnx_resnet50.py
+python3 generate_onnx_resnet50.py
 ```
 
 The program will produce a file `resnet50.onnx` containing the ONNX model representation.
