@@ -806,7 +806,7 @@ To run this program for ResNet50, use the command:
 python3 bench_model.py resnet50
 ```
 
-The program output will look like:
+The program output will look something like (this program is not deterministic due to randomised inputs so results differ each execution):
 
 ```
 Start resnet50
