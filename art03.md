@@ -249,9 +249,7 @@ def main():
     network = builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
     config = builder.create_builder_config()
     config.max_workspace_size = 256 * 1024 * 1024
-    # setup timimg cache just to avoid warnings at runtime
-    cache = config.create_timing_cache(b"")
-    config.set_timing_cache(cache, False)
+    config.set_flag(trt.BuilderFlag.DISABLE_TIMING_CACHE)
 
     parser = trt.OnnxParser(network, logger)
     ok = parser.parse_from_file(onnx_path)
@@ -277,7 +275,6 @@ This program uses the following TensorRT API object classes:
 * `Builder` - a factory used to create several other classes
 * `INetworkDefinition` - representation of TensorRT networks (models)
 * `IBuilderConfig` - a class used to hold configuration parameters for `Builder`
-* `ITimingCahche` - a class handling timing information
 * `OnnxParser` - a class used for parsing ONNX models into TensorRT network definitions
 * `IHostMemory` - representation of buffers in a host memory
 
@@ -291,7 +288,7 @@ an empty network instance
 a builder configuration instance
 * sets the `max_workspace_size` configuration parameter representing
 the maximum workspace size that can be used by inference algorithms
-* sets up timing cache `cache: ITimingCache`
+* disables timing cache
 * creates `parser: OnnxParser` representing an ONNX parser instance;
 reference to the previously created empty network definition is attached 
 to the parser
@@ -301,9 +298,6 @@ the attached network definition object
 * uses `builder` to create `plan: IHostMemory` representing
 a serialized network (plan) stored in a host memory buffer
 * saves the plan in the output file
-
-Note that in this example the timing cache is set up only to avoid
-warning messages at runtime.
 
 The program has two command line arguments: a path to the input ONNX file and
 a path to the output TensorRT plan file.
@@ -371,7 +365,6 @@ MODELS = [
     'wide_resnet101_2',
 ]
 
-
 def setup_builder():
     logger = trt.Logger()
     builder = trt.Builder(logger)
@@ -386,9 +379,7 @@ def generate_plan(logger, builder, name):
     network = builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
     config = builder.create_builder_config()
     config.max_workspace_size = 256 * 1024 * 1024
-    # setup timing cache just to avoid warnings at runtime
-    cache = config.create_timing_cache(b"")
-    config.set_timing_cache(cache, False)
+    config.set_flag(trt.BuilderFlag.DISABLE_TIMING_CACHE)
 
     parser = trt.OnnxParser(network, logger)
     ok = parser.parse_from_file(onnx_path)
@@ -405,7 +396,7 @@ def main():
         generate_plan(logger, builder, name)
     print('DONE')
 
-main() 
+main()
 ```
 
 To run this program, enter the following commands:
@@ -448,7 +439,6 @@ private:
     UniquePtr<nvinfer1::IBuilder> m_builder;
     UniquePtr<nvinfer1::INetworkDefinition> m_network;
     UniquePtr<nvinfer1::IBuilderConfig> m_config;
-    UniquePtr<nvinfer1::ITimingCache> m_cache;
     UniquePtr<nvonnxparser::IParser> m_parser;
 };
 
@@ -472,18 +462,10 @@ void OnnxParser::Init() {
         Error("Error creating builder config");
     }
     m_config->setMaxWorkspaceSize(256 * 1024 * 1024);
+    m_config->setFlag(nvinfer1::BuilderFlag::kDISABLE_TIMING_CACHE);
     m_parser.reset(nvonnxparser::createParser(*m_network, m_logger));
     if (m_parser == nullptr) {
         Error("Error creating ONNX parser");
-    }
-    // setup timing cache just to avoid warnings at runtime
-    m_cache.reset(m_config->createTimingCache(nullptr, 0));
-    if (m_cache == nullptr) {
-        Error("Error creating timing cache");
-    }
-    bool ok = m_config->setTimingCache(*m_cache, false);
-    if (!ok) {
-        Error("Error setting timing cache");
     }
 }
 
@@ -541,7 +523,6 @@ This program uses the following TensorRT API object classes:
 * `nvinfer1::IBuilder` - a factory used to create several other classes
 * `nvinfer1::INetworkDefinition` - representation of TensorRT networks (models)
 * `nvinfer1::IBuilderConfig` - a class used to hold configuration parameters for `IBuilder`
-* `nvinfer1::ITimingCahche` - a class handling timing information
 * `nvonnxparser::IParser` - a class used for parsing ONNX models into TensorRT network definitions
 * `nvinfer1::IHostMemory` - representation of buffers in a host memory
 
@@ -557,13 +538,10 @@ an empty network instance
 a builder configuration instance
 * sets the `maxWorkspaceSize` configuration parameter representing
 the maximum workspace size that can be used by inference algorithms
-* sets up timing cache `cache`
+* disables timing cache
 * creates `m_parser` representing an ONNX parser instance;
 reference to the previously created empty network definition is attached 
 to the parser
-
-Note that in this example the timing cache is set up only to avoid
-warning messages at runtime.
 
 The `Parse` method performs the following steps:
 

@@ -44,7 +44,6 @@ MODELS = [
     'wide_resnet101_2',
 ]
 
-
 def setup_builder():
     logger = trt.Logger()
     builder = trt.Builder(logger)

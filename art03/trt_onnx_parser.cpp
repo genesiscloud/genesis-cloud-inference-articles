@@ -23,7 +23,6 @@ private:
     UniquePtr<nvinfer1::IBuilder> m_builder;
     UniquePtr<nvinfer1::INetworkDefinition> m_network;
     UniquePtr<nvinfer1::IBuilderConfig> m_config;
-    UniquePtr<nvinfer1::ITimingCache> m_cache;
     UniquePtr<nvonnxparser::IParser> m_parser;
 };
 
