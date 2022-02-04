@@ -47,18 +47,10 @@ void OnnxParser::Init() {
         Error("Error creating builder config");
     }
     m_config->setMaxWorkspaceSize(256 * 1024 * 1024);
+    m_config->setFlag(nvinfer1::BuilderFlag::kDISABLE_TIMING_CACHE);
     m_parser.reset(nvonnxparser::createParser(*m_network, m_logger));
     if (m_parser == nullptr) {
         Error("Error creating ONNX parser");
-    }
-    // setup timing cache just to avoid warnings at runtime
-    m_cache.reset(m_config->createTimingCache(nullptr, 0));
-    if (m_cache == nullptr) {
-        Error("Error creating timing cache");
-    }
-    bool ok = m_config->setTimingCache(*m_cache, false);
-    if (!ok) {
-        Error("Error setting timing cache");
     }
 }
 

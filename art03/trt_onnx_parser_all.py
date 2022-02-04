@@ -59,9 +59,7 @@ def generate_plan(logger, builder, name):
     network = builder.create_network(1 << int(trt.NetworkDefinitionCreationFlag.EXPLICIT_BATCH))
     config = builder.create_builder_config()
     config.max_workspace_size = 256 * 1024 * 1024
-    # setup timing cache just to avoid warnings at runtime
-    cache = config.create_timing_cache(b"")
-    config.set_timing_cache(cache, False)
+    config.set_flag(trt.BuilderFlag.DISABLE_TIMING_CACHE)
 
     parser = trt.OnnxParser(network, logger)
     ok = parser.parse_from_file(onnx_path)
