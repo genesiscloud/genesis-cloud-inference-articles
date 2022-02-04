@@ -1677,3 +1677,48 @@ The index of documents covering all TensorRT versions is available
 [here](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html).
 
 
+## Appendix A: Benchmarking results on NVIDIA RTX 3090
+
+All recommendations and examples described in the Articles 1, 2, and 3 are also applicable to 
+Genesis Cloud instances equipped with NVIDIA RTX 3090 GPUs. We have conducted benchmarking 
+of inference for the image classification models on the RTX 3090 instance. Here are the results:
+
+```
+Model                    PyTorch      TorchScript (Python)    TorchScript (C++)    TensorRT (Python)    TensorRT (C++)
+----------------------------------------------------------------------------------------------------------------------
+alexnet                    1.30                1.22                  1.01                 0.52                0.52
+densenet121               19.91               19.26                 13.80                 3.65                3.58
+densenet161               29.76               30.54                 21.43                 7.23                7.19
+densenet169               28.93               28.32                 19.67                 7.03                6.91
+densenet201               34.34               36.97                 23.97                10.56               10.47
+mnasnet0_5                 5.55                4.54                  3.78                 0.63                0.61
+mnasnet1_0                 5.87                4.74                  3.88                 0.81                0.79
+mobilenet_v2               6.21                5.85                  4.21                 0.73                0.71
+mobilenet_v3_large         7.87                6.86                  5.65                 0.95                1.03
+mobilenet_v3_small         6.49                5.84                  4.43                 0.70                0.79
+resnet101                 16.09               13.38                 11.19                 3.26                3.07
+resnet152                 24.34               19.75                 17.10                 4.54                4.55
+resnet18                   3.37                2.79                  2.35                 1.05                1.08
+resnet34                   6.11                4.95                  4.25                 1.84                1.75
+resnet50                   8.21                6.61                  5.82                 1.72                1.75
+resnext101_32x8d          22.09               19.31                 17.64                 7.85                7.97
+resnext50_32x4d            6.53                5.16                  4.28                 2.05                2.12
+shufflenet_v2_x0_5         6.53                5.26                  4.22                 0.49                0.57
+shufflenet_v2_x1_0         7.08                5.81                  4.68                 0.89                0.91
+squeezenet1_0              3.16                2.94                  2.40                 0.40                0.38
+squeezenet1_1              3.09                2.90                  2.26                 0.31                0.31
+vgg11                      1.92                1.88                  1.58                 1.50                1.51
+vgg11_bn                   2.32                2.13                  1.84                 1.49                1.49
+vgg13                      2.28                2.06                  1.99                 1.84                1.85
+vgg13_bn                   2.71                2.44                  2.16                 1.84                1.85
+vgg16                      2.68                2.49                  2.50                 2.27                2.25
+vgg16_bn                   3.27                2.93                  3.55                 2.27                2.28
+vgg19                      3.01                2.99                  3.12                 2.69                2.70
+vgg19_bn                   8.21                3.48                  3.18                 2.74                2.72
+wide_resnet101_2          15.34               12.62                 10.65                 5.36                5.21
+wide_resnet50_2            7.98                6.63                  5.63                 2.80                2.75
+```
+
+For all the covered models and batch size 1 there is almost no performance improvement compared to 
+the performance results for RTX 3080 listed above.
+
