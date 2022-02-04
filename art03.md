@@ -29,6 +29,10 @@ Various assets (source code, shell scripts, and data files) used in this article
 can be found in the supporting
 [GitHub repository](https://github.com/lxgo/genesis-kbase/tree/main/art03).
 
+To run examples described in this article we recommend cloning the entire 
+[repository](https://github.com/lxgo/genesis-kbase) on your Genesis Cloud instance.
+The subdirectory `art03` must be made your current directory.
+
 
 ## Step 1. Install TensorRT
 
