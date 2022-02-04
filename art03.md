@@ -1719,6 +1719,6 @@ wide_resnet101_2          15.34               12.62                 10.65       
 wide_resnet50_2            7.98                6.63                  5.63                 2.80                2.75
 ```
 
-For all the covered models and batch size 1 there is almost no performance improvement compared to 
-the performance results for RTX 3080 listed above.
+For all the considered models and batch size of 1 there is almost no performance improvement compared to 
+the results for RTX 3080 listed above.
 
