@@ -1677,7 +1677,7 @@ The index of documents covering all TensorRT versions is available
 [here](https://docs.nvidia.com/deeplearning/tensorrt/archives/index.html).
 
 
-## Appendix A: Benchmarking results on NVIDIA RTX 3090
+## Appendix A. Benchmarking results on NVIDIA RTX 3090
 
 All recommendations and examples described in the Articles 1, 2, and 3 are also applicable to 
 Genesis Cloud instances equipped with NVIDIA RTX 3090 GPUs. We have conducted benchmarking 
