@@ -96,7 +96,7 @@ driver `nvcc` is accessible by entering the command:
 nvcc --version
 ```
 
-If this command files, update the `PATH` environment variable:
+If this command fails, update the `PATH` environment variable:
 
 ```
 export PATH=/usr/local/cuda/bin:$PATH
