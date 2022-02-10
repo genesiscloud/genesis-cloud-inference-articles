@@ -322,12 +322,12 @@ python3 perf_resnet50_ts.py
 The program output will look like:
 
 ```
-Perf original model 9.11 ms
-Perf TorchScript model 6.24 ms
+Perf original model 8.13 ms
+Perf TorchScript model 5.41 ms
 Original model top 5 results:
- tensor([[549, 783, 446, 490, 610]], device='cuda:0')
+ tensor([[783, 549, 446, 892, 844]], device='cuda:0')
 TorchScript model top 5 results:
- tensor([[549, 783, 446, 490, 610]], device='cuda:0')
+ tensor([[783, 549, 446, 892, 844]], device='cuda:0')
 ```
 
 The Python program `bench_model_ts.py` is more general; it implements benchmarking
@@ -413,14 +413,14 @@ The program output will look like:
 
 ```
 Start resnet50
-Model resnet50: elapsed time 6.48 ms
-#resnet50;6.484319
+Model resnet50: elapsed time 5.33 ms
+#resnet50;5.325712
 Top-5 results
-  549 4.64%
-  892 3.64%
-  783 3.17%
-  610 3.15%
-  446 2.88%
+  783 3.88%
+  610 3.37%
+  892 3.30%
+  549 3.13%
+  556 2.89%
 ```
 
 The shell script `bench_ts_all_py.sh` performs benchmarking of all supported torchvision
@@ -1006,37 +1006,37 @@ The output file `perf02.csv` will look like:
 
 ```
 Model;PyTorch;TorchScript (Python);TorchScript (C++)
-alexnet;1.23;1.19;1.04
-densenet121;19.79;19.45;13.34
-densenet161;29.43;30.32;20.70
-densenet169;28.47;30.06;20.11
-densenet201;33.48;36.21;22.70
-mnasnet0_5;5.45;4.65;3.67
-mnasnet1_0;5.66;4.62;3.95
-mobilenet_v2;6.19;5.63;4.02
-mobilenet_v3_large;8.07;6.71;5.18
-mobilenet_v3_small;6.37;5.66;4.19
-resnet101;15.80;12.76;10.81
-resnet152;23.66;19.08;16.37
-resnet18;3.39;2.69;2.30
-resnet34;6.11;4.83;4.11
-resnet50;7.99;6.42;5.47
-resnext101_32x8d;21.69;18.82;16.66
-resnext50_32x4d;6.45;5.10;4.41
-shufflenet_v2_x0_5;6.33;5.12;4.01
-shufflenet_v2_x1_0;6.84;5.59;4.44
-squeezenet1_0;3.05;2.95;2.33
-squeezenet1_1;3.03;2.79;2.31
+alexnet;1.23;1.05;1.04
+densenet121;19.79;13.65;13.34
+densenet161;29.43;20.83;20.70
+densenet169;28.47;19.33;20.11
+densenet201;33.48;22.44;22.70
+mnasnet0_5;5.45;3.63;3.67
+mnasnet1_0;5.66;3.79;3.95
+mobilenet_v2;6.19;4.12;4.02
+mobilenet_v3_large;8.07;5.22;5.18
+mobilenet_v3_small;6.37;4.20;4.19
+resnet101;15.80;11.01;10.81
+resnet152;23.66;16.65;16.37
+resnet18;3.39;2.39;2.30
+resnet34;6.11;4.22;4.11
+resnet50;7.99;5.53;5.47
+resnext101_32x8d;21.69;17.34;16.66
+resnext50_32x4d;6.45;4.32;4.41
+shufflenet_v2_x0_5;6.33;4.03;4.01
+shufflenet_v2_x1_0;6.84;4.58;4.44
+squeezenet1_0;3.05;2.28;2.33
+squeezenet1_1;3.03;2.28;2.31
 vgg11;1.91;1.81;1.84
-vgg11_bn;2.37;2.09;1.96
-vgg13;2.26;2.21;2.27
-vgg13_bn;2.62;2.42;2.43
-vgg16;2.82;2.79;2.88
-vgg16_bn;3.23;3.03;3.06
-vgg19;3.29;3.36;3.40
-vgg19_bn;3.72;3.60;3.64
-wide_resnet101_2;15.50;12.32;10.55
-wide_resnet50_2;7.88;6.66;5.35 
+vgg11_bn;2.37;1.93;1.96
+vgg13;2.26;2.31;2.27
+vgg13_bn;2.62;2.45;2.43
+vgg16;2.82;2.75;2.88
+vgg16_bn;3.23;3.10;3.06
+vgg19;3.29;3.40;3.40
+vgg19_bn;3.72;3.64;3.64
+wide_resnet101_2;15.50;10.89;10.55
+wide_resnet50_2;7.88;5.52;5.35
 ```
 
 The Python program `tab_perf.py` can be used to display the CSV data in the tabular format:
@@ -1111,46 +1111,44 @@ The output file `perf02.txt` will look like:
 ```
 Model                    PyTorch      TorchScript (Python)    TorchScript (C++)
 -------------------------------------------------------------------------------
-alexnet                    1.23                1.19                  1.04      
-densenet121               19.79               19.45                 13.34      
-densenet161               29.43               30.32                 20.70      
-densenet169               28.47               30.06                 20.11      
-densenet201               33.48               36.21                 22.70      
-mnasnet0_5                 5.45                4.65                  3.67      
-mnasnet1_0                 5.66                4.62                  3.95      
-mobilenet_v2               6.19                5.63                  4.02      
-mobilenet_v3_large         8.07                6.71                  5.18      
-mobilenet_v3_small         6.37                5.66                  4.19      
-resnet101                 15.80               12.76                 10.81      
-resnet152                 23.66               19.08                 16.37      
-resnet18                   3.39                2.69                  2.30      
-resnet34                   6.11                4.83                  4.11      
-resnet50                   7.99                6.42                  5.47      
-resnext101_32x8d          21.69               18.82                 16.66      
-resnext50_32x4d            6.45                5.10                  4.41      
-shufflenet_v2_x0_5         6.33                5.12                  4.01      
-shufflenet_v2_x1_0         6.84                5.59                  4.44      
-squeezenet1_0              3.05                2.95                  2.33      
-squeezenet1_1              3.03                2.79                  2.31      
+alexnet                    1.23                1.05                  1.04      
+densenet121               19.79               13.65                 13.34      
+densenet161               29.43               20.83                 20.70      
+densenet169               28.47               19.33                 20.11      
+densenet201               33.48               22.44                 22.70      
+mnasnet0_5                 5.45                3.63                  3.67      
+mnasnet1_0                 5.66                3.79                  3.95      
+mobilenet_v2               6.19                4.12                  4.02      
+mobilenet_v3_large         8.07                5.22                  5.18      
+mobilenet_v3_small         6.37                4.20                  4.19      
+resnet101                 15.80               11.01                 10.81      
+resnet152                 23.66               16.65                 16.37      
+resnet18                   3.39                2.39                  2.30      
+resnet34                   6.11                4.22                  4.11      
+resnet50                   7.99                5.53                  5.47      
+resnext101_32x8d          21.69               17.34                 16.66      
+resnext50_32x4d            6.45                4.32                  4.41      
+shufflenet_v2_x0_5         6.33                4.03                  4.01      
+shufflenet_v2_x1_0         6.84                4.58                  4.44      
+squeezenet1_0              3.05                2.28                  2.33      
+squeezenet1_1              3.03                2.28                  2.31      
 vgg11                      1.91                1.81                  1.84      
-vgg11_bn                   2.37                2.09                  1.96      
-vgg13                      2.26                2.21                  2.27      
-vgg13_bn                   2.62                2.42                  2.43      
-vgg16                      2.82                2.79                  2.88      
-vgg16_bn                   3.23                3.03                  3.06      
-vgg19                      3.29                3.36                  3.40      
-vgg19_bn                   3.72                3.60                  3.64      
-wide_resnet101_2          15.50               12.32                 10.55      
-wide_resnet50_2            7.88                6.66                  5.35       
+vgg11_bn                   2.37                1.93                  1.96      
+vgg13                      2.26                2.31                  2.27      
+vgg13_bn                   2.62                2.45                  2.43      
+vgg16                      2.82                2.75                  2.88      
+vgg16_bn                   3.23                3.10                  3.06      
+vgg19                      3.29                3.40                  3.40      
+vgg19_bn                   3.72                3.64                  3.64      
+wide_resnet101_2          15.50               10.89                 10.55      
+wide_resnet50_2            7.88                5.52                  5.35
 ```
 
 
 ## Conclusion
 
-Analysis of these performance data reveals that running TorchScript code with C++
+Analysis of these performance data reveals that running TorchScript code with Python or with C++
 and TorchLib provides substantial performance increase (typically about by the factor of 1.5)
 compared to running the original PyTorch model with Python. 
 
-Running TorchScript code with Python is slower than running it with C++
-but faster than running the original PyTorch model.
 
