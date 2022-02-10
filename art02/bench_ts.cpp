@@ -13,10 +13,10 @@
 //    WallClock
 //
 
-class WallClock {
+class Timer {
 public:
-    WallClock();
-    ~WallClock();
+    Timer();
+    ~Timer();
 public:
     void Reset();
     void Start();
@@ -30,28 +30,28 @@ private:
 
 // construction/destruction
 
-WallClock::WallClock(): elapsed(0.0f) { }
+Timer::Timer(): elapsed(0.0f) { }
 
-WallClock::~WallClock() { }
+Timer::~Timer() { }
 
 // interface
 
-void WallClock::Reset() {
+void Timer::Reset() {
     elapsed = 0.0f;
 }
 
-void WallClock::Start() {
+void Timer::Start() {
     start = std::chrono::steady_clock::now();
 }
 
-void WallClock::Stop() {
+void Timer::Stop() {
     end = std::chrono::steady_clock::now();
     elapsed +=
         std::chrono::duration_cast<
             std::chrono::duration<float, std::milli>>(end - start).count();
 }
 
-float WallClock::Elapsed() {
+float Timer::Elapsed() {
     return elapsed;
 }
 
@@ -61,16 +61,15 @@ float WallClock::Elapsed() {
 
 int main(int argc, const char *argv[]) {
     if (argc != 2) {
-        std::cerr << "Usage: bench_ts <path-to-exported-model>" << std::endl;
+        std::cerr << "Usage: bench_ts <torchscript-model-path>" << std::endl;
         return -1;
     }
 
     std::string name(argv[1]);
 
-    // execute model and package output as tensor
     std::cout << "Start model " << name << std::endl;
 
-    int repeat = 100; // make it configuravle?
+    int repeat = 100; 
 
     bool haveCuda = torch::cuda::is_available();
     assert(haveCuda);
@@ -79,7 +78,7 @@ int main(int argc, const char *argv[]) {
 
     std::cout << "Loading model..." << std::endl;
 
-    // deserialize ScriptModule
+    // load model
     torch::jit::script::Module module;
     try {
         module = torch::jit::load(argv[1], device);
@@ -91,9 +90,8 @@ int main(int argc, const char *argv[]) {
 
     std::cout << "Model loaded successfully" << std::endl;
 
-    // ensures that autograd is off
+    // switch off autograd, set evluation mode
     torch::NoGradGuard noGrad; 
-    // turn off dropout and other training-time layers/functions
     module.eval(); 
 
     // create input
@@ -106,19 +104,19 @@ int main(int argc, const char *argv[]) {
     }
 
     // benchmark
-    WallClock clock;
-    clock.Start();
+    Timer timer;
+    timer.Start();
     for (int i = 0; i < repeat; i++) {
         module.forward(inputs);
     }
-    clock.Stop();
-    float t = clock.Elapsed();
+    timer.Stop();
+    float t = timer.Elapsed();
     std::cout << "Model " << name << ": elapsed time " << 
         t << " ms / " << repeat << " iterations = " << t / float(repeat) << std::endl; 
     // record for automated extraction
     std::cout << "#" << name << ";" << t / float(repeat) << std::endl;
 
-    // execute model and package output as tensor
+    // execute model
     at::Tensor output = module.forward(inputs).toTensor();
 
     namespace F = torch::nn::functional;

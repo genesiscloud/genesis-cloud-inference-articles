@@ -16,10 +16,10 @@ void Error(const char *fmt, ...);
 
 // wall clock
 
-class WallClock {
+class Timer {
 public:
-    WallClock();
-    ~WallClock();
+    Timer();
+    ~Timer();
 public:
     void Reset();
     void Start();

@@ -9,7 +9,7 @@
 
 int main(int argc, const char *argv[]) {
     if (argc != 3) {
-        std::cerr << "Usage: infer_model_ts <path-to-exported-model> <path-to-input-data>" << std::endl;
+        std::cerr << "Usage: infer_model_ts <torchscript-model-path> <input-data-path>" << std::endl;
         return -1;
     }
 
@@ -20,7 +20,7 @@ int main(int argc, const char *argv[]) {
 
     std::cout << "Loading model..." << std::endl;
 
-    // deserialize ScriptModule
+    // load model
     torch::jit::script::Module module;
     try {
         module = torch::jit::load(argv[1], device);
@@ -33,9 +33,8 @@ int main(int argc, const char *argv[]) {
     std::cout << "Model loaded successfully" << std::endl;
     std::cout << std::endl;
 
-    // ensure that autograd is off
+    // switch off autigrad, set evalation mode
     torch::NoGradGuard noGrad; 
-    // turn off dropout and other training-time layers/functions
     module.eval(); 
 
     // read classes
@@ -69,7 +68,7 @@ int main(int argc, const char *argv[]) {
     // create inputs
     std::vector<torch::jit::IValue> inputs{input};
 
-    // execute model and package output as tensor
+    // execute model
     at::Tensor output = module.forward(inputs).toTensor();
 
     // apply softmax and get Top-5 results
@@ -77,7 +76,7 @@ int main(int argc, const char *argv[]) {
     at::Tensor softmax = F::softmax(output, F::SoftmaxFuncOptions(1));
     std::tuple<at::Tensor, at::Tensor> top5 = softmax.topk(5);
     
-    // get probabilities ans labels
+    // get probabilities and labels
     at::Tensor probs = std::get<0>(top5);
     at::Tensor labels = std::get<1>(top5);
 

@@ -23,12 +23,13 @@ def main():
 
     # benchmark TorchScript model
 
-    for i in range(1, 10):
-        model(input)
-    start = perf_counter()
-    for i in range(1, 100):
-        model(input)
-    end = perf_counter()
+    with torch.no_grad():
+        for i in range(1, 10):
+            model(input)
+        start = perf_counter()
+        for i in range(1, 100):
+            model(input)
+        end = perf_counter()
 
     elapsed = ((end - start) / 100) * 1000
     print('Model {0}: elapsed time {1:.2f} ms'.format(name, elapsed))

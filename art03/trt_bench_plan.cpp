@@ -141,13 +141,13 @@ int main(int argc, char *argv[]) {
         engine.RunInfer();
     }
 
-    WallClock clock;
-    clock.Start();
+    Timer timer;
+    timer.Start();
     for (int i = 0; i < repeat; i++) {
         engine.RunInfer();
     }
-    clock.Stop();
-    float t = clock.Elapsed();
+    timer.Stop();
+    float t = timer.Elapsed();
     printf("Model %s: elapsed time %f ms / %d = %f\n", planPath, t, repeat, t / float(repeat));
     // record for automated extraction
     printf("#%s;%f\n", planPath, t / float(repeat)); 

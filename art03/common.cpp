@@ -25,26 +25,26 @@ void Error(const char *fmt, ...) {
 
 // wall clock
 
-WallClock::WallClock(): elapsed(0.0f) { }
+Timer::Timer(): elapsed(0.0f) { }
 
-WallClock::~WallClock() { }
+Timer::~Timer() { }
 
-void WallClock::Reset() {
+void Timer::Reset() {
     elapsed = 0.0f;
 }
 
-void WallClock::Start() {
+void Timer::Start() {
     start = std::chrono::steady_clock::now();
 }
 
-void WallClock::Stop() {
+void Timer::Stop() {
     end = std::chrono::steady_clock::now();
     elapsed +=
         std::chrono::duration_cast<
             std::chrono::duration<float, std::milli>>(end - start).count();
 }
 
-float WallClock::Elapsed() {
+float Timer::Elapsed() {
     return elapsed;
 }
 
