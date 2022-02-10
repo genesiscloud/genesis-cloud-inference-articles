@@ -1,280 +1,280 @@
 #head;TorchScript (Python)
 Start alexnet
-Model alexnet: elapsed time 1.19 ms
-#alexnet;1.187317
+Model alexnet: elapsed time 1.05 ms
+#alexnet;1.047226
 Top-5 results
-  556 4.72%
-  549 2.77%
-  892 2.63%
-  446 2.30%
-  844 2.00%
+  556 5.43%
+  892 3.59%
+  549 3.54%
+  446 2.33%
+  844 2.32%
 Start densenet121
-Model densenet121: elapsed time 19.45 ms
-#densenet121;19.446931
+Model densenet121: elapsed time 13.65 ms
+#densenet121;13.649310
 Top-5 results
-  418 2.04%
-  892 1.79%
-  446 1.55%
-  549 1.54%
-  772 1.35%
+  591 3.52%
+  539 2.45%
+  446 2.19%
+  549 2.12%
+  418 1.77%
 Start densenet161
-Model densenet161: elapsed time 30.32 ms
-#densenet161;30.322270
+Model densenet161: elapsed time 20.83 ms
+#densenet161;20.833150
 Top-5 results
-  620 3.94%
-  892 3.76%
-  600 2.37%
-  971 2.23%
-  844 1.94%
+  620 4.97%
+  446 4.75%
+  549 2.43%
+  111 2.42%
+  904 1.90%
 Start densenet169
-Model densenet169: elapsed time 30.06 ms
-#densenet169;30.055242
+Model densenet169: elapsed time 19.33 ms
+#densenet169;19.331220
 Top-5 results
-  111 36.19%
-  812 2.16%
-  844 2.11%
-  892 2.00%
-  446 1.98%
+  111 20.05%
+  812 3.50%
+  744 2.50%
+  657 2.16%
+  763 2.14%
 Start densenet201
-Model densenet201: elapsed time 36.21 ms
-#densenet201;36.207940
+Model densenet201: elapsed time 22.44 ms
+#densenet201;22.436801
 Top-5 results
-  844 3.45%
-  783 3.00%
-  644 2.97%
-  784 2.44%
-  78 2.44%
+  844 4.27%
+  644 3.03%
+  111 2.81%
+  783 2.69%
+  549 2.66%
 Start mnasnet0_5
-Model mnasnet0_5: elapsed time 4.65 ms
-#mnasnet0_5;4.649257
+Model mnasnet0_5: elapsed time 3.63 ms
+#mnasnet0_5;3.633313
 Top-5 results
-  892 2.87%
-  783 2.04%
-  644 1.76%
-  78 1.64%
-  844 1.62%
+  892 2.30%
+  783 1.92%
+  446 1.70%
+  844 1.67%
+  904 1.27%
 Start mnasnet1_0
-Model mnasnet1_0: elapsed time 4.62 ms
-#mnasnet1_0;4.621840
+Model mnasnet1_0: elapsed time 3.79 ms
+#mnasnet1_0;3.792959
 Top-5 results
-  418 9.31%
-  446 4.28%
-  111 4.21%
-  563 3.95%
-  844 3.44%
+  418 8.81%
+  111 4.35%
+  563 3.25%
+  446 3.21%
+  769 2.92%
 Start mobilenet_v2
-Model mobilenet_v2: elapsed time 5.63 ms
-#mobilenet_v2;5.628340
+Model mobilenet_v2: elapsed time 4.12 ms
+#mobilenet_v2;4.124093
 Top-5 results
-  892 5.24%
-  549 4.63%
-  446 3.13%
-  844 2.38%
-  418 1.99%
+  892 5.52%
+  549 4.73%
+  446 3.52%
+  844 2.93%
+  418 2.70%
 Start mobilenet_v3_large
-Model mobilenet_v3_large: elapsed time 6.71 ms
-#mobilenet_v3_large;6.711290
+Model mobilenet_v3_large: elapsed time 5.22 ms
+#mobilenet_v3_large;5.218045
 Top-5 results
-  21 7.34%
-  23 5.68%
-  128 5.31%
-  22 3.85%
-  701 2.83%
-Start mobilenet_v3_small
-Model mobilenet_v3_small: elapsed time 5.66 ms
-#mobilenet_v3_small;5.658193
-Top-5 results
-  21 9.25%
-  549 4.55%
-  892 3.92%
-  22 3.14%
-  92 2.58%
-Start resnet101
-Model resnet101: elapsed time 12.76 ms
-#resnet101;12.756311
-Top-5 results
-  783 12.80%
-  784 5.98%
-  418 5.26%
-  549 4.89%
-  563 3.24%
-Start resnet152
-Model resnet152: elapsed time 19.08 ms
-#resnet152;19.075341
-Top-5 results
-  78 6.27%
-  679 4.87%
-  111 4.58%
-  783 4.11%
-  644 3.86%
-Start resnet18
-Model resnet18: elapsed time 2.69 ms
-#resnet18;2.694303
-Top-5 results
-  845 4.18%
-  111 3.12%
-  418 3.12%
-  644 2.45%
-  784 2.21%
-Start resnet34
-Model resnet34: elapsed time 4.83 ms
-#resnet34;4.834139
-Top-5 results
-  845 2.28%
-  418 1.78%
-  610 1.70%
-  549 1.54%
-  679 1.52%
-Start resnet50
-Model resnet50: elapsed time 6.42 ms
-#resnet50;6.418032
-Top-5 results
-  892 3.47%
-  549 2.93%
-  783 2.74%
-  610 2.68%
-  844 2.19%
-Start resnext101_32x8d
-Model resnext101_32x8d: elapsed time 18.82 ms
-#resnext101_32x8d;18.815202
-Top-5 results
-  892 19.76%
-  446 8.42%
-  882 5.44%
-  844 3.79%
-  418 3.38%
-Start resnext50_32x4d
-Model resnext50_32x4d: elapsed time 5.10 ms
-#resnext50_32x4d;5.099405
-Top-5 results
-  111 38.79%
-  556 4.08%
-  783 3.27%
-  534 2.54%
-  446 2.20%
-Start shufflenet_v2_x0_5
-Model shufflenet_v2_x0_5: elapsed time 5.12 ms
-#shufflenet_v2_x0_5;5.115101
-Top-5 results
-  490 23.49%
-  904 8.61%
-  446 8.22%
-  411 7.00%
-  89 6.38%
-Start shufflenet_v2_x1_0
-Model shufflenet_v2_x1_0: elapsed time 5.59 ms
-#shufflenet_v2_x1_0;5.587741
-Top-5 results
-  549 13.79%
-  700 12.13%
-  78 8.14%
-  111 5.92%
-  446 3.26%
-Start squeezenet1_0
-Model squeezenet1_0: elapsed time 2.95 ms
-#squeezenet1_0;2.946618
-Top-5 results
-  533 4.26%
+  23 3.61%
+  844 3.05%
+  21 2.99%
   446 2.49%
-  679 1.74%
-  418 1.68%
-  549 1.62%
-Start squeezenet1_1
-Model squeezenet1_1: elapsed time 2.79 ms
-#squeezenet1_1;2.786455
+  892 2.48%
+Start mobilenet_v3_small
+Model mobilenet_v3_small: elapsed time 4.20 ms
+#mobilenet_v3_small;4.202811
 Top-5 results
-  539 5.30%
-  533 4.54%
-  443 2.12%
-  735 2.09%
-  549 1.53%
+  21 9.74%
+  892 3.91%
+  22 3.55%
+  92 2.78%
+  549 2.64%
+Start resnet101
+Model resnet101: elapsed time 11.01 ms
+#resnet101;11.009169
+Top-5 results
+  783 11.79%
+  701 5.58%
+  784 4.77%
+  549 4.16%
+  111 3.20%
+Start resnet152
+Model resnet152: elapsed time 16.65 ms
+#resnet152;16.652038
+Top-5 results
+  679 7.81%
+  78 5.53%
+  783 5.20%
+  644 4.80%
+  111 3.72%
+Start resnet18
+Model resnet18: elapsed time 2.39 ms
+#resnet18;2.386954
+Top-5 results
+  892 3.72%
+  111 3.55%
+  845 3.11%
+  644 2.37%
+  418 2.14%
+Start resnet34
+Model resnet34: elapsed time 4.22 ms
+#resnet34;4.215422
+Top-5 results
+  845 2.27%
+  563 1.49%
+  977 1.46%
+  622 1.37%
+  418 1.26%
+Start resnet50
+Model resnet50: elapsed time 5.53 ms
+#resnet50;5.530868
+Top-5 results
+  783 3.78%
+  892 3.66%
+  610 3.14%
+  549 2.96%
+  446 2.36%
+Start resnext101_32x8d
+Model resnext101_32x8d: elapsed time 17.34 ms
+#resnext101_32x8d;17.338957
+Top-5 results
+  892 12.99%
+  882 11.90%
+  446 3.71%
+  418 2.39%
+  840 2.33%
+Start resnext50_32x4d
+Model resnext50_32x4d: elapsed time 4.32 ms
+#resnext50_32x4d;4.323156
+Top-5 results
+  111 18.81%
+  556 6.11%
+  534 5.58%
+  892 4.17%
+  783 2.83%
+Start shufflenet_v2_x0_5
+Model shufflenet_v2_x0_5: elapsed time 4.03 ms
+#shufflenet_v2_x0_5;4.031513
+Top-5 results
+  904 20.54%
+  490 11.63%
+  89 8.90%
+  446 7.29%
+  556 5.19%
+Start shufflenet_v2_x1_0
+Model shufflenet_v2_x1_0: elapsed time 4.58 ms
+#shufflenet_v2_x1_0;4.575673
+Top-5 results
+  700 16.29%
+  549 10.83%
+  78 7.83%
+  111 5.77%
+  446 5.65%
+Start squeezenet1_0
+Model squeezenet1_0: elapsed time 2.28 ms
+#squeezenet1_0;2.282292
+Top-5 results
+  533 5.56%
+  446 1.76%
+  904 1.66%
+  679 1.51%
+  418 1.38%
+Start squeezenet1_1
+Model squeezenet1_1: elapsed time 2.28 ms
+#squeezenet1_1;2.283750
+Top-5 results
+  533 10.69%
+  539 6.33%
+  443 5.14%
+  735 3.01%
+  474 2.00%
 Start vgg11
 Model vgg11: elapsed time 1.81 ms
-#vgg11;1.809227
+#vgg11;1.814731
 Top-5 results
-  618 4.39%
-  784 3.22%
-  418 3.00%
-  623 2.68%
-  677 2.48%
+  618 3.65%
+  784 2.93%
+  418 2.87%
+  623 2.37%
+  783 2.10%
 Start vgg11_bn
-Model vgg11_bn: elapsed time 2.09 ms
-#vgg11_bn;2.086451
+Model vgg11_bn: elapsed time 1.93 ms
+#vgg11_bn;1.926210
 Top-5 results
-  549 2.81%
-  892 2.07%
+  892 2.81%
+  549 2.10%
+  844 2.05%
   446 1.79%
-  111 1.74%
-  619 1.42%
+  111 1.67%
 Start vgg13
-Model vgg13: elapsed time 2.21 ms
-#vgg13;2.214464
+Model vgg13: elapsed time 2.31 ms
+#vgg13;2.306549
 Top-5 results
-  111 2.71%
-  600 2.45%
-  783 2.32%
-  677 2.23%
-  892 2.23%
+  783 2.03%
+  677 1.82%
+  549 1.70%
+  892 1.68%
+  844 1.66%
 Start vgg13_bn
-Model vgg13_bn: elapsed time 2.42 ms
-#vgg13_bn;2.420521
+Model vgg13_bn: elapsed time 2.45 ms
+#vgg13_bn;2.454709
 Top-5 results
-  549 5.73%
-  111 2.93%
-  701 2.13%
-  892 2.12%
-  921 1.39%
+  549 3.91%
+  701 2.00%
+  892 1.94%
+  977 1.58%
+  6 1.45%
 Start vgg16
-Model vgg16: elapsed time 2.79 ms
-#vgg16;2.792963
+Model vgg16: elapsed time 2.75 ms
+#vgg16;2.746518
 Top-5 results
-  111 5.70%
-  892 1.92%
-  844 1.88%
-  418 1.84%
-  446 1.63%
+  111 6.54%
+  844 1.74%
+  892 1.70%
+  534 1.55%
+  446 1.47%
 Start vgg16_bn
-Model vgg16_bn: elapsed time 3.03 ms
-#vgg16_bn;3.031486
+Model vgg16_bn: elapsed time 3.10 ms
+#vgg16_bn;3.100442
 Top-5 results
-  783 2.04%
-  418 1.96%
-  623 1.68%
-  549 1.58%
-  677 1.57%
+  549 1.61%
+  418 1.53%
+  623 1.50%
+  783 1.48%
+  78 1.40%
 Start vgg19
-Model vgg19: elapsed time 3.36 ms
-#vgg19;3.355425
+Model vgg19: elapsed time 3.40 ms
+#vgg19;3.402011
 Top-5 results
-  892 2.06%
-  844 1.79%
-  618 1.33%
-  418 1.11%
-  549 0.97%
+  892 2.77%
+  844 1.44%
+  618 1.13%
+  549 0.80%
+  623 0.79%
 Start vgg19_bn
-Model vgg19_bn: elapsed time 3.60 ms
-#vgg19_bn;3.599378
+Model vgg19_bn: elapsed time 3.64 ms
+#vgg19_bn;3.639615
 Top-5 results
-  446 2.23%
-  111 1.43%
-  549 1.38%
-  418 1.33%
-  784 1.13%
+  446 3.34%
+  549 2.27%
+  904 1.37%
+  828 1.34%
+  79 1.27%
 Start wide_resnet101_2
-Model wide_resnet101_2: elapsed time 12.32 ms
-#wide_resnet101_2;12.317547
+Model wide_resnet101_2: elapsed time 10.89 ms
+#wide_resnet101_2;10.891076
 Top-5 results
-  111 4.90%
-  556 4.53%
-  784 2.62%
-  563 2.27%
-  78 2.09%
+  111 7.06%
+  78 3.06%
+  784 2.99%
+  556 2.41%
+  563 2.31%
 Start wide_resnet50_2
-Model wide_resnet50_2: elapsed time 6.66 ms
-#wide_resnet50_2;6.664267
+Model wide_resnet50_2: elapsed time 5.52 ms
+#wide_resnet50_2;5.518265
 Top-5 results
-  892 6.23%
-  679 5.76%
-  783 5.46%
-  111 4.52%
-  78 4.52%
+  892 7.31%
+  111 5.83%
+  783 5.16%
+  78 4.48%
+  844 4.23%
