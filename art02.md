@@ -254,42 +254,46 @@ import torchvision.models as models
 # create models
 
 resnet50 = models.resnet50(pretrained=True).cuda()
-resnet50_scripted = torch.jit.script(resnet50)
-dummy_input = torch.rand(1, 3, 224, 224).cuda()
+resnet50_ts = torch.jit.script(resnet50)
+input = torch.rand(1, 3, 224, 224).cuda()
 
 resnet50.eval()
-resnet50_scripted.eval()
+resnet50_ts.eval()
 
 # benchmark original model
 
-for i in range(1, 10):
-    resnet50(dummy_input)
-start = perf_counter()
-for i in range(1, 100):
-    resnet50(dummy_input)
-end = perf_counter()
+with torch.no_grad():
+    for i in range(1, 10):
+        resnet50(input)
+    start = perf_counter()
+    for i in range(1, 100):
+        resnet50(input)
+    end = perf_counter()
+
 print('Perf original model {0:.2f} ms'.format(((end - start) / 100) * 1000))
 
 # benchmark TorchScript model
 
-for i in range(1, 10):
-    resnet50_scripted(dummy_input)
-start = perf_counter()
-for i in range(1, 100):
-    resnet50_scripted(dummy_input)
-end = perf_counter()
+with torch.no_grad():
+    for i in range(1, 10):
+        resnet50_ts(input)
+    start = perf_counter()
+    for i in range(1, 100):
+        resnet50_ts(input)
+    end = perf_counter()
+
 print('Perf TorchScript model {0:.2f} ms'.format(((end - start) / 100) * 1000))
 
 # compare Top-5 results
 
-unscripted_output = resnet50(dummy_input)
-scripted_output = resnet50_scripted(dummy_input)
+output = resnet50(input)
+output_ts = resnet50_ts(input)
 
-unscripted_top5 = F.softmax(unscripted_output, dim=1).topk(5).indices
-scripted_top5 = F.softmax(scripted_output, dim=1).topk(5).indices
+top5 = F.softmax(output, dim=1).topk(5).indices
+top5_ts = F.softmax(output_ts, dim=1).topk(5).indices
 
-print('Original model top 5 results:\n {}'.format(unscripted_top5))
-print('TorchScript model top 5 results:\n {}'.format(scripted_top5))
+print('Original model top 5 results:\n {}'.format(top5))
+print('TorchScript model top 5 results:\n {}'.format(top5_ts))
 ```
 
 This program:
@@ -354,12 +358,13 @@ def main():
 
     # benchmark TorchScript model
 
-    for i in range(1, 10):
-        model(input)
-    start = perf_counter()
-    for i in range(1, 100):
-        model(input)
-    end = perf_counter()
+    with torch.no_grad():
+        for i in range(1, 10):
+            model(input)
+        start = perf_counter()
+        for i in range(1, 100):
+            model(input)
+        end = perf_counter()
 
     elapsed = ((end - start) / 100) * 1000
     print('Model {0}: elapsed time {1:.2f} ms'.format(name, elapsed))
@@ -377,7 +382,7 @@ def main():
     for ind, val in zip(top5p[0], top5v[0]):
         print("  {0} {1:.2f}%".format(ind, val * 100))
 
-main() 
+main()
 ```
 
 The program uses a model name as its single command line argument.
@@ -567,7 +572,7 @@ and pre-processed input image.
 
 int main(int argc, const char *argv[]) {
     if (argc != 3) {
-        std::cerr << "Usage: infer_model_ts <path-to-exported-model> <path-to-input-data>" << std::endl;
+        std::cerr << "Usage: infer_model_ts <torchscript-model-path> <input-data-path>" << std::endl;
         return -1;
     }
 
@@ -578,7 +583,7 @@ int main(int argc, const char *argv[]) {
 
     std::cout << "Loading model..." << std::endl;
 
-    // deserialize ScriptModule
+    // load model
     torch::jit::script::Module module;
     try {
         module = torch::jit::load(argv[1], device);
@@ -591,9 +596,8 @@ int main(int argc, const char *argv[]) {
     std::cout << "Model loaded successfully" << std::endl;
     std::cout << std::endl;
 
-    // ensure that autograd is off
+    // switch off autigrad, set evalation mode
     torch::NoGradGuard noGrad; 
-    // turn off dropout and other training-time layers/functions
     module.eval(); 
 
     // read classes
@@ -627,7 +631,7 @@ int main(int argc, const char *argv[]) {
     // create inputs
     std::vector<torch::jit::IValue> inputs{input};
 
-    // execute model and package output as tensor
+    // execute model
     at::Tensor output = module.forward(inputs).toTensor();
 
     // apply softmax and get Top-5 results
@@ -635,7 +639,7 @@ int main(int argc, const char *argv[]) {
     at::Tensor softmax = F::softmax(output, F::SoftmaxFuncOptions(1));
     std::tuple<at::Tensor, at::Tensor> top5 = softmax.topk(5);
     
-    // get probabilities ans labels
+    // get probabilities and labels
     at::Tensor probs = std::get<0>(top5);
     at::Tensor labels = std::get<1>(top5);
 
@@ -735,10 +739,10 @@ The C++ program `bench_ts.cpp` performs inference benchmarking for a TorchScript
 //    WallClock
 //
 
-class WallClock {
+class Timer {
 public:
-    WallClock();
-    ~WallClock();
+    Timer();
+    ~Timer();
 public:
     void Reset();
     void Start();
@@ -752,28 +756,28 @@ private:
 
 // construction/destruction
 
-WallClock::WallClock(): elapsed(0.0f) { }
+Timer::Timer(): elapsed(0.0f) { }
 
-WallClock::~WallClock() { }
+Timer::~Timer() { }
 
 // interface
 
-void WallClock::Reset() {
+void Timer::Reset() {
     elapsed = 0.0f;
 }
 
-void WallClock::Start() {
+void Timer::Start() {
     start = std::chrono::steady_clock::now();
 }
 
-void WallClock::Stop() {
+void Timer::Stop() {
     end = std::chrono::steady_clock::now();
     elapsed +=
         std::chrono::duration_cast<
             std::chrono::duration<float, std::milli>>(end - start).count();
 }
 
-float WallClock::Elapsed() {
+float Timer::Elapsed() {
     return elapsed;
 }
 
@@ -783,16 +787,15 @@ float WallClock::Elapsed() {
 
 int main(int argc, const char *argv[]) {
     if (argc != 2) {
-        std::cerr << "Usage: bench_ts <path-to-exported-model>" << std::endl;
+        std::cerr << "Usage: bench_ts <torchscript-model-path>" << std::endl;
         return -1;
     }
 
     std::string name(argv[1]);
 
-    // execute model and package output as tensor
     std::cout << "Start model " << name << std::endl;
 
-    int repeat = 100; // make it configuravle?
+    int repeat = 100; 
 
     bool haveCuda = torch::cuda::is_available();
     assert(haveCuda);
@@ -801,7 +804,7 @@ int main(int argc, const char *argv[]) {
 
     std::cout << "Loading model..." << std::endl;
 
-    // deserialize ScriptModule
+    // load model
     torch::jit::script::Module module;
     try {
         module = torch::jit::load(argv[1], device);
@@ -813,9 +816,8 @@ int main(int argc, const char *argv[]) {
 
     std::cout << "Model loaded successfully" << std::endl;
 
-    // ensures that autograd is off
+    // switch off autograd, set evluation mode
     torch::NoGradGuard noGrad; 
-    // turn off dropout and other training-time layers/functions
     module.eval(); 
 
     // create input
@@ -828,19 +830,19 @@ int main(int argc, const char *argv[]) {
     }
 
     // benchmark
-    WallClock clock;
-    clock.Start();
+    Timer timer;
+    timer.Start();
     for (int i = 0; i < repeat; i++) {
         module.forward(inputs);
     }
-    clock.Stop();
-    float t = clock.Elapsed();
+    timer.Stop();
+    float t = timer.Elapsed();
     std::cout << "Model " << name << ": elapsed time " << 
         t << " ms / " << repeat << " iterations = " << t / float(repeat) << std::endl; 
     // record for automated extraction
     std::cout << "#" << name << ";" << t / float(repeat) << std::endl;
 
-    // execute model and package output as tensor
+    // execute model
     at::Tensor output = module.forward(inputs).toTensor();
 
     namespace F = torch::nn::functional;
