@@ -1,7 +1,7 @@
 
 # Article 1. Installation and basic use of CUDA, PyTorch, and torchvision
 
-This article will guide you through the basic steps required for installation
+This article will guide you through the basic steps which are required for installation
 and basic use of PyTorch and related software components on a Genesis Cloud
 GPU instance. The following topics are covered:
 
@@ -10,7 +10,7 @@ GPU instance. The following topics are covered:
 * installation of PyTorch and torchvision
 * inference using torchvision image classification models with Python
 
-We will use a Genesis Cloud instance equipped with NVIDIA RTX 3080 GPU
+In your Genesis Cloud account make sure that you have access to at least one NVIDIA RTX 3080 GPU
 and the following software versions:
 
 * OS: Ubuntu 20.04
@@ -27,14 +27,17 @@ To run examples described in this article we recommend cloning the entire
 [repository](https://github.com/lxgo/genesis-kbase) on your Genesis Cloud instance.
 The subdirectory `art01` must be made your current directory.
 
+**Before you start, make sure that you have created an account with Genesis Cloud and finished the on-boarding steps (phone verification, adding SSH key, providing credit card). Furthermore, ensure that you have access to one NVIDIA RTX 3080 GPU instance** (if not, request quota [here](https://console-staging-gws.genesiscloud.dev/dashboard/quota)). 
+
+---
+
 ## Step 1. Creating a GPU instance on Genesis Cloud
 
-We assume that you have an account at Genesis Cloud. We start with creation of
-a new GPU instance that will be used for running examples described in this
-and several following articles.
+We start with creating a new GPU instance on your Genesis Cloud dashboard. This instance will be used for running examples described in this
+and the following articles of this series.
 
-To create a new instance, visit a [page](https://compute.genesiscloud.com/dashboard/instances/create) 
-titled "Create New Instance". On this page:
+To create a new instance, visit the [Create New Instance](https://compute.genesiscloud.com/dashboard/instances/create) 
+page. Complete the following steps:
 
 * choose a meaningful Hostname and, optionally, a Nickname
 * in Select Instance Type: choose GPU NVIDIA / GeForce RTX 3080
@@ -43,9 +46,9 @@ titled "Create New Instance". On this page:
 * in Select Image: choose Ubuntu 20.04
 * Authentication: select method (SSH Key is recommended)
  
-Once ready, click the "Create Instance" button.
+Then click the "Create Instance" button.
 
-Once your instance is ready, login and proceed with the following steps.
+Once your instance is ready, login and proceed with the following steps. If you need any additional help on how to create and run an instance check the referred [knowledge base article](https://support.genesiscloud.com/a/solutions/articles/47001101437).  
 
 ## Step 2. Install CUDA
 
@@ -64,7 +67,7 @@ On this page, make the following selections:
 * Installer Type: deb (local)
 
 The sequence of commands for installation of the selected version will be presented.
-At the time of writing of this article, these commands were:
+At the time of writing this article, these commands were:
 
 ```
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/cuda-ubuntu2004.pin
@@ -76,25 +79,25 @@ sudo apt-get update
 sudo apt-get -y install cuda
 ```
 
-As these commands might change in the future, we recommend using the commands that are actually presented
-on this page. 
+**As these commands might change in the future, we recommend using the commands that are actually presented
+on this page.** 
 
 Enter these commands one by one (or build and execute the respective shell script).
-The last command will launch the CUDA installation process that might take a while.
+The last command will launch the CUDA installation process, which might take a while.
 
 For this and similar installation steps, we advice to create a scratch directory
-(for example, `~/transit`) and set it as current directory during the installation:
+(for example, `~/transit`) and set it as the current directory during the installation:
 
 ```
 mkdir -p ~/transit
 cd ~/transit
 ```
 
-Upon the successful installation, we recommend rebooting your instance by stopping and starting it
-from the Genesis Cloud Web console.
+**Upon the successful installation, we recommend rebooting your instance by stopping and starting it
+from the Genesis Cloud Web console.**
 
 We strongly advise you to take time and study [CUDA EULA](https://docs.nvidia.com/cuda/eula/index.html)
-available by the reference on this page. 
+available by reference on this page. 
 
 To validate CUDA installation, type the command:
 
@@ -102,7 +105,7 @@ To validate CUDA installation, type the command:
 nvidia-smi
 ```
 
-You should get the output looking like:
+You should get an output similar to this:
 
 ```
 +-----------------------------------------------------------------------------+
@@ -146,7 +149,8 @@ of primitives for deep neural networks. To install cuDNN, visit the
 [distribution page](https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/).
 Select packages corresponding to the desired combination of CUDA and cuDNN versions.
 For each such combination there are two packages of interest representing the runtime and developer libraries.
-At the time of writing of this article, for CUDA 11.3 and cuDNN 8.2.1, these packages were:
+
+At the time of writing this article, for CUDA 11.3 and cuDNN 8.2.1, these packages were:
 
 ```
 libcudnn8_8.2.1.32-1+cuda11.3_amd64.deb
@@ -174,8 +178,8 @@ sudo dpkg -i libcudnn8-dev_8.2.1.32-1+cuda11.3_amd64.deb
 
 The C++ program `cudnn_softmax` implements a simple cuDNN example
 that initializes a CUDA tensor with random values, applies
-the cuDNN Softmax operation to it, and prints top 5 values of
-the result:
+the cuDNN Softmax operation to it, and prints the top 5 values of
+your result:
 
 ```
 #include <cstdio>
@@ -468,16 +472,16 @@ The program output will look like:
 
 ## Step 5. Install PyTorch
 
-To install and use PyTorch, Python interpreter and package installer `pip` are required.
-When a new instance is created on Genesis Cloud, Python 3 is automatically preinstalled; 
-however, `pip` must be installed explicitly. This can be done using the commands:
+To install and use PyTorch, the Python interpreter and package installer `pip` are required.
+**When a new instance is created on Genesis Cloud, Python 3 is automatically preinstalled; 
+however, `pip` must be installed explicitly**. This can be done using the commands:
 
 ```
 sudo apt install python3-pip
 ```
 
 To install PyTorch, visit the [product site](https://pytorch.org/) and select the desired 
-configuration as follows:
+configuration as following:
 
 * PyTorch Build: Stable (1.10.1)
 * Your OS: Linux
@@ -486,7 +490,7 @@ configuration as follows:
 * Compute Platform: CUDA 11.3
 
 The command for installation of the selected configuration will be presented.
-At the time of writing of this article, this commands was:
+At the time of writing this article, this commands was:
 
 ```
 pip3 install torch==1.10.1+cu113 torchvision==0.11.2+cu113 torchaudio==0.10.1+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html
@@ -522,15 +526,16 @@ The [torchvision](https://pytorch.org/vision/stable/index.html) package is part 
 project. It includes various computational assets (model architectures, image transformations,
 and datasets) facilitating using PyTorch for computer vision. 
 
-The torchvision package is installed automatically together with PyTorch. In this and following
+**The torchvision package is installed automatically together with PyTorch.** In this and the following
 articles we will use torchvision models to demonstrate various aspects of deep learning implementation
 on Genesis Cloud infrastructure.
 
-We will start with an example of direct use of torchvision models for image classification.
+We will start with an example of direct ussage of torchvision models for image classification.
 
-As input, we will need an arbitrary image containing a single object to be classified.
+As input, we will need an arbitrary image containing a single object that will be classified.
 We will use this [husky image](https://commons.wikimedia.org/wiki/Category:Siberian_Husky#/media/File:Siberian-husky-1291343_1920.jpg)
-in our experiments (it is in public domain). Use these commands to create a subdirectory
+in our experiments (it is in public domain). 
+Use the following commands to create a subdirectory
 `data` for holding input files and to downloads the image:
 
 ```
@@ -540,7 +545,7 @@ wget https://upload.wikimedia.org/wikipedia/commons/4/4b/Siberian-husky-1291343_
 
 Torchvision image classification models have been trained on the ImageNet dataset and use
 1000 image classes labeled by consecutive integer numbers. The text file `imagenet_classes.txt` 
-containing class descriptions for all labels can be obtained using this command:
+containsclass descriptions for all labels, which can be obtained using this command:
 
 ```
 wget https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt
@@ -548,10 +553,10 @@ wget https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt
 
 Torchvision provides an extensive set of 
 [image classification models](https://pytorch.org/vision/stable/models.html#classification).
-We will use ResNet50 in the following example.
+In the following example, we will use ResNet50.
 
-The following Python program `infer_resnet50.py` inputs the image, performs classification
-and outputs top 5 results with the respective probabilities.
+The following Python program `infer_resnet50.py` inputs the image, performs a classification
+and outputs the top 5 results with the respective probabilities.
 
 ```
 import torch
@@ -603,26 +608,26 @@ for ind, val in zip(top5.indices, top5.values):
     print("{0} {1:.2f}%".format(categories[ind], val * 100))
 ```
 
-The program performs these main actions:
+The program performs these following main actions:
 
-* loads the pre-trained ResNet50 model
-* sets the model in evaluation (inference) mode
-* specifies transformations for image pre-processing
-* reads the image file using PIL package
-* applies transformations to the image
-* creates an input batch tensor containing one transformed image
-* if CUDA is available, moves both the input batch and the model to CUDA device
-* disables gradient computations in PyTorch
-* runs inference for the model producing the output tensor
-* applies the softmax transformation to the output
-* gets labels and probabilities for top 5 results
-* reads ImageNet class descriptions
-* prints top 5 classes and probabilities in human-readable form
+* loading the pre-trained ResNet50 model
+* set the model in evaluation (inference) mode
+* specify transformations for image pre-processing
+* read the image file using PIL package
+* apply transformations to the image
+* create an input batch tensor containing one transformed image
+* if CUDA is available, move both the input batch and the model to a CUDA device
+* disable gradient computations in PyTorch
+* run inference for the model producing the output tensor
+* apply the softmax transformation to the output
+* get labels and probabilities for top 5 results
+* read ImageNet class descriptions
+* print top 5 classes and probabilities in human-readable form
 
 The program uses the same sequence of image transformations as commonly applied
-during the ImageNet dataset during the model training.
+during the ImageNet dataset model training.
 
-Combination of `model.eval()` and `torch.no_grad()` calls is commonly used
+Combination of `model.eval()` and `torch.no_grad()` calls are commonly used
 when running inference with PyTorch models.
 
 To run this program, use the command:
@@ -642,14 +647,14 @@ Saint Bernard 0.32%
 ```
 
 You can also experiment with the other classification models from the torchvision
-library and other images.
+library as well as with other images.
 
 
 ## Step 7. Benchmarking the torchvision models
 
 We will perform simple inference benchmarking of torchscript models by running
-inference multiple times and measuring the average wall clock time required
-for one run.
+the inference multiple times and measuring the average wall clock time required
+for completing one run.
 
 The Python program `bench_resnet50.py` implements benchmarking of ResNet50:
 
@@ -696,14 +701,14 @@ print('Top 5 results:\n {}'.format(top5))
 
 The program performs the following steps:
 
-* creates ResNet50 model; places the model on CUDA device
-* sets the model in evaluation (inference) mode
-* creates an input tensor with random dummy contents; places it on CUDA device
-* disables gradient computations in PyTorch and benchmarks the model
-* prints benchmarking results
-* applies the softmax transformation to the outputs
-* gets labels and probabilities for top 5 results
-* prints top 5 classes and probabilities
+* create ResNet50 model; places the model on CUDA device
+* set the model in evaluation (inference) mode
+* create an input tensor with random dummy contents; place it on CUDA device
+* disable gradient computations in PyTorch and benchmark the model
+* print benchmarking results
+* apply the softmax transformation to the outputs
+* get labels and probabilities for top 5 results
+* print top 5 classes and probabilities
 
 The benchmarking includes 10 "warmup" inference runs
 followed by 100 runs for which the total wall clock time is measured.
@@ -785,23 +790,23 @@ main()
 
 The program uses a model name as its single command line argument.
 
-NOTE: The model `googlenet` is not supported because of the specific format
-of input tensors it uses.
+**NOTE:** The model `googlenet` is not supported because of the specific format
+of input tensors that are used.
 
 The program performs the following steps:
 
-* creates a model builder for the specified model name
-* uses this builder to create a model; places the model on CUDA device
-* sets the model in evaluation (inference) mode
-* creates an input tensor with random dummy contents; places it on CUDA device
-* disables gradient computations in PyTorch and benchmarks the model
-* prints benchmarking results
-* applies the softmax transformation to the outputs
-* gets labels and probabilities for top 5 results
-* prints top 5 classes and probabilities
+* creating a model builder for the specified model name
+* use this builder to create a model; places the model on CUDA device
+* set the model in evaluation (inference) mode
+* create an input tensor with random dummy contents; place it on CUDA device
+* disable gradient computations in PyTorch and benchmark the model
+* print benchmarking results
+* apply the softmax transformation to the outputs
+* get labels and probabilities for top 5 results
+* print top 5 classes and probabilities
 
 The program prints a special formatted line starting with `"#"` that
-will be later used for automated extraction of performance metrics.
+will be later used for the automated extraction of performance metrics.
 
 To run this program for ResNet50, use the command:
 
@@ -809,7 +814,7 @@ To run this program for ResNet50, use the command:
 python3 bench_model.py resnet50
 ```
 
-The program output will look something like (this program is not deterministic due to randomised inputs so results differ each execution):
+The program output will look something like (this program is not deterministic due to randomised inputs, so results differ after each execution):
 
 ```
 Start resnet50
@@ -870,14 +875,16 @@ Running this script is straightforward:
 ./bench_all.sh >bench_torch.log
 ```
 
-The benchmarking log will be saved in `bench_torch.log` that later will be
+The benchmarking log will be saved in `bench_torch.log`, which is later
 used for performance comparison of various deployment methods.
 
 
 ## Conclusion
 
-Using PyTorch and Python directly is perhaps the most simple and straightforward way
-for running inference; however there exist much more performance efficient methods for 
-model deployment on the GPU-enabled infrastructure. We will discuss these methods
-in the subsequent articles.
+Using PyTorch and Python **directly** is perhaps the most simple and straightforward way
+for running inference; however there are much more performance efficient methods for 
+model deployment in a GPU-enabled infrastructure. 
+We will discuss these methods in the subsequent articles. 
+
+**So stay tuned and keep accelerating with Genesis Cloud**
 
