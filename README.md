@@ -17,5 +17,8 @@ Deployment techniques for PyTorch models using TorchScript
 [Article 3](https://github.com/lxgo/genesis-kbase/blob/main/art03.md)
 Deployment techniques for PyTorch models using TensorRT
 
+[Article 4](https://github.com/lxgo/genesis-kbase/blob/main/art04.md)
+Using Triton for production deployment of TensorRT models
+
 The repository is work in progress.
 
