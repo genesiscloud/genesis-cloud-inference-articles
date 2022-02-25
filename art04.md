@@ -40,7 +40,7 @@ install the required software as described in the previous articles.
 * Install TensorRT (Article 3, Step 1)
 
 Furthermore running examples described in this article requires files
-containng husky images in raw and preprocessed formats
+containing husky images in raw and preprocessed formats
 
 For your convenience, these files are included in assets available in 
 the supporting repository and located in the subdirectory `art04`:
@@ -59,7 +59,7 @@ These instructions can be also used for experimenting with different input image
 
 For Tritorn deployment, we will transform ONNX models to TensorRT plans.
 Since TensorRT plans are device-specific, we have not included them
-in the repository assets and we will perform respective transformation
+in the repository assets and we will perform the respective transformation
 using methods similar to those described in Article 3.
 
 
@@ -131,10 +131,10 @@ NOTE: NVIDIA uses dual versioning nomenclature for Triton components. A Triton c
 can be labeled both via the regular release identifier (like the above 2.18.0) or via 
 the version of corresponding NVIDIA GPU-optimized container (NGC). For example, regular server
 release 2.18.0 corresponds to NGC 22.01. Although we will not use NGC in this article,
-the NGC nomenclature must be taken in account while installing some Triton components.
+the NGC nomenclature must be taken into account while installing some Triton components.
 
 We will download and build Triton components in the directory `~/factory` and install
-built packages in `~/triton`. Directory `~/transit` will be used for temporary storing
+built packages in `~/triton`. Directory `~/transit` will be used for temporarily storing
 the downloaded software components. Create these directories if they don't exist yet:
 
 ```
@@ -149,7 +149,7 @@ Make `~/transit` your current directory:
 cd ~/transit
 ```
 
-Install the dependencies required for builting Triton server as follows:
+Install the dependencies required for building Triton server as follows:
 
 ```
 sudo apt-get update
@@ -232,7 +232,7 @@ To build Triton server, start this script:
 ```
 
 It will take some time to complete. Upon completion, the Triton server
-will be installed in directory `~/triton/server`.
+will be installed in the directory `~/triton/server`.
 
 To validate the build results, use the command:
 
@@ -265,7 +265,7 @@ sudo apt-get install libcurl4-openssl-dev
 sudo apt-get install uuid-dev
 ```
 
-These packages are not required for building the libraries supporting
+These packages are not required for building the libraries that support
 the HTTP protocol only.
 
 Then make `~/factory` your current directory and clone the repository 
@@ -286,7 +286,7 @@ mkdir -p client/build
 cd client/build
 ```
 
-The shell script for creating CMake build configuration for the Triton client libraryis provided in the asset directory for this article; copy it to the current directory and make sure it has execution permissions:
+The shell script for creating CMake build configuration for the Triton client libraries provided in the asset directory for this article; copy it to the current directory and make sure it has execution permissions:
 
 ```
 cp ~/kbase/art04/build_client.sh .
@@ -350,8 +350,8 @@ to build and install the Triton client libraries:
 make
 ```
 
-This will take some time to complete. Upon completion, the Triton client libaries
-will be installed in directory `~/triton/client`.
+This will take some time to complete. Upon completion, the Triton client libraries
+will be installed in the directory `~/triton/client`.
 
 The Python API must be installed using the generated wheel file
 `~/triton/client/python/tritonclient-0.0.0-py3-none-manylinux1_x86_64.whl`:
@@ -506,7 +506,7 @@ The fields in this file have the following meaning:
 * `input`: list of specifications of input tensors
 * `output`: list of specifications of output tensors
 
-The field `max_batch_size` must have non-zero value of the model
+The field `max_batch_size` must have a non-zero value if the model
 supports variable batch size specified by the client request.
 For the models with fixed batch size (as in this example)
 this field must be set to zero.
@@ -560,7 +560,7 @@ can be installed as a service running in the background.
 
 ## Step 5. Build Python client for image classification
 
-The Python program `image_client.py` implements a simple Triron client
+The Python program `image_client.py` implements a simple Triton client
 for image classification requests. It represents a scaled down version
 of the code available in
 [Triton Client Libraries and Examples](https://github.com/triton-inference-server/client)
@@ -936,7 +936,7 @@ python3 image_client.py -h
 NOTE: Scaling (preprocessing) algorithms implemented by `image_client.py`
 have been inherited from the original NVIDIA example code and differ
 from the preprocessing algorithm that has been used for training of
-torchvision models and appplied in the previous articles.
+torchvision models and applied in the previous articles.
 We are using the `INCEPTION` algorithm in this example as it most closely
 matches the correct algorithm and yields reasonable classification results.
 The interested reader can modify the code `image_client.py` to implement
@@ -945,7 +945,7 @@ the original preprocessing algorithm.
 
 ## Step 6. Build C++ client for image classification
 
-The C++ program `image_client.cpp` implements a simple Triron client
+The C++ program `image_client.cpp` implements a simple Triton client
 for image classification requests. It represents a scaled down version
 of the code available in
 [Triton Client Libraries and Examples](https://github.com/triton-inference-server/client)
