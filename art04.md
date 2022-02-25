@@ -221,7 +221,7 @@ python3 ./build.py \
 This script specifies a lightweight Triton configuration supporting only TensorRT
 and ensemble backends. Since TensorRT represents by far the most efficient method
 of deployment of deep learning models on the NVIDIA GPU platforms we will not
-need, for the purpose of oyr study, any other backends supported by Triton.
+need, for the purpose of our study, any other backends supported by Triton.
 
 Note that the release identification `r22.01` corresponds to the NGC nomenclature.
 
