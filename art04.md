@@ -895,6 +895,45 @@ if __name__ == '__main__':
     print("DONE") 
 ```
 
+The Python package `tritonclient.http` implements the Triton HTTP client Python API and
+provides the `InferenceServerClient` class implementing the HTTP client object.
+
+The program performs the following steps:
+
+* parse the command line arguments
+* create an instance of Triton HTTP client `triton_client: httpclient.InferenceServerClient`
+* query the Triton server using the `triton_client.get_model_metadata` method to obtain the model metadata
+* query the Triton server using the `triton_client.get_model_config` method to obtain the model configuration
+* convert the model metadata and configuration to `AttrDict` using the `convert_http_metadata_config` function
+* parse the model metadata and configuration using the `parse_model` function
+* create a sorted list of names of the input image files
+* read the input images and preprocesses them using the `preprocess` function
+* loop over the input images and creates batches according to the model batching configuration
+* for each batch form a Triton server inference request using the `requestGenerator` iterator function
+* submit each inference request to the Triton server using the `triton_client.infer` method
+* collect inference responses in a list
+* upon completion of all inference requests, postprocess all reponses using the `postprocess` function
+
+The `parse_model` function verifies the model metadata and configuraton and extracts essential
+model attributes like names of input and output tensors, input image dimensions, number of channels,
+tensor format, and data type.
+
+The `preprocess` function preprocesses the input tensor according to the specified scaling
+algorithm. Preprocessing includes resizing, normalization and, optionally, changing
+the tensor format.
+
+The `postprocess` function postprocesses the output tensor by converting it to the human-readable
+form and printing the results.
+
+NOTE: Scaling (preprocessing) algorithms implemented by `image_client.py`
+have been inherited from the original NVIDIA example code and differ
+from the preprocessing algorithm that has been used for training of
+torchvision models and applied in the previous articles.
+We are using the `INCEPTION` algorithm in this example as it most closely
+matches the correct algorithm and yields reasonable classification results.
+The interested reader can modify the code `image_client.py` to implement
+the original preprocessing algorithm.
+
 Before running this program, install the required Python dependency as follows:
 
 ```
@@ -932,15 +971,6 @@ the command:
 ```
 python3 image_client.py -h
 ```
-
-NOTE: Scaling (preprocessing) algorithms implemented by `image_client.py`
-have been inherited from the original NVIDIA example code and differ
-from the preprocessing algorithm that has been used for training of
-torchvision models and applied in the previous articles.
-We are using the `INCEPTION` algorithm in this example as it most closely
-matches the correct algorithm and yields reasonable classification results.
-The interested reader can modify the code `image_client.py` to implement
-the original preprocessing algorithm.
 
 
 ## Step 6. Build C++ client for image classification
@@ -1148,6 +1178,26 @@ int main(int argc, char **argv) {
     return 0;
 }
 ```
+
+This program uses the Triton HTTP client C++ API specified in the `triton_http.h`
+header file. The respective interface declarations are encapsulated in
+the `triton::client` namespace. The C++ class `triton::client::InferenceServerHttpClient`
+represents the Triton HTTP client.
+
+The program performs the following steps:
+
+* get argumets from the command line, set options with hardcoded values
+* create an instance of the HTTP client object
+* query the Triton server using the client `ModelMetadata` method to obtain the model metadata
+* parse the model metadata using the `ParseJson` function
+* extract the relevant model metadata values using the `ParseModel` function
+* read the input image data using the `FileToInputData` function
+* create the input object for inference using the `InferInput::Create` API function
+* create the output object inference using the `InferRequestedOutput::Create` API function
+* initialize the object containing inference options
+* initialize the inference input object with the input data
+* submit the inference request using the `Infer` client method
+* represent the response in a human-readable form and print it using the `Postprocess` function
 
 The shell script `build_image_client.sh` must be used to compile and link this program:
 
