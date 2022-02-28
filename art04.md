@@ -912,9 +912,9 @@ The program performs the following steps:
 * for each batch form a Triton server inference request using the `requestGenerator` iterator function
 * submit each inference request to the Triton server using the `triton_client.infer` method
 * collect inference responses in a list
-* upon completion of all inference requests, postprocess all reponses using the `postprocess` function
+* upon completion of all inference requests, post process all responses using the `postprocess` function
 
-The `parse_model` function verifies the model metadata and configuraton and extracts essential
+The `parse_model` function verifies the model metadata and configuration and extracts essential
 model attributes like names of input and output tensors, input image dimensions, number of channels,
 tensor format, and data type.
 
@@ -1186,7 +1186,7 @@ represents the Triton HTTP client.
 
 The program performs the following steps:
 
-* get argumets from the command line, set options with hardcoded values
+* get arguments from the command line, set options with hardcoded values
 * create an instance of the HTTP client object
 * query the Triton server using the client `ModelMetadata` method to obtain the model metadata
 * parse the model metadata using the `ParseJson` function
