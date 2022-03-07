@@ -530,7 +530,7 @@ and datasets) facilitating using PyTorch for computer vision.
 articles we will use torchvision models to demonstrate various aspects of deep learning implementation
 on Genesis Cloud infrastructure.
 
-We will start with an example of direct ussage of torchvision models for image classification.
+We will start with an example of direct usage of torchvision models for image classification.
 
 As input, we will need an arbitrary image containing a single object that will be classified.
 We will use this [husky image](https://commons.wikimedia.org/wiki/Category:Siberian_Husky#/media/File:Siberian-husky-1291343_1920.jpg)
