@@ -451,6 +451,7 @@ We will store all the installed Triton models in the directory `~/models`.
 Create this directory if it does not yet exist:
 
 ```
+mkdir ~/models
 cd -p ~/models
 ```
 
@@ -538,6 +539,12 @@ Use the shell script `start_server.sh` for starting the server:
     --model-repository ~/models \
     --allow-http 1 \
     --http-port 8000
+```
+
+To run the script type:
+
+```
+./~/kbase/art04/start_server.sh
 ```
 
 This script specifies several configurable server options.
