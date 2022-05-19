@@ -316,18 +316,6 @@ cmake \
     ..
 ```
 
-NOTE: If you do not intend to use the gRPC protocol, set values of
-`TRITON_ENABLE_CC_GRPC` and `TRITON_ENABLE_PYTHON_GRPC` in this
-script to `OFF`. This will significantly reduce the build time.
-Examples in this article do not use the gRPC protocol.
-The respective lines in the script will look like:
-
-```
-    -DTRITON_ENABLE_CC_GRPC=OFF \
-    ...
-    -DTRITON_ENABLE_PYTHON_GRPC=OFF \
-```
-
 Verify that CMake is accessible:
 
 ```
