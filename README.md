@@ -20,7 +20,7 @@ Deployment techniques for PyTorch models using TensorRT
 [Article 4](https://github.com/lxgo/genesis-kbase/blob/main/art04.md)
 Using Triton for production deployment of TensorRT models
 
-[Article 4](https://github.com/lxgo/genesis-kbase/blob/main/art05.md) Introduction to transformer models and Hugging Face library
+[Article 5](https://github.com/lxgo/genesis-kbase/blob/main/art05.md) Introduction to transformer models and Hugging Face library
 
 The repository is work in progress.
 
