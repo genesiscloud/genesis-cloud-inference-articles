@@ -1,0 +1,37 @@
+#head;ORT (C++)
+Model ./onnx/bert_base_uncased_b1_s16.onnx: elapsed time 427.210358 ms / 100 = 4.272104
+#./onnx/bert_base_uncased_b1_s16.onnx;4.272104
+Model ./onnx/bert_base_uncased_b1_s64.onnx: elapsed time 445.145111 ms / 100 = 4.451451
+#./onnx/bert_base_uncased_b1_s64.onnx;4.451451
+Model ./onnx/bert_base_uncased_b1_s512.onnx: elapsed time 857.540710 ms / 100 = 8.575407
+#./onnx/bert_base_uncased_b1_s512.onnx;8.575407
+Model ./onnx/bert_base_uncased_b8_s16.onnx: elapsed time 409.439545 ms / 100 = 4.094396
+#./onnx/bert_base_uncased_b8_s16.onnx;4.094396
+Model ./onnx/bert_base_uncased_b8_s64.onnx: elapsed time 713.236755 ms / 100 = 7.132368
+#./onnx/bert_base_uncased_b8_s64.onnx;7.132368
+Model ./onnx/bert_base_uncased_b8_s512.onnx: elapsed time 5258.272461 ms / 100 = 52.582726
+#./onnx/bert_base_uncased_b8_s512.onnx;52.582726
+Model ./onnx/bert_base_uncased_b64_s16.onnx: elapsed time 1119.413330 ms / 100 = 11.194134
+#./onnx/bert_base_uncased_b64_s16.onnx;11.194134
+Model ./onnx/bert_base_uncased_b64_s64.onnx: elapsed time 4234.052734 ms / 100 = 42.340527
+#./onnx/bert_base_uncased_b64_s64.onnx;42.340527
+Model ./onnx/bert_base_uncased_b64_s512.onnx: elapsed time 39274.523438 ms / 100 = 392.745239
+#./onnx/bert_base_uncased_b64_s512.onnx;392.745239
+Model ./onnx/bert_base_uncased_b1_s16_opt.onnx: elapsed time 215.458862 ms / 100 = 2.154589
+#./onnx/bert_base_uncased_b1_s16_opt.onnx;2.154589
+Model ./onnx/bert_base_uncased_b1_s64_opt.onnx: elapsed time 235.445831 ms / 100 = 2.354458
+#./onnx/bert_base_uncased_b1_s64_opt.onnx;2.354458
+Model ./onnx/bert_base_uncased_b1_s512_opt.onnx: elapsed time 796.377258 ms / 100 = 7.963773
+#./onnx/bert_base_uncased_b1_s512_opt.onnx;7.963773
+Model ./onnx/bert_base_uncased_b8_s16_opt.onnx: elapsed time 256.542725 ms / 100 = 2.565427
+#./onnx/bert_base_uncased_b8_s16_opt.onnx;2.565427
+Model ./onnx/bert_base_uncased_b8_s64_opt.onnx: elapsed time 678.436707 ms / 100 = 6.784367
+#./onnx/bert_base_uncased_b8_s64_opt.onnx;6.784367
+Model ./onnx/bert_base_uncased_b8_s512_opt.onnx: elapsed time 4606.357422 ms / 100 = 46.063576
+#./onnx/bert_base_uncased_b8_s512_opt.onnx;46.063576
+Model ./onnx/bert_base_uncased_b64_s16_opt.onnx: elapsed time 1063.642822 ms / 100 = 10.636428
+#./onnx/bert_base_uncased_b64_s16_opt.onnx;10.636428
+Model ./onnx/bert_base_uncased_b64_s64_opt.onnx: elapsed time 3700.445557 ms / 100 = 37.004456
+#./onnx/bert_base_uncased_b64_s64_opt.onnx;37.004456
+Model ./onnx/bert_base_uncased_b64_s512_opt.onnx: elapsed time 33784.363281 ms / 100 = 337.843628
+#./onnx/bert_base_uncased_b64_s512_opt.onnx;337.843628
