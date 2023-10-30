@@ -22,5 +22,7 @@ Using Triton for production deployment of TensorRT models
 
 [Article 5](https://github.com/lxgo/genesis-kbase/blob/main/art05.md) Introduction to transformer models and Hugging Face library
 
+[Article 6](https://github.com/lxgo/genesis-kbase/blob/main/art06.md) Using ONNX Runtime for deployment and optimization of transformer models
+
 The repository is work in progress.
 
